@@ -6,12 +6,12 @@ import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
-public class DetailsActivity extends AppCompatActivity {
+public class ItemDetails extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
+        setContentView(R.layout.activity_itemdetails);
 
         Spinner spinner = (Spinner) findViewById(R.id.spinner);
         // spinner.setOnItemSelectedListener(this);

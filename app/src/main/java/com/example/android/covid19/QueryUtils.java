@@ -26,7 +26,10 @@ public class QueryUtils {
     private static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
     static List<String> spinnerArray;
-    static int total1;
+    static List<String> disArray = new ArrayList<>();
+    static int total1,active,deaths,recovered;
+
+
    // public String val;
 
     private QueryUtils() {
@@ -142,6 +145,9 @@ public class QueryUtils {
             //JSONObject jsonObject1 = jsonObject.getJSONObject("rates");
 
             total1=0;
+            active=0;
+            deaths=0;
+            recovered=0;
             Iterator keys = jsonObject1.keys();
             while(keys.hasNext()) {
                 // loop to get the dynamic key
@@ -152,6 +158,9 @@ public class QueryUtils {
                 JSONObject jsonObject = currentDynamicValue.getJSONObject("districtData");
                 Iterator keys1 = jsonObject.keys();
                 String val = null;
+                String act=null;
+                String det=null;
+                String rec=null;
                 int statesum = 0;
                 while(keys1.hasNext()) {
 
@@ -161,8 +170,17 @@ public class QueryUtils {
                     JSONObject cdv = jsonObject.getJSONObject(currentDynamicKey1);
 
                      val = cdv.getString("confirmed");
-                     statesum+=Integer.valueOf(val);
+                     act = cdv.getString("active");
+                     rec = cdv.getString("recovered");
+                     det = cdv.getString("deceased");
+
+
+                    disArray.add(currentDynamicKey1+ " -> " + val);
+                    statesum+=Integer.valueOf(val);
                     total1 = total1 + Integer.valueOf(val);
+                    active+=Integer.valueOf(act);
+                    deaths+=Integer.valueOf(det);
+                    recovered+=Integer.valueOf(rec);
 
 
                 }

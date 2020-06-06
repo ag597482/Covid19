@@ -3,8 +3,10 @@
     <string name="Country">Country-Wise</string>
     <string name="State">State-Wise</string>
     <string name="Distict">District-Wise</string>
+    <string name="predict">Predict this data</string>
+    <string name="details">More Detailed</string>
 
-    <string-array name="planets_array" >
+    <string-array name="planets_array">
         <item>Mercury</item>
         <item>Venus</item>
         <item>Earth</item>

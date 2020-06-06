@@ -2,11 +2,14 @@ package com.example.android.covid19;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentUris;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.util.List;
@@ -17,8 +20,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = MainActivity.class.getName();
     private static final String USGS_REQUEST_URL =
             "https://api.covid19india.org/state_district_wise.json";
-    TextView textView;
-
+    TextView textView,active,deaths,rec;
+    ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +31,35 @@ public class MainActivity extends AppCompatActivity {
         st=(Button)findViewById(R.id.st);
         dt=(Button)findViewById(R.id.dt);
 
+
+
         textView =(TextView)findViewById(R.id.total);
+        active = (TextView)findViewById(R.id.active);
+        deaths = (TextView)findViewById(R.id.deaths);
+        rec = (TextView)findViewById(R.id.recovered);
+        progressBar = (ProgressBar)findViewById(R.id.progressBar);
+
+        QueryUtils.disArray.add("Aman");
 
         ct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i=new Intent(MainActivity.this,DetailsActivity.class);
+                Intent i=new Intent(MainActivity.this,DetailedActivity.class);
+
+              //  Uri currentUri = ContentUris.withAppendedId("A");
+                i.setData(Uri.parse("A"));
+                startActivity(i);
+
+            }
+        });
+
+        dt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(MainActivity.this,DetailedActivity.class);
+
+                //  Uri currentUri = ContentUris.withAppendedId("A");
+                i.setData(Uri.parse("B"));
                 startActivity(i);
 
             }
@@ -61,6 +87,11 @@ public class MainActivity extends AppCompatActivity {
             if (data != null && !data.isEmpty()) {
                // textView.setText(data.toString());
                 textView.setText(String.valueOf(QueryUtils.total1));
+                active.setText(String.valueOf(QueryUtils.active));
+                deaths.setText(String.valueOf(QueryUtils.deaths));
+                rec.setText(String.valueOf(QueryUtils.recovered));
+
+                progressBar.setVisibility(View.INVISIBLE);
             }
         }
     }
