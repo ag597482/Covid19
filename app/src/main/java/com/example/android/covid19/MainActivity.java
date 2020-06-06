@@ -65,6 +65,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        st.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(MainActivity.this,PredictionActivity.class);
+                startActivity(i);
+
+            }
+        });
+
         EarthquakeAsyncTask task = new EarthquakeAsyncTask();
         task.execute(USGS_REQUEST_URL);
 
