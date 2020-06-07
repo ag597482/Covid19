@@ -13,6 +13,37 @@ tools:context=".PredictionActivity">
     android:layout_height="220dip"
     android:layout_marginTop="100dp"
     android:id="@+id/graph" />
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="30dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="30dp"
+        >
+        <TextView
+            android:layout_width="0dp"
+            android:id="@+id/xc"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:text="X : 0"
+            android:gravity="center"/>
+        <TextView
+            android:layout_width="0dp"
+            android:id="@+id/yc"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:text="Y : 1"
+            android:gravity="center"/>
+
+    </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,5 +54,7 @@ tools:context=".PredictionActivity">
         android:textSize="20dp"
 
         />
+
+
 
 </LinearLayout>
