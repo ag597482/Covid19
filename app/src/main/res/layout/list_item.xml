@@ -5,16 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:padding="16dp">
+    android:orientation="horizontal"
+    android:padding="4dp">
 
     <TextView
         android:id="@+id/location_total_cases"
         android:layout_width="65dp"
         android:layout_height="65dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginLeft="3dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginLeft="4dp"
         android:background="@drawable/rounded_textview"
         android:gravity="center"
         android:text="1000000"
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="4dp"
         android:text="Jharkhand"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -54,8 +54,8 @@
         android:id="@+id/location_active"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginEnd="6dp"
+        android:layout_marginRight="6dp"
         android:text="100000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -64,7 +64,7 @@
         android:id="@+id/location_recovery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="4dp"
         android:text="1250"
         app:layout_constraintEnd_toEndOf="@+id/location_active"
         app:layout_constraintTop_toBottomOf="@+id/location_active" />
@@ -73,8 +73,10 @@
         android:id="@+id/location_death"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:text="100"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/location_recovery"
         app:layout_constraintTop_toBottomOf="@+id/location_recovery" />
 
