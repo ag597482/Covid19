@@ -140,40 +140,21 @@ public final class Utils {
      */
     private static ArrayList<info_card> extractFeatureFromJson(String earthquakeJSON) {
         // If the JSON string is empty or null, then return early.
-        if (TextUtils.isEmpty(earthquakeJSON)) {
+        try {
 
             ArrayList<info_card> location_card_info =new ArrayList<info_card>();
             // Create an ArrayList of AndroidFlavor objects
-            location_card_info.add(new info_card("Donut", "1.600"));
+            location_card_info.add(new info_card("Donut", "1.6"));
+            location_card_info.add(new info_card("Eclair", "2.0-2.1"));
+            location_card_info.add(new info_card("Froyo", "2.2-2.2.3"));
             return location_card_info;
-        }
-//
-        try {
-            JSONObject baseJsonResponse = new JSONObject(earthquakeJSON);
-            JSONArray featureArray = baseJsonResponse.getJSONArray("features");
-
-            // If there are results in the features array
-            if (featureArray.length() > 0) {
-//                // Extract out the first feature (which is an earthquake)
-//                JSONObject firstFeature = featureArray.getJSONObject(0);
-//                JSONObject properties = firstFeature.getJSONObject("properties");
-//
-//                // Extract out the title, number of people, and perceived strength values
-//                String title = properties.getString("title");
-//                String numberOfPeople = properties.getString("felt");
-//                String perceivedStrength = properties.getString("cdi");
-
-                // Create a new {@link Event} object
-                ArrayList<info_card> location_card_info =new ArrayList<info_card>();
-                // Create an ArrayList of AndroidFlavor objects
-                location_card_info.add(new info_card("Donut", "1.6"));
-                location_card_info.add(new info_card("Eclair", "2.0-2.1"));
-                location_card_info.add(new info_card("Froyo", "2.2-2.2.3"));
-                return location_card_info;
-            }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Problem parsing the earthquake JSON results", e);
         }
-        return new ArrayList<info_card>();
+        ArrayList<info_card> location_card_info =new ArrayList<info_card>();
+        // Create an ArrayList of AndroidFlavor objects
+        location_card_info.add(new info_card("Donut", "1.6"));
+        location_card_info.add(new info_card("Eclair", "2.0-2.1"));
+        return location_card_info;
     }
 }
