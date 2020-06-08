@@ -31,6 +31,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Utility class with methods to help perform the HTTP request and
@@ -75,9 +76,7 @@ public final class Utils {
         return url;
     }
 
-    /**
-     * Make an HTTP request to the given URL and return a String as the response.
-     */
+
     private static String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = "";
 
@@ -110,16 +109,16 @@ public final class Utils {
                 urlConnection.disconnect();
             }
             if (inputStream != null) {
+                // Closing the input stream could throw an IOException, which is why
+                // the makeHttpRequest(URL url) method signature specifies than an IOException
+                // could be thrown.
                 inputStream.close();
             }
         }
         return jsonResponse;
     }
 
-    /**
-     * Convert the {@link InputStream} into a String which contains the
-     * whole JSON response from the server.
-     */
+
     private static String readFromStream(InputStream inputStream) throws IOException {
         StringBuilder output = new StringBuilder();
         if (inputStream != null) {
@@ -134,28 +133,64 @@ public final class Utils {
         return output.toString();
     }
 
-    /**
-     * Return an {@link ArrayList<info_card>} object by parsing out information
-     * about the first earthquake from the input earthquakeJSON string.
-     */
+
     private static ArrayList<info_card> extractFeatureFromJson(String earthquakeJSON) {
         // If the JSON string is empty or null, then return early.
+
+        ArrayList<info_card> location_card_info =new ArrayList<info_card>();
+        if (TextUtils.isEmpty(earthquakeJSON)) {
+
+            return location_card_info;
+        }
         try {
             JSONObject jsonObject1=new JSONObject(earthquakeJSON);
 
-            ArrayList<info_card> location_card_info =new ArrayList<info_card>();
-            // Create an ArrayList of AndroidFlavor objects
-            location_card_info.add(new info_card("Donut", "1.6"));
-            location_card_info.add(new info_card("Eclair", "2.0-2.1"));
-            location_card_info.add(new info_card("Froyo", "2.2-2.2.3"));
-            return location_card_info;
+            Iterator keys = jsonObject1.keys();
+            while(keys.hasNext()) {
+                // loop to get the dynamic key
+                String currentDynamicKey = (String)keys.next();
+
+                // get the value of the dynamic key
+                JSONObject currentDynamicValue = jsonObject1.getJSONObject(currentDynamicKey);
+                JSONObject jsonObject = currentDynamicValue.getJSONObject("districtData");
+                Iterator keys1 = jsonObject.keys();
+                String val = null;
+                String act=null;
+                String det=null;
+                String rec=null;
+                int total1=0;
+                int active=0;
+                int deaths=0;
+                int recovered=0;
+                int statesum = 0;
+                while(keys1.hasNext()) {
+
+
+                    String currentDynamicKey1 = (String)keys1.next();
+
+                    JSONObject cdv = jsonObject.getJSONObject(currentDynamicKey1);
+
+                    val = cdv.getString("confirmed");
+                    act = cdv.getString("active");
+                    rec = cdv.getString("recovered");
+                    det = cdv.getString("deceased");
+
+
+                    statesum+=Integer.valueOf(val);
+                    total1 = total1 + Integer.valueOf(val);
+                    active+=Integer.valueOf(act);
+                    deaths+=Integer.valueOf(det);
+                    recovered+=Integer.valueOf(rec);
+
+
+                }
+                location_card_info.add(new info_card(currentDynamicKey, "detail",active,deaths,recovered,statesum));
+            }
         } catch (JSONException e) {
+
+            location_card_info.add(new info_card("state name", "detail",1,2,3,4));
             Log.e(LOG_TAG, "Problem parsing the earthquake JSON results", e);
         }
-        ArrayList<info_card> location_card_info =new ArrayList<info_card>();
-        // Create an ArrayList of AndroidFlavor objects
-        location_card_info.add(new info_card("Donut", "1.6"));
-        location_card_info.add(new info_card("Eclair", "2.0-2.1"));
         return location_card_info;
     }
 }

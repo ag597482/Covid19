@@ -67,35 +67,35 @@ public class Location_card_addapter extends ArrayAdapter<info_card> {
         TextView location_name = (TextView) listItemView.findViewById(R.id.location_name);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
-        location_name.setText(currentAndroidFlavor.getVersionName());
+        location_name.setText(currentAndroidFlavor.getLocation_name());
 
         // Find the TextView in the list_item.xml layout with the ID version_number
         TextView location_detail = (TextView) listItemView.findViewById(R.id.location_detail);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
-        location_detail.setText(currentAndroidFlavor.getVersionNumber());
+        location_detail.setText(currentAndroidFlavor.getLocation_detail());
 
         TextView location_active = (TextView) listItemView.findViewById(R.id.location_active);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
-        location_active.setText(currentAndroidFlavor.getVersionName());
+        location_active.setText(String.valueOf(currentAndroidFlavor.getLocation_active()));
 
         // Find the TextView in the list_item.xml layout with the ID version_number
         TextView location_death = (TextView) listItemView.findViewById(R.id.location_death);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
-        location_death.setText(currentAndroidFlavor.getVersionNumber());
+        location_death.setText(String.valueOf(currentAndroidFlavor.getLocation_death()));
 
         TextView location_recovery = (TextView) listItemView.findViewById(R.id.location_recovery);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
-        location_recovery.setText(currentAndroidFlavor.getVersionName());
+        location_recovery.setText(String.valueOf(currentAndroidFlavor.getLocation_recovery()));
 
         // Find the TextView in the list_item.xml layout with the ID version_number
         TextView location_total_cases = (TextView) listItemView.findViewById(R.id.location_total_cases);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
-        location_total_cases.setText(currentAndroidFlavor.getVersionNumber());
+        location_total_cases.setText(String.valueOf( currentAndroidFlavor.getLocation_total_cases()));
         return listItemView;
     }
 

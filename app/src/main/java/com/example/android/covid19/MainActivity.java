@@ -31,7 +31,7 @@ import java.util.Collection;
 public class MainActivity extends AppCompatActivity {
 
     private static final String USGS_REQUEST_URL =
-            "http://api.covid19india.org/state_district_wise.json";
+            "https://api.covid19india.org/state_district_wise.json";
 
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
@@ -41,52 +41,54 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ArrayList<String> statelist = new ArrayList<>();
-        String [] state= {"India","Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir",
-                "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan",
-                "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttarakhand", "Uttar Pradesh", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh",
+        String [] state= {"India","Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttarakhand", "Uttar Pradesh", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh",
                 "Dadra and Nagar Haveli", "Daman and Diu", "Delhi", "Lakshadweep", "Puducherry"} ;
         for(int i=0;i<state.length;i++)
         statelist.add(state[i]);
 
         Spinner location_spinner = (Spinner) findViewById(R.id.location);
 
-        // Create a new {@link ArrayAdapter} of earthquakes
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1, statelist);
 
-        // Set the adapter on the {@link ListView}
-        // so the list can be populated in the user interface
         location_spinner.setAdapter(adapter);
         //
-        //
-        //
-
-        Log.v(LOG_TAG, "After spinner");
-
-        ArrayList<info_card> location_card_info =Utils.fetchEarthquakeData(USGS_REQUEST_URL);
 
 
-//        ArrayList<info_card> location_card_info =new ArrayList<info_card>();
-//        // Create an ArrayList of AndroidFlavor objects
-//        location_card_info.add(new info_card("Donut", "1.6"));
-//        location_card_info.add(new info_card("Eclair", "2.0-2.1"));
-//        location_card_info.add(new info_card("Froyo", "2.2-2.2.3"));
-//        location_card_info.add(new info_card("GingerBread", "2.3-2.3.7"));
-//        location_card_info.add(new info_card("Honeycomb", "3.0-3.2.6"));
-//        location_card_info.add(new info_card("Ice Cream Sandwich", "4.0-4.0.4"));
-//        location_card_info.add(new info_card("Jelly Bean", "4.1-4.3.1"));
+        EarthquakeAsyncTask task = new EarthquakeAsyncTask();
+        task.execute(USGS_REQUEST_URL);
 
-        // Create an {@link AndroidFlavorAdapter}, whose data source is a list of
-        // {@link AndroidFlavor}s. The adapter knows how to create list item views for each item
-        // in the list.
-        Location_card_addapter flavorAdapter = new Location_card_addapter(this, location_card_info);
+    }
+    public void Update_location_card(ArrayList<info_card> git)
+    {
+        Location_card_addapter flavorAdapter = new Location_card_addapter(this, git);
 
         // Get a reference to the ListView, and attach the adapter to the listView.
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(flavorAdapter);
+    }
 
 
-        Log.v(LOG_TAG, "After all in the end");
 
+    private class EarthquakeAsyncTask extends AsyncTask<String, Void, ArrayList<info_card> > {
+
+        protected ArrayList<info_card> doInBackground(String... urls) {
+            // Don't perform the request if there are no URLs, or the first URL is null.
+            if (urls.length < 1 || urls[0] == null) {
+                return null;
+            }
+
+            ArrayList<info_card>  result = Utils.fetchEarthquakeData(urls[0]);
+            return result;
+        }
+
+
+        protected void onPostExecute(ArrayList<info_card>  result) {
+            // If there is no result, do nothing.
+            if (result == null) {
+                return;
+            }
+            Update_location_card(result);
+        }
     }
 }
