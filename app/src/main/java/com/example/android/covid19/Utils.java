@@ -141,6 +141,7 @@ public final class Utils {
     private static ArrayList<info_card> extractFeatureFromJson(String earthquakeJSON) {
         // If the JSON string is empty or null, then return early.
         try {
+            JSONObject jsonObject1=new JSONObject(earthquakeJSON);
 
             ArrayList<info_card> location_card_info =new ArrayList<info_card>();
             // Create an ArrayList of AndroidFlavor objects
