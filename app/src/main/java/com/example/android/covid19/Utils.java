@@ -41,7 +41,9 @@ public final class Utils {
     /** Tag for the log messages */
     public static final String LOG_TAG = Utils.class.getSimpleName();
 
-
+    /**
+     * Query the USGS dataset and return an {@link ArrayList<info_card>} object to represent a single earthquake.
+     */
     public static ArrayList<info_card> fetchEarthquakeData(String requestUrl) {
         // Create URL object
         URL url = createUrl(requestUrl);
@@ -53,11 +55,10 @@ public final class Utils {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
-
         // Extract relevant fields from the JSON response and create an {@link Event} object
         ArrayList<info_card> earthquake = extractFeatureFromJson(jsonResponse);
 
-        // Return the {@link Event}
+//         Return the {@link Event}
         return earthquake;
     }
 
@@ -73,7 +74,7 @@ public final class Utils {
         }
         return url;
     }
-x
+
     /**
      * Make an HTTP request to the given URL and return a String as the response.
      */
@@ -134,52 +135,45 @@ x
     }
 
     /**
-     * Return an {@link info_card} object by parsing out information
+     * Return an {@link ArrayList<info_card>} object by parsing out information
      * about the first earthquake from the input earthquakeJSON string.
      */
     private static ArrayList<info_card> extractFeatureFromJson(String earthquakeJSON) {
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(earthquakeJSON)) {
-            return null;
-        }
 
+            ArrayList<info_card> location_card_info =new ArrayList<info_card>();
+            // Create an ArrayList of AndroidFlavor objects
+            location_card_info.add(new info_card("Donut", "1.600"));
+            return location_card_info;
+        }
+//
         try {
             JSONObject baseJsonResponse = new JSONObject(earthquakeJSON);
             JSONArray featureArray = baseJsonResponse.getJSONArray("features");
 
             // If there are results in the features array
             if (featureArray.length() > 0) {
-                // Extract out the first feature (which is an earthquake)
-                JSONObject firstFeature = featureArray.getJSONObject(0);
-                JSONObject properties = firstFeature.getJSONObject("properties");
-
-                // Extract out the title, number of people, and perceived strength values
-                String title = properties.getString("title");
-                String numberOfPeople = properties.getString("felt");
-                String perceivedStrength = properties.getString("cdi");
+//                // Extract out the first feature (which is an earthquake)
+//                JSONObject firstFeature = featureArray.getJSONObject(0);
+//                JSONObject properties = firstFeature.getJSONObject("properties");
+//
+//                // Extract out the title, number of people, and perceived strength values
+//                String title = properties.getString("title");
+//                String numberOfPeople = properties.getString("felt");
+//                String perceivedStrength = properties.getString("cdi");
 
                 // Create a new {@link Event} object
-//
-//
-//
-
                 ArrayList<info_card> location_card_info =new ArrayList<info_card>();
                 // Create an ArrayList of AndroidFlavor objects
                 location_card_info.add(new info_card("Donut", "1.6"));
                 location_card_info.add(new info_card("Eclair", "2.0-2.1"));
                 location_card_info.add(new info_card("Froyo", "2.2-2.2.3"));
-                location_card_info.add(new info_card("GingerBread", "2.3-2.3.7"));
-                location_card_info.add(new info_card("Honeycomb", "3.0-3.2.6"));
-                location_card_info.add(new info_card("Ice Cream Sandwich", "4.0-4.0.4"));
-                location_card_info.add(new info_card("Jelly Bean", "4.1-4.3.1"));
-
-
-
                 return location_card_info;
             }
         } catch (JSONException e) {
             Log.e(LOG_TAG, "Problem parsing the earthquake JSON results", e);
         }
-        return null;
+        return new ArrayList<info_card>();
     }
 }

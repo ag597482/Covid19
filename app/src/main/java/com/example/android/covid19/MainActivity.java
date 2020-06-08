@@ -31,7 +31,7 @@ import java.util.Collection;
 public class MainActivity extends AppCompatActivity {
 
     private static final String USGS_REQUEST_URL =
-            "https://api.covid19india.org/state_district_wise.json";
+            "http://api.covid19india.org/state_district_wise.json";
 
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
