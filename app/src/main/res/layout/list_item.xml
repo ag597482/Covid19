@@ -52,32 +52,42 @@
         app:layout_constraintTop_toBottomOf="@+id/location_name" />
 
     <TextView
-        android:id="@+id/location_active"
+        android:id="@+id/location_recovery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="6dp"
-        android:layout_marginRight="6dp"
+        android:background="#E4FFFFFF"
+        android:paddingRight="4dp"
         android:text="100000"
+        android:textColor="@color/Recover"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/location_recovery"
+        android:id="@+id/location_active"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:background="#E4FFFFFF"
+        android:paddingRight="4dp"
         android:text="1250"
-        app:layout_constraintEnd_toEndOf="@+id/location_active"
-        app:layout_constraintTop_toBottomOf="@+id/location_active" />
+        android:textColor="@color/Active"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/location_recovery"
+        app:layout_constraintTop_toBottomOf="@+id/location_recovery" />
 
     <TextView
         android:id="@+id/location_death"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
+        android:background="#E4FFFFFF"
+        android:paddingRight="4dp"
         android:text="100"
-        app:layout_constraintEnd_toEndOf="@+id/location_recovery"
-        app:layout_constraintTop_toBottomOf="@+id/location_recovery" />
+        android:textColor="@color/death"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/location_active"
+        app:layout_constraintTop_toBottomOf="@+id/location_active" />
 
     <TextView
         android:id="@+id/textView"

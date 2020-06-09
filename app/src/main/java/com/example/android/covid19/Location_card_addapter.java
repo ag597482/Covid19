@@ -78,18 +78,18 @@ public class Location_card_addapter extends ArrayAdapter<info_card> {
         TextView location_active = (TextView) listItemView.findViewById(R.id.location_active);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
-        location_active.setText(String.valueOf(currentAndroidFlavor.getLocation_active()));
+        location_active.setText(String.valueOf(currentAndroidFlavor.getLocation_active())+" (A)");
 
         // Find the TextView in the list_item.xml layout with the ID version_number
         TextView location_death = (TextView) listItemView.findViewById(R.id.location_death);
         // Get the version number from the current AndroidFlavor object and
         // set this text on the number TextView
-        location_death.setText(String.valueOf(currentAndroidFlavor.getLocation_death()));
+        location_death.setText(String.valueOf(currentAndroidFlavor.getLocation_death())+" (D)");
 
         TextView location_recovery = (TextView) listItemView.findViewById(R.id.location_recovery);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
-        location_recovery.setText(String.valueOf(currentAndroidFlavor.getLocation_recovery()));
+        location_recovery.setText(String.valueOf(currentAndroidFlavor.getLocation_recovery())+ " (R)");
 
         // Find the TextView in the list_item.xml layout with the ID version_number
         TextView location_total_cases = (TextView) listItemView.findViewById(R.id.location_total_cases);
