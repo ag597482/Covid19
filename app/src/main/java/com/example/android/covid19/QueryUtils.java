@@ -194,7 +194,7 @@ public class QueryUtils {
 
                 }
                 all.put(currentDynamicKey,dist);
-                dist.clear();
+
                 earthquakes.add(currentDynamicKey+ " -> " + statesum);
                 state.add(new info_card(currentDynamicKey,"",Integer.valueOf(total1),Integer.valueOf(active),Integer.valueOf(recovered),Integer.valueOf(deaths)));
 
