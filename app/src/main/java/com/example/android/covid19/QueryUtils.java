@@ -30,7 +30,7 @@ public class QueryUtils {
     static List<String> disArray = new ArrayList<>();
     static int total1,active,deaths,recovered;
 
-    static HashMap<String,ArrayList<Item>> all=new HashMap<>();
+    static HashMap<String,ArrayList<info_card>> all=new HashMap<>();
 
 
    // public String val;
@@ -150,7 +150,7 @@ public class QueryUtils {
 
             Iterator keys = jsonObject1.keys();
 
-            ArrayList<Item> state=new ArrayList<Item>();
+            ArrayList<info_card> state=new ArrayList<info_card>();
             while(keys.hasNext()) {
                 // loop to get the dynamic key
                 String currentDynamicKey = (String)keys.next();
@@ -168,7 +168,7 @@ public class QueryUtils {
                 active=0;
                 deaths=0;
                 recovered=0;
-                ArrayList<Item> dist=new ArrayList<Item>();
+                ArrayList<info_card> dist=new ArrayList<info_card>();
                 while(keys1.hasNext()) {
 
 
@@ -181,7 +181,7 @@ public class QueryUtils {
                      rec = cdv.getString("recovered");
                      det = cdv.getString("deceased");
 
-                     dist.add(new Item(currentDynamicKey1,Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
+                     dist.add(new info_card(currentDynamicKey1,"",Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
 
 
                     disArray.add(currentDynamicKey1+ " -> " + val);
@@ -196,7 +196,7 @@ public class QueryUtils {
                 all.put(currentDynamicKey,dist);
                 dist.clear();
                 earthquakes.add(currentDynamicKey+ " -> " + statesum);
-                state.add(new Item(currentDynamicKey,Integer.valueOf(total1),Integer.valueOf(active),Integer.valueOf(recovered),Integer.valueOf(deaths)));
+                state.add(new info_card(currentDynamicKey,"",Integer.valueOf(total1),Integer.valueOf(active),Integer.valueOf(recovered),Integer.valueOf(deaths)));
 
 
 

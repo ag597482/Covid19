@@ -1,107 +1,255 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context=".MainActivity"
 
-    tools:context=".MainActivity"
-    android:orientation="vertical">
+    android:layout_gravity="center"
+    android:gravity="center"
+android:orientation="vertical">
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:orientation="vertical">
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_margin="10dp"
+        android:spinnerMode="dropdown"
+    />
+
+<LinearLayout
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    android:layout_margin="5dp"
+    android:background="@drawable/rounded_textview"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+
+    >
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+
         android:gravity="center"
         android:layout_gravity="center"
-        android:orientation="horizontal"
-
-
-        >
+        android:text="Total Cases"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        />
     <TextView
         android:id="@+id/total"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="000000"
-        android:textColor="#0000ff"
-        android:textSize="70sp"
-    />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/active"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="000000"
-                android:textColor="#CBCB05"
-                android:textSize="20sp"
-                />
-            <TextView
-                android:id="@+id/recovered"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="000000"
-                android:textColor="#00ff00"
-                android:textSize="20sp"
-                />
-            <TextView
-            android:id="@+id/deaths"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0000"
-            android:textColor="#ff0000"
-            android:textSize="20sp"
-            />
-        </LinearLayout>
-    </LinearLayout>
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/dashGap"
-        android:layout_width="wrap_content"
-        android:layout_gravity="center"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        />
-    <Button
-        android:id="@+id/ct"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/State"
-        android:textSize="30dp"
 
-        android:textAllCaps="false"
-        android:layout_marginTop="60dp"
-        android:layout_marginBottom="10dp"
+        android:gravity="center"
         android:layout_gravity="center"
-
+        android:text="0000000"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
         />
-    <Button
-        android:id="@+id/dt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/Distict"
-        android:textSize="30dp"
-        android:textAllCaps="false"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-        />
-    <Button
-
-        android:id="@+id/st"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/predict"
-    android:textSize="30dp"
-        android:textAllCaps="false"
-        android:layout_gravity="center"
-        android:layout_margin="10dp"
-    />
 
 </LinearLayout>
-</ScrollView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="10dp">
+
+
+        <LinearLayout
+            android:id="@+id/constraintLayout"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="65dp"
+            android:background="#D7932E"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/recover_cases_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Recover Case"
+
+                android:textColor="#FFFFFF"
+                android:textStyle="bold|italic"
+                android:layout_gravity="center"
+                android:gravity="center"
+
+                />
+
+            <TextView
+                android:id="@+id/active"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:gravity="center"
+                android:text="1000000000"
+                android:textColor="#FAF6F6"
+                android:textStyle="bold"
+
+               />
+
+            <TextView
+                android:id="@+id/one_day_recovery"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:textColor="#FAF6F6"
+                android:textSize="16sp"
+                />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="65dp"
+            android:background="#6BD54E"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/total_cases">
+
+            <TextView
+                android:id="@+id/death_cases_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Death Case"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold|italic"
+                android:layout_gravity="center"
+                android:gravity="center"
+
+                />
+
+            <TextView
+                android:id="@+id/recovered"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:gravity="center"
+                android:text="1000000000"
+                android:textColor="#FAF6F6"
+                android:textSize="18sp"
+               />
+
+            <TextView
+                android:id="@+id/one_day_death"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:textColor="#FAF6F6"
+                android:textSize="16sp"
+               />
+
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/constraintLayout3"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="65dp"
+
+
+            android:background="#A71B4B"
+            android:orientation="vertical"
+          >
+
+            <TextView
+                android:id="@+id/Active_cases_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Active Case"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold|italic"
+                android:layout_gravity="center"
+                android:gravity="center"
+                />
+
+            <TextView
+                android:id="@+id/deaths"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:gravity="center"
+                android:text="1000"
+                android:textColor="#FAF6F6"
+
+                android:textStyle="bold"
+              />
+
+            <TextView
+                android:id="@+id/one_day_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="3dp"
+                android:gravity="center"
+                android:textColor="#FAF6F6"
+                android:textSize="16sp"
+
+                 />
+
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    </LinearLayout>
+
+ <LinearLayout
+     android:layout_width="match_parent"
+     android:layout_height="0dp"
+     android:orientation="vertical"
+     android:layout_weight="5">
+
+<androidx.appcompat.widget.SearchView
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/serch"
+    android:title="searchbar"
+    android:icon="@android:drawable/ic_menu_search"
+    app:showAsAction="ifRoom|collapseActionView"
+    app:actionViewClass="androidx.appcompat.widget.SearchView"
+    app:queryHint="Search ..."
+
+    />
+     <ProgressBar
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/progressBar"
+         android:layout_gravity="center"
+         />
+<ListView
+    android:id="@+id/list"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    />
+
+ </LinearLayout>
+
+
+
+</LinearLayout>
