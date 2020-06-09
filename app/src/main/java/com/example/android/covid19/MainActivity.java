@@ -37,6 +37,9 @@ public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        EarthquakeAsyncTask task = new EarthquakeAsyncTask();
+        task.execute(USGS_REQUEST_URL);
         Log.v(LOG_TAG, "just under creat");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -53,10 +56,6 @@ public class MainActivity extends AppCompatActivity {
 
         location_spinner.setAdapter(adapter);
         //
-
-
-        EarthquakeAsyncTask task = new EarthquakeAsyncTask();
-        task.execute(USGS_REQUEST_URL);
 
     }
     public void Update_location_card(ArrayList<info_card> git)
