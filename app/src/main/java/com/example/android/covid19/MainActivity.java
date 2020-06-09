@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         EarthquakeAsyncTask task = new EarthquakeAsyncTask();
         task.execute(USGS_REQUEST_URL);
         Log.v(LOG_TAG, "just under creat");
@@ -58,8 +57,33 @@ public class MainActivity extends AppCompatActivity {
         //
 
     }
+
+
+    public void total_sum(ArrayList<info_card>arr)
+    {
+        TextView total_cases=(TextView) findViewById(R.id.total_cases);
+        TextView total_recovery=(TextView) findViewById(R.id.total_recovery);
+        TextView total_death=(TextView) findViewById(R.id.total_death);
+
+        TextView total_active=(TextView) findViewById(R.id.total_death);
+        int tc=0,tr=0,td=0,ta=0;
+        for(int i=0;i<arr.size();i++)
+        {
+            tc=tc+arr.get(i).getLocation_total_cases();
+            tr=tr+arr.get(i).getLocation_recovery();
+            td=td+arr.get(i).getLocation_death();
+            ta=ta+arr.get(i).getLocation_active();
+        }
+        total_cases.setText(String.valueOf(tc));
+        total_recovery.setText(String.valueOf(tr));
+        total_death.setText(String.valueOf(td));
+        total_active.setText(String.valueOf(ta));
+
+    }
+
     public void Update_location_card(ArrayList<info_card> git)
     {
+        total_sum(git);
         Location_card_addapter flavorAdapter = new Location_card_addapter(this, git);
 
         // Get a reference to the ListView, and attach the adapter to the listView.

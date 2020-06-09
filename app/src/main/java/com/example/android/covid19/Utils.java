@@ -142,6 +142,8 @@ public final class Utils {
 
             return location_card_info;
         }
+
+        int total1=0;
         try {
             JSONObject jsonObject1=new JSONObject(earthquakeJSON);
 
@@ -158,7 +160,6 @@ public final class Utils {
                 String act=null;
                 String det=null;
                 String rec=null;
-                int total1=0;
                 int active=0;
                 int deaths=0;
                 int recovered=0;
@@ -184,7 +185,9 @@ public final class Utils {
 
 
                 }
+
                 location_card_info.add(new info_card(currentDynamicKey, "detail",active,deaths,recovered,statesum));
+
             }
         } catch (JSONException e) {
 
