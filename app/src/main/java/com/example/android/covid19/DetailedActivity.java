@@ -40,13 +40,17 @@ public class DetailedActivity extends AppCompatActivity {
         {
             adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,districtlist);
         }
+        else
+        {
+        adapter = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,statelist);
+        }
         lv.setAdapter(adapter);
 
 //        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
 //            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 //
-//                Intent intent = new Intent(DetailedActivity.this, DetailedListActivity.class);
+//                Intent intent = new Intent(DetailedActivity.this, DetailedActivity.class);
 //
 ////                Uri currentUri = ContentUris.withAppendedId(ItemEntry.CONTENT_URI,id);
 ////

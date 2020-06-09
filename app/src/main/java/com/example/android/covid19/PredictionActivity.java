@@ -82,7 +82,7 @@ public class PredictionActivity extends AppCompatActivity {
             if (data != null && !data.isEmpty()) {
                 //Toast.makeText(PredictionActivity.this,"aman",Toast.LENGTH_SHORT).show();
                 // textView.setText(data.toString());
-                tv.setText("Total cases : "+ QueryUtils1.total + "\nActive :"+ QueryUtils1.active + "\nRows - " + data.size());
+                tv.setText("Total cases : "+ QueryUtils1.total + " Rows - " + data.size());
 
                 //ArrayList<Integer> y = new ArrayList<>(data);
                 for(int i=1;i<data.size();i++)

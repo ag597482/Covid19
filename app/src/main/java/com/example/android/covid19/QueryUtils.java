@@ -14,6 +14,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -28,6 +29,8 @@ public class QueryUtils {
     static List<String> spinnerArray;
     static List<String> disArray = new ArrayList<>();
     static int total1,active,deaths,recovered;
+
+    static HashMap<String,ArrayList<Item>> all=new HashMap<>();
 
 
    // public String val;
@@ -144,11 +147,10 @@ public class QueryUtils {
 
             //JSONObject jsonObject1 = jsonObject.getJSONObject("rates");
 
-            total1=0;
-            active=0;
-            deaths=0;
-            recovered=0;
+
             Iterator keys = jsonObject1.keys();
+
+            ArrayList<Item> state=new ArrayList<Item>();
             while(keys.hasNext()) {
                 // loop to get the dynamic key
                 String currentDynamicKey = (String)keys.next();
@@ -162,6 +164,11 @@ public class QueryUtils {
                 String det=null;
                 String rec=null;
                 int statesum = 0;
+                total1=0;
+                active=0;
+                deaths=0;
+                recovered=0;
+                ArrayList<Item> dist=new ArrayList<Item>();
                 while(keys1.hasNext()) {
 
 
@@ -174,6 +181,8 @@ public class QueryUtils {
                      rec = cdv.getString("recovered");
                      det = cdv.getString("deceased");
 
+                     dist.add(new Item(currentDynamicKey1,Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
+
 
                     disArray.add(currentDynamicKey1+ " -> " + val);
                     statesum+=Integer.valueOf(val);
@@ -184,10 +193,17 @@ public class QueryUtils {
 
 
                 }
+                all.put(currentDynamicKey,dist);
+                dist.clear();
                 earthquakes.add(currentDynamicKey+ " -> " + statesum);
+                state.add(new Item(currentDynamicKey,Integer.valueOf(total1),Integer.valueOf(active),Integer.valueOf(recovered),Integer.valueOf(deaths)));
+
+
 
                 // do something here with the value...
             }
+
+            all.put("India",state);
 
 //            earthquakes.add(jsonObject1.getString("USD"));
 //            earthquakes.add(jsonObject.toString());
