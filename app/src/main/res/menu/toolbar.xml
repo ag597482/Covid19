@@ -2,11 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/serch"
-        android:title="searchbar"
-        android:icon="@android:drawable/ic_menu_search"
-        app:showAsAction="ifRoom|collapseActionView"
-        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        android:id="@+id/graphs"
+        android:title="graphs"
+        android:icon="@android:drawable/ic_menu_mapmode"
+        app:showAsAction="ifRoom"
         />
 
 </menu>
