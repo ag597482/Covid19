@@ -6,11 +6,13 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
     public static String spinner_location;
 
     private static final String USGS_REQUEST_URL =
@@ -64,6 +65,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         spinner_location = parent.getItemAtPosition(position).toString();
+        ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
+            progressBar.setVisibility(View.VISIBLE);
             EarthquakeAsyncTask task = new EarthquakeAsyncTask();
             task.execute(USGS_REQUEST_URL);
     }
@@ -98,16 +101,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public void Update_location_card(ArrayList<info_card> git)
     {
+        ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.GONE);
         total_sum(git);
         Location_card_addapter flavorAdapter = new Location_card_addapter(this, git);
 
-        // Get a reference to the ListView, and attach the adapter to the listView.
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(flavorAdapter);
     }
 
-
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
 
     private class EarthquakeAsyncTask extends AsyncTask<String, Void, ArrayList<info_card> > {
 
