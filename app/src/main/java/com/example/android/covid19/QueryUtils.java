@@ -32,6 +32,8 @@ public class QueryUtils {
 
     static HashMap<String,ArrayList<info_card>> all=new HashMap<>();
 
+    static HashMap<String,info_card> detacard = new HashMap<>();
+    public static int dc,dr,dd;
 
    // public String val;
 
@@ -168,6 +170,10 @@ public class QueryUtils {
                 active=0;
                 deaths=0;
                 recovered=0;
+                dc=0;
+                dr=0;
+                dd=0;
+
                 ArrayList<info_card> dist=new ArrayList<info_card>();
                 while(keys1.hasNext()) {
 
@@ -181,8 +187,16 @@ public class QueryUtils {
                      rec = cdv.getString("recovered");
                      det = cdv.getString("deceased");
 
-                     dist.add(new info_card(currentDynamicKey1,"",Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
+                     JSONObject del=cdv.getJSONObject("delta");
+                     int tdc=del.getInt("confirmed");
+                     int tdr=del.getInt("recovered");
+                     int tdd=del.getInt("deceased");
+                     dc+=tdc;
+                     dr+=tdr;
+                     dd+=tdd;
 
+                     dist.add(new info_card(currentDynamicKey1,"",Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
+                     detacard.put(currentDynamicKey1,new info_card(currentDynamicKey1,tdc,tdr,tdd,Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
 
                     disArray.add(currentDynamicKey1+ " -> " + val);
                     statesum+=Integer.valueOf(val);
@@ -194,6 +208,7 @@ public class QueryUtils {
 
                 }
                 all.put(currentDynamicKey,dist);
+                detacard.put(currentDynamicKey,new info_card(currentDynamicKey,dc,dr,dd,Integer.valueOf(total1),Integer.valueOf(active),Integer.valueOf(recovered),Integer.valueOf(deaths)));
 
                 earthquakes.add(currentDynamicKey+ " -> " + statesum);
                 state.add(new info_card(currentDynamicKey,"",Integer.valueOf(total1),Integer.valueOf(active),Integer.valueOf(recovered),Integer.valueOf(deaths)));

@@ -2,6 +2,7 @@ package com.example.android.covid19;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,7 +27,7 @@ public class PredictionActivity extends AppCompatActivity {
     public static final String LOG_TAG = MainActivity.class.getName();
     private static final String USGS_REQUEST_URL =
             "https://api.covid19india.org/data.json";
-    TextView tv,xc,yc;
+    TextView tv,xc,yc,place;
     GraphView graph;
     LineGraphSeries<DataPoint> series,series1;
     SeekBar seekBar;
@@ -38,6 +39,8 @@ public class PredictionActivity extends AppCompatActivity {
         setContentView(R.layout.activity_prediction);
 
 
+
+        place=(TextView)findViewById(R.id.place);
         ps= new PointsGraphSeries<DataPoint>();
         ps.setColor(R.color.RED);
         ps.setSize(5);
@@ -47,7 +50,10 @@ public class PredictionActivity extends AppCompatActivity {
 
         seekBar = (SeekBar) findViewById(R.id.seekBar);
 
-        seekBar.setMax(130);
+
+        String cardclicked = getIntent().getData().toString();
+        place.setText(cardclicked);
+
 
         graph = (GraphView) findViewById(R.id.graph);
         series = new LineGraphSeries<DataPoint>(new DataPoint[] {
@@ -84,10 +90,12 @@ public class PredictionActivity extends AppCompatActivity {
                 // textView.setText(data.toString());
                 tv.setText("Total cases : "+ QueryUtils1.total + " Rows - " + data.size());
 
+
+                seekBar.setMax(data.size()-1);
                 //ArrayList<Integer> y = new ArrayList<>(data);
                 for(int i=1;i<data.size();i++)
                 {
-                    series.appendData(new DataPoint(i,data.get(i)),true,130);
+                    series.appendData(new DataPoint(i,QueryUtils1.dc.get(i)),true,130);
 
                 }
 
@@ -95,10 +103,7 @@ public class PredictionActivity extends AppCompatActivity {
 
                 graph.addSeries(series);
 
-                for(int i=1;i<130;i++)
-                {
-                    series1.appendData(new DataPoint(i,Math.exp((i-50)/4)),true,130);
-                }
+
 
 
                 series1.setColor(R.color.colorAccent);
@@ -117,8 +122,8 @@ public class PredictionActivity extends AppCompatActivity {
 //                graph.getViewport().setScalableY(true); // enables vertical zooming and scrolling
 
 
-                graph.getViewport().setMaxX(130);
-                graph.getViewport().setMaxY(250000);
+                graph.getViewport().setMaxX(data.size()+1);
+                graph.getViewport().setMaxY(15000);
 
                 DataPoint p = series.findDataPointAtX(10);
                 series.findDataPointAtX(0);
@@ -129,7 +134,7 @@ public class PredictionActivity extends AppCompatActivity {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                         xc.setText("X : " + progress);
-                        yc.setText("Y : " + data.get(progress));
+                        yc.setText("Y : " + QueryUtils1.dc.get(progress));
 
 //
 //

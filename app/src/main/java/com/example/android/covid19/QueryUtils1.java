@@ -25,7 +25,7 @@ public class QueryUtils1 {
 
     private static final String LOG_TAG = QueryUtils1.class.getSimpleName();
 
-    static List<Integer> timeseries;
+    static List<Integer> timeseries,tc,td,tr,dc,dd,dr;
     static int total,active,deaths,recovered;
 
 
@@ -123,6 +123,16 @@ public class QueryUtils1 {
 
         // Create an empty ArrayList that we can start adding earthquakes to
         List<Integer> earthquakes = new ArrayList<Integer>();
+        tc=new ArrayList<Integer>();
+        dc=new ArrayList<Integer>();
+        td=new ArrayList<Integer>();
+        dd=new ArrayList<Integer>();
+        tr=new ArrayList<Integer>();
+        dr=new ArrayList<Integer>();
+
+
+
+
 
         // Try to parse the SAMPLE_JSON_RESPONSE. If there's a problem with the way the JSON
         // is formatted, a JSONException exception object will be thrown.
@@ -138,6 +148,14 @@ public class QueryUtils1 {
             {
                 JSONObject jo = timeseries.getJSONObject(i);
                 Integer a = jo.getInt("totalconfirmed");
+                tc.add(jo.getInt("totalconfirmed"));
+                dc.add(jo.getInt("dailyconfirmed"));
+                tr.add(jo.getInt("totalrecovered"));
+                dr.add(jo.getInt("dailyrecovered"));
+                td.add(jo.getInt("totaldeceased"));
+                dd.add(jo.getInt("dailydeceased"));
+
+
                 earthquakes.add(a);
             }
 

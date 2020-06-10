@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                         Intent intent=new Intent(MainActivity.this,PredictionActivity.class);
                         info_card infoCard=(info_card)parent.getItemAtPosition(position);
-
+                        intent.setData(Uri.parse(infoCard.getLocation_name()));
                         startActivity(intent);
                     }
                 });
