@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 final Location_card_addapter location_card_addapter=new Location_card_addapter(MainActivity.this,num);
 
                // ArrayAdapter<String> adapter = new ArrayAdapter<String>(getBaseContext(),android.R.layout.simple_list_item_1,distictsinstate);
-                Toast.makeText(parent.getContext(), "Selected: " + tutorialsName + " " + QueryUtils.all.get(tutorialsName).size() ,Toast.LENGTH_LONG).show();
+                //Toast.makeText(parent.getContext(), "Selected: " + tutorialsName + " " + QueryUtils.all.get(tutorialsName).size() ,Toast.LENGTH_LONG).show();
                 listView.setAdapter(location_card_addapter);
 
                 listView.setTextFilterEnabled(true);

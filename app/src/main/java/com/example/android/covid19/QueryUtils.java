@@ -33,7 +33,7 @@ public class QueryUtils {
     static HashMap<String,ArrayList<info_card>> all=new HashMap<>();
 
     static HashMap<String,info_card> detacard = new HashMap<>();
-    public static int dc,dr,dd;
+    public static int dc,dr,dd,ft,fa,fr,fd,fdt,fdr,fdd;
 
    // public String val;
 
@@ -150,6 +150,13 @@ public class QueryUtils {
             //JSONObject jsonObject1 = jsonObject.getJSONObject("rates");
 
 
+            ft=0;
+            fa=0;
+            fr=0;
+            fd=0;
+            fdt=0;
+            fdr=0;
+            fdd=0;
             Iterator keys = jsonObject1.keys();
 
             ArrayList<info_card> state=new ArrayList<info_card>();
@@ -207,6 +214,13 @@ public class QueryUtils {
 
 
                 }
+                ft+=total1;
+                fa+=active;
+                fr+=recovered;
+                fd+=deaths;
+                fdt+=dc;
+                fdr+=dr;
+                fdd+=dd;
                 all.put(currentDynamicKey,dist);
                 detacard.put(currentDynamicKey,new info_card(currentDynamicKey,dc,dr,dd,Integer.valueOf(total1),Integer.valueOf(active),Integer.valueOf(recovered),Integer.valueOf(deaths)));
 
@@ -219,6 +233,8 @@ public class QueryUtils {
             }
 
             all.put("India",state);
+            detacard.put("India",new info_card("India",fdt,fdr,fdd,ft,fa,fr,fd));
+
 
 //            earthquakes.add(jsonObject1.getString("USD"));
 //            earthquakes.add(jsonObject.toString());
