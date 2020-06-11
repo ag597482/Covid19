@@ -1,5 +1,6 @@
 package com.example.android.covid19;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
@@ -13,6 +14,10 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -20,7 +25,9 @@ import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static java.lang.String.format;
 
@@ -32,6 +39,8 @@ public class PredictionActivity extends AppCompatActivity {
     SeekBar days,factor;
 
     TextView textView,active,deaths,rec,dttt,dtta,dttr,dttd,pred,tday,place;
+
+
 
     int[][] prediction = new int[3][11];
     int minc,maxc;
@@ -52,6 +61,7 @@ public class PredictionActivity extends AppCompatActivity {
         dtta = (TextView)findViewById(R.id.dactive);
         dttr = (TextView)findViewById(R.id.drecovered);
         dttd = (TextView)findViewById(R.id.ddeaths);
+
 
         place=(TextView)findViewById(R.id.place);
 
@@ -169,6 +179,9 @@ public class PredictionActivity extends AppCompatActivity {
 
 
 
+
     }
+
+
 
 }

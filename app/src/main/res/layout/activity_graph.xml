@@ -161,6 +161,16 @@
         android:textSize="20dp"
 
         />
+<TextView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/notice"
+    android:text="Notice"
+    android:gravity="center_horizontal"
+    android:textSize="20sp"
+    android:background="@drawable/sp_style"
+    android:layout_margin="9dp"
+    />
 
 
 </LinearLayout>

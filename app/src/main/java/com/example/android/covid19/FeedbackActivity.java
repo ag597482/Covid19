@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -40,6 +41,9 @@ public class FeedbackActivity extends AppCompatActivity {
                 databaseReference.push().setValue(feedback);
 
                 feedbackmessage.setText("");
+                name.setText("");
+                mobile.setText("");
+                Toast.makeText(FeedbackActivity.this,"Feedback Recorded..!",Toast.LENGTH_SHORT).show();
             }
         });
 

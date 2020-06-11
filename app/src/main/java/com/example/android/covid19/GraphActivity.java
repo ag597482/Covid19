@@ -1,14 +1,20 @@
 package com.example.android.covid19;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -16,7 +22,9 @@ import com.jjoe64.graphview.series.PointsGraphSeries;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class GraphActivity extends AppCompatActivity {
 
@@ -26,6 +34,12 @@ public class GraphActivity extends AppCompatActivity {
             "https://api.covid19india.org/data.json";
 
     TextView tv,xc,yc,delc,delr,deld,totc,totr,totd;
+
+    TextView notice1;
+    FirebaseRemoteConfig firebaseRemoteConfig;
+
+    public static final String TEXTE="noTICE";
+    public static final String MSG="notice";
 
     GraphView graph;
     LineGraphSeries<DataPoint> series,series1,sdelc,sdelr,sdeld,stotc,stotr,stotd;
@@ -39,6 +53,10 @@ public class GraphActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+
+
+        firebaseRemoteConfig=FirebaseRemoteConfig.getInstance();
+        notice1=findViewById(R.id.notice);
 
 
         ps= new PointsGraphSeries<DataPoint>();
@@ -182,11 +200,51 @@ public class GraphActivity extends AppCompatActivity {
 
             }
         });
+
+
+        FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
+                .setDeveloperModeEnabled(BuildConfig.DEBUG)
+                .build();
+        firebaseRemoteConfig.setConfigSettingsAsync(configSettings);
+
+        Map<String,Object> defaultconfigmap = new HashMap<>();
+        defaultconfigmap.put(MSG,TEXTE);
+
+        firebaseRemoteConfig.setDefaults(defaultconfigmap);
+        fetchconfig();
         
         
-        
-        
-        
+    }
+    private void fetchconfig() {
+
+        long cacheExpiration = 60; // 1 hour in seconds
+        // If developer mode is enabled reduce cacheExpiration to 0 so that each fetch goes to the
+        // server. This should not be used in release builds.
+        if (firebaseRemoteConfig.getInfo().getConfigSettings().isDeveloperModeEnabled()) {
+            cacheExpiration = 0;
+        }
+        firebaseRemoteConfig.fetch(cacheExpiration)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        // Make the fetched config available
+                        // via FirebaseRemoteConfig get<type> calls, e.g., getLong, getString.
+                        firebaseRemoteConfig.activateFetched();
+
+                        String tex = firebaseRemoteConfig.getString(MSG);
+                        notice1.setText(tex);
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        // An error occurred when fetching the config.
+                        Log.w("ERROR", "Error fetching config", e);
+                        notice1.setText(MSG);
+
+                    }
+                });
     }
 
     private class EarthquakeAsyncTask extends AsyncTask<String, Void, List<Integer>> {
