@@ -31,6 +31,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 
 /**
@@ -41,6 +42,9 @@ public final class Utils {
 
     /** Tag for the log messages */
     public static final String LOG_TAG = Utils.class.getSimpleName();
+
+    static HashMap<String,ArrayList<info_card>> state_district_info=new HashMap<>();
+    static ArrayList<info_card> india_info=new ArrayList<info_card>();
 
     /**
      * Query the USGS dataset and return an {@link ArrayList<info_card>} object to represent a single earthquake.
@@ -59,7 +63,6 @@ public final class Utils {
         // Extract relevant fields from the JSON response and create an {@link Event} object
         ArrayList<info_card> earthquake = extractFeatureFromJson(jsonResponse);
 
-//         Return the {@link Event}
         return earthquake;
     }
 
@@ -80,11 +83,9 @@ public final class Utils {
     private static String makeHttpRequest(URL url) throws IOException {
         String jsonResponse = "";
 
-        // If the URL is null, then return early.
         if (url == null) {
             return jsonResponse;
         }
-
         HttpURLConnection urlConnection = null;
         InputStream inputStream = null;
         try {
@@ -136,15 +137,19 @@ public final class Utils {
 
     private static ArrayList<info_card> extractFeatureFromJson(String earthquakeJSON) {
         // If the JSON string is empty or null, then return early.
-        if(MainActivity.spinner_location=="India") {
-            ArrayList<info_card> location_card_info = india_info_api(earthquakeJSON);
-            return location_card_info;
-        }
-        else
-        {
-            ArrayList<info_card> location_card_info = state_info_api(earthquakeJSON);
-            return location_card_info;
-        }
+
+        ArrayList<info_card> location_card_info = india_info_api(earthquakeJSON);
+        return location_card_info;
+
+//        if(MainActivity.spinner_location=="India") {
+//            ArrayList<info_card> location_card_info = india_info_api(earthquakeJSON);
+//            return location_card_info;
+//        }
+//        else
+//        {
+//            ArrayList<info_card> location_card_info = state_info_api(earthquakeJSON);
+//            return location_card_info;
+//        }
     }
 
 
@@ -152,6 +157,8 @@ public final class Utils {
     public static ArrayList<info_card> india_info_api(String earthquakeJSON)
     {
         ArrayList<info_card> location_card_info =new ArrayList<info_card>();
+        ArrayList<info_card> dist_info =new ArrayList<info_card>();
+        ArrayList<info_card> dist_temp =new ArrayList<info_card>();
         if (TextUtils.isEmpty(earthquakeJSON)) {
 
             return location_card_info;
@@ -164,43 +171,60 @@ public final class Utils {
             Iterator keys = jsonObject1.keys();
             while(keys.hasNext()) {
                 // loop to get the dynamic key
-                String currentDynamicKey = (String)keys.next();
+                String state_name = (String)keys.next();
 
                 // get the value of the dynamic key
-                JSONObject currentDynamicValue = jsonObject1.getJSONObject(currentDynamicKey);
-                JSONObject jsonObject = currentDynamicValue.getJSONObject("districtData");
-                Iterator keys1 = jsonObject.keys();
-                String val = null;
-                String act=null;
-                String det=null;
-                String rec=null;
-                int active=0;
-                int deaths=0;
-                int recovered=0;
-                int statesum = 0;
+                JSONObject state_json = jsonObject1.getJSONObject(state_name);
+                JSONObject district_json = state_json.getJSONObject("districtData");
+                Iterator keys1 = district_json.keys();
+                int state_tc=0;
+                int state_ac=0;
+                int state_rc=0;
+                int state_dc=0;
+                int state_dtc=0;
+                int state_drc=0;
+                int state_ddc=0;
+
                 while(keys1.hasNext()) {
+                    int dist_tc;
+                    int dist_ac;
+                    int dist_rc;
+                    int dist_dc;
+                    int dist_dtc;
+                    int dist_drc;
+                    int dist_ddc;
+
+                    String district_name = (String)keys1.next();
+
+                    JSONObject cdv = district_json.getJSONObject(district_name);
 
 
-                    String currentDynamicKey1 = (String)keys1.next();
+                    JSONObject detta_json = cdv.getJSONObject("delta");
 
-                    JSONObject cdv = jsonObject.getJSONObject(currentDynamicKey1);
+                    dist_tc= Integer.valueOf(cdv.getString("confirmed"));
+                    dist_ac= Integer.valueOf(cdv.getString("active"));
+                    dist_rc= Integer.valueOf(cdv.getString("recovered"));
+                    dist_dc= Integer.valueOf(cdv.getString("deceased"));
 
-                    val = cdv.getString("confirmed");
-                    act = cdv.getString("active");
-                    rec = cdv.getString("recovered");
-                    det = cdv.getString("deceased");
+                    dist_dtc= Integer.valueOf(detta_json.getString("confirmed"));
+                    dist_drc= Integer.valueOf(detta_json.getString("recovered"));
+                    dist_ddc= Integer.valueOf(detta_json.getString("deceased"));
 
+                    state_tc+=dist_tc;
+                    state_ac+=dist_ac;
+                    state_rc+=dist_rc;
+                    state_dc+=dist_dc;
 
-                    statesum+=Integer.valueOf(val);
-                    total1 = total1 + Integer.valueOf(val);
-                    active+=Integer.valueOf(act);
-                    deaths+=Integer.valueOf(det);
-                    recovered+=Integer.valueOf(rec);
+                    state_ddc+=dist_ddc;
+                    state_drc+=dist_drc;
+                    state_dtc+=dist_dtc;
 
-
+                    dist_info.add(new info_card(district_name,state_name,dist_tc,dist_rc,dist_dc,dist_ac,dist_dtc,dist_drc,dist_ddc));
                 }
-
-                location_card_info.add(new info_card(currentDynamicKey, MainActivity.spinner_location,active,deaths,recovered,statesum));
+                dist_temp=dist_info;
+                state_district_info.put(state_name,dist_temp);
+                location_card_info.add(new info_card(state_name, "India",state_tc,state_ac,state_rc,state_dc));
+                india_info.add(new info_card(state_name, "India",state_tc,state_rc,state_dc,state_ac,state_dtc,state_drc,state_ddc));
 
             }
         } catch (JSONException e) {
@@ -212,61 +236,58 @@ public final class Utils {
 
     }
 
-    public static ArrayList<info_card> state_info_api(String earthquakeJSON)
-    {
-        ArrayList<info_card> location_card_info =new ArrayList<info_card>();
-        if (TextUtils.isEmpty(earthquakeJSON)) {
-
-            return location_card_info;
-        }
-
-        int total1=0;
-        try {
-            JSONObject jsonObject1=new JSONObject(earthquakeJSON);
-            Iterator keys = jsonObject1.keys();
-                    JSONObject currentDynamicValue = jsonObject1.getJSONObject(MainActivity.spinner_location);
-                    JSONObject jsonObject = currentDynamicValue.getJSONObject("districtData");
-                    Iterator keys1 = jsonObject.keys();
-                    String val = null;
-                    String act = null;
-                    String det = null;
-                    String rec = null;
-                    int active = 0;
-                    int deaths = 0;
-                    int recovered = 0;
-                    int statesum = 0;
-                    while (keys1.hasNext()) {
-
-
-                        String district_name = (String) keys1.next();
-
-                        JSONObject cdv = jsonObject.getJSONObject(district_name);
-
-                        val = cdv.getString("confirmed");
-                        act = cdv.getString("active");
-                        rec = cdv.getString("recovered");
-                        det = cdv.getString("deceased");
-
-
-                        statesum = Integer.valueOf(val);
-                        total1 = Integer.valueOf(val);
-                        active = Integer.valueOf(act);
-                        deaths = Integer.valueOf(det);
-                        recovered = Integer.valueOf(rec);
-
-
-                        location_card_info.add(new info_card(district_name, MainActivity.spinner_location, active, deaths, recovered, statesum));
-
-
-                }
-        } catch (JSONException e) {
-
-            location_card_info.add(new info_card("state name", MainActivity.spinner_location,1,2,3,4));
-            Log.e(LOG_TAG, "Problem parsing the earthquake JSON results", e);
-        }
-        return location_card_info;
-
-    }
+//    public static ArrayList<info_card> state_info_api(String earthquakeJSON)
+//    {
+//        ArrayList<info_card> location_card_info =new ArrayList<info_card>();
+//        if (TextUtils.isEmpty(earthquakeJSON)) {
+//
+//            return location_card_info;
+//        }
+//
+//        int total1=0;
+//        try {
+//            JSONObject jsonObject1=new JSONObject(earthquakeJSON);
+//            Iterator keys = jsonObject1.keys();
+//                    JSONObject currentDynamicValue = jsonObject1.getJSONObject(MainActivity.spinner_location);
+//                    JSONObject jsonObject = currentDynamicValue.getJSONObject("districtData");
+//                    Iterator keys1 = jsonObject.keys();
+//                    String val = null;
+//                    String act = null;
+//                    String det = null;
+//                    String rec = null;
+//                    int active = 0;
+//                    int deaths = 0;
+//                    int recovered = 0;
+//                    int statesum = 0;
+//                    while (keys1.hasNext()) {
+//
+//
+//                        String district_name = (String) keys1.next();
+//
+//                        JSONObject cdv = jsonObject.getJSONObject(district_name);
+//
+//                        val = cdv.getString("confirmed");
+//                        act = cdv.getString("active");
+//                        rec = cdv.getString("recovered");
+//                        det = cdv.getString("deceased");
+//
+//
+//                        statesum = Integer.valueOf(val);
+//                        total1 = Integer.valueOf(val);
+//                        active = Integer.valueOf(act);
+//                        deaths = Integer.valueOf(det);
+//                        recovered = Integer.valueOf(rec);
+//
+//
+//                        location_card_info.add(new info_card(district_name, MainActivity.spinner_location, active, deaths, recovered, statesum));
+//                }
+//        } catch (JSONException e) {
+//
+//            Log.e(LOG_TAG, "Problem parsing the earthquake JSON results", e);
+//        }
+//        return location_card_info;
+//
+//    }
 
 
 

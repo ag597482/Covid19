@@ -5,7 +5,6 @@
     <string name="Distict">District-Wise</string>
 
 
-
     <!-- Header that goes above the title of the earthquake event [CHAR LIMIT=50] -->
     <string name="header_event">Event</string>
 

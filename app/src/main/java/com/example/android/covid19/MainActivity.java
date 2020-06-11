@@ -2,38 +2,25 @@ package com.example.android.covid19;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Collection;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     public static String spinner_location;
+
+    public ArrayList<info_card> global_info;
 
     private static final String USGS_REQUEST_URL =
             "https://api.covid19india.org/state_district_wise.json";
@@ -52,23 +39,37 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         for(int i=0;i<state.length;i++)
         statelist.add(state[i]);
 
-        Spinner location_spinner = (Spinner) findViewById(R.id.location);
+        EarthquakeAsyncTask task = new EarthquakeAsyncTask();
+        task.execute(USGS_REQUEST_URL);
+        Spinner location_spinner = (Spinner) findViewById(R.id.location_name);
 
         location_spinner.setOnItemSelectedListener(this );
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1, statelist);
 
         location_spinner.setAdapter(adapter);
+
+
+        //intend to prediction activity
+        ListView listView = (ListView) findViewById(R.id.list);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=new Intent(MainActivity.this,PredictionActivity.class);
+                info_card infoCard=(info_card)parent.getItemAtPosition(position);
+                intent.setData(Uri.parse(infoCard.getLocation_name()));
+                startActivity(intent);
+            }
+        });
     }
 
-
+// spinner
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         spinner_location = parent.getItemAtPosition(position).toString();
         ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
             progressBar.setVisibility(View.VISIBLE);
-            EarthquakeAsyncTask task = new EarthquakeAsyncTask();
-            task.execute(USGS_REQUEST_URL);
+            Update_location_card();
     }
 
     @Override
@@ -76,44 +77,92 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
-
+// sum for total in big circle
     public void total_sum(ArrayList<info_card>arr)
     {
         TextView total_cases=(TextView) findViewById(R.id.total_cases);
         TextView total_recovery=(TextView) findViewById(R.id.total_recovery);
         TextView total_death=(TextView) findViewById(R.id.total_death);
+        TextView delta_active=(TextView) findViewById(R.id.one_day_active);
+        TextView delta_recovery=(TextView) findViewById(R.id.one_day_recovery);
+        TextView delta_death=(TextView) findViewById(R.id.one_day_death);
+        TextView delta_total=(TextView) findViewById(R.id.one_day_cases);
 
         TextView total_active=(TextView) findViewById(R.id.total_active);
-        int tc=0,tr=0,td=0,ta=0;
+        int tc=0,tr=0,td=0,ta=0,dtc=0,dtr=0,dta=0,dtd=0;
         for(int i=0;i<arr.size();i++)
         {
             tc=tc+arr.get(i).getLocation_total_cases();
             tr=tr+arr.get(i).getLocation_recovery();
             td=td+arr.get(i).getLocation_death();
             ta=ta+arr.get(i).getLocation_active();
+            dtc=dtc+arr.get(i).getDela_confirmed();
+            dtr+=arr.get(i).getDelta_recover();
+            dtd=dtd+arr.get(i).getDelta_deaths();
+            dta=dta+arr.get(i).getDelta_active();
         }
         total_cases.setText(String.valueOf(tc));
         total_recovery.setText(String.valueOf(tr));
         total_death.setText(String.valueOf(td));
         total_active.setText(String.valueOf(ta));
-
+        delta_active.setText(String.valueOf(dta));
+        delta_death.setText(String.valueOf(dtd));
+        delta_total.setText(String.valueOf(dtc));
+        delta_recovery.setText(String.valueOf(dtr));
     }
 
-    public void Update_location_card(ArrayList<info_card> git)
+    public void Update_location_card()
     {
         ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
-        total_sum(git);
-        Location_card_addapter flavorAdapter = new Location_card_addapter(this, git);
-
+        Location_card_addapter flavorAdapter;
+        if(spinner_location!="India")
+        {flavorAdapter = new Location_card_addapter(this, Utils.state_district_info.get(spinner_location));
+        total_sum(Utils.state_district_info.get(spinner_location));}
+        else
+        {flavorAdapter = new Location_card_addapter(this, Utils.india_info);total_sum(Utils.india_info);}
+        if(flavorAdapter==null)
+        {
+            flavorAdapter=new Location_card_addapter(this, Utils.india_info);total_sum(Utils.india_info);
+        }
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(flavorAdapter);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
-    }
+
+    //search_bar
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu_edit,menu);
+//        MenuItem item=findViewById(R.id.search);
+//        SearchView searchView =(SearchView) item.getActionView();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                ArrayList<info_card> results= new ArrayList<info_card>();
+//
+//                for(int i=0;i<global_info.size();i++)
+//                {
+//                    if(global_info.get(i).getLocation_name().toLowerCase().contains(newText.toLowerCase()))
+//                    {
+//                        results.add(global_info.get(i));
+//                    }
+//                }
+//                Location_card_addapter resadapter=new Location_card_addapter(MainActivity.this,results);
+//                ListView listView = (ListView) findViewById(R.id.list);
+//                listView.setAdapter(resadapter);
+//                return true;
+//            }
+//        });
+//
+//        return true;
+//    }
 
     private class EarthquakeAsyncTask extends AsyncTask<String, Void, ArrayList<info_card> > {
 
@@ -122,18 +171,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             if (urls.length < 1 || urls[0] == null) {
                 return null;
             }
-
             ArrayList<info_card>  result = Utils.fetchEarthquakeData(urls[0]);
             return result;
         }
 
 
         protected void onPostExecute(ArrayList<info_card>  result) {
-            // If there is no result, do nothing.
             if (result == null) {
                 return;
             }
-            Update_location_card(result);
+            global_info=result;
+            Update_location_card();
         }
     }
 }

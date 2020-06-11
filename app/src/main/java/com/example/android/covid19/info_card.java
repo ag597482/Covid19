@@ -8,10 +8,13 @@ public class info_card {
     private int location_active;
     private int location_recovery;
     private int location_death;
+    private int dela_confirmed;
+    private int delta_recover;
+    private int delta_deaths;
 
     private int mImageResourceId;
 
-    public info_card(String vlocation_name, String vlocation_detail,int vlocation_active,int vlocation_death,int vlocation_recovery,int vlocation_total_cases)
+    public info_card(String vlocation_name, String vlocation_detail, int vlocation_total_cases, int vlocation_active, int vlocation_recovery,int vlocation_death)
     {
         location_name = vlocation_name;
         location_detail = vlocation_detail;
@@ -21,6 +24,19 @@ public class info_card {
         location_total_cases=vlocation_total_cases;
     }
 
+    public info_card(String name,String vlocation_detail,int c,int r,int d,int a,int dt,int dr,int dd)
+    {
+        location_name=name;
+        location_detail=vlocation_detail;
+        dela_confirmed=dt;
+        delta_recover=dr;
+        delta_deaths=dd;
+        location_active=a;
+        location_death=d;
+        location_recovery=r;
+        location_total_cases=c;
+
+    }
     public String getLocation_name() {
         return location_name;
     }
@@ -41,5 +57,12 @@ public class info_card {
     public int getLocation_death() {
         return location_death;
     }
+
+    public int getDela_confirmed(){
+        return dela_confirmed;
+    }
+    public int getDelta_recover(){return delta_recover; }
+    public int getDelta_deaths(){ return delta_deaths; }
+    public int getDelta_active(){ return dela_confirmed-delta_recover-delta_deaths; }
 
 }
