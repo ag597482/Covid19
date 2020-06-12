@@ -17,9 +17,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    public static String spinner_location;
+    public static String spinner_location,sort_by;
 
     public ArrayList<info_card> global_info;
 
@@ -44,14 +45,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         //spinner location
         Spinner location_spinner = (Spinner) findViewById(R.id.location_name);
-        location_spinner.setOnItemSelectedListener(this );
+        location_spinner.setOnItemSelectedListener(new CountriesSpinnerClass() );
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1, statelist);
         location_spinner.setAdapter(adapter);
 
         //spinner sort
         Spinner sort_list = (Spinner) findViewById(R.id.sort_list);
-//        sort_list.setOnItemSelectedListener(this );
+        sort_list.setOnItemSelectedListener(this);
         ArrayAdapter<String> sort_list_adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1, sort_str);
         sort_list.setAdapter(sort_list_adapter);
@@ -70,13 +71,22 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         });
     }
 
-// spinner
     @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+         sort_by= parent.getItemAtPosition(position).toString();
+        Update_location_card();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) { }
+
+    class CountriesSpinnerClass implements AdapterView.OnItemSelectedListener
+    {
+        @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         spinner_location = parent.getItemAtPosition(position).toString();
         ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
             progressBar.setVisibility(View.VISIBLE);
-            Toast.makeText(this,spinner_location,Toast.LENGTH_LONG);
         Update_location_card();
     }
 
@@ -84,6 +94,23 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+    }
+
+
+// spinner
+//    @Override
+//    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//        spinner_location = parent.getItemAtPosition(position).toString();
+//        ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
+//            progressBar.setVisibility(View.VISIBLE);
+//            Toast.makeText(this,spinner_location,Toast.LENGTH_LONG);
+//        Update_location_card();
+//    }
+//
+//    @Override
+//    public void onNothingSelected(AdapterView<?> parent) {
+//
+//    }
 
 // sum for total in big circle
     public void total_sum(ArrayList<info_card>arr)
@@ -126,11 +153,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         Location_card_addapter flavorAdapter;
+        ArrayList<info_card> required_arraylist;
         if(spinner_location.equals("India"))
-        {flavorAdapter = new Location_card_addapter(this, Utils.india_info);total_sum(Utils.india_info);}
+        {
+             required_arraylist=new ArrayList<info_card>(Utils.india_info);
+            Collections.sort(required_arraylist, new CustomComparator());
+        }
         else
-        {flavorAdapter = new Location_card_addapter(this, Utils.state_district_info.get(spinner_location));
-            total_sum(Utils.state_district_info.get(spinner_location));}
+        {
+            required_arraylist =new ArrayList<info_card>(Utils.state_district_info.get(spinner_location));
+            Collections.sort(required_arraylist, new CustomComparator());
+        }
+        flavorAdapter = new Location_card_addapter(this, required_arraylist);
+        total_sum(required_arraylist);
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(flavorAdapter);
     }
