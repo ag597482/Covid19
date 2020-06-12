@@ -17,6 +17,7 @@ package com.example.android.covid19;
 
 import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,6 +32,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -42,6 +44,8 @@ public final class Utils {
 
     /** Tag for the log messages */
     public static final String LOG_TAG = Utils.class.getSimpleName();
+
+
 
     static HashMap<String,ArrayList<info_card>> state_district_info=new HashMap<>();
     static ArrayList<info_card> india_info=new ArrayList<info_card>();
@@ -140,16 +144,6 @@ public final class Utils {
 
         ArrayList<info_card> location_card_info = india_info_api(earthquakeJSON);
         return location_card_info;
-
-//        if(MainActivity.spinner_location=="India") {
-//            ArrayList<info_card> location_card_info = india_info_api(earthquakeJSON);
-//            return location_card_info;
-//        }
-//        else
-//        {
-//            ArrayList<info_card> location_card_info = state_info_api(earthquakeJSON);
-//            return location_card_info;
-//        }
     }
 
 
@@ -157,7 +151,6 @@ public final class Utils {
     public static ArrayList<info_card> india_info_api(String earthquakeJSON)
     {
         ArrayList<info_card> location_card_info =new ArrayList<info_card>();
-        ArrayList<info_card> dist_info =new ArrayList<info_card>();
         ArrayList<info_card> dist_temp =new ArrayList<info_card>();
         if (TextUtils.isEmpty(earthquakeJSON)) {
 
@@ -170,6 +163,7 @@ public final class Utils {
 
             Iterator keys = jsonObject1.keys();
             while(keys.hasNext()) {
+                 ArrayList<info_card> dist_info =new ArrayList<info_card>();
                 // loop to get the dynamic key
                 String state_name = (String)keys.next();
 
@@ -221,12 +215,13 @@ public final class Utils {
 
                     dist_info.add(new info_card(district_name,state_name,dist_tc,dist_rc,dist_dc,dist_ac,dist_dtc,dist_drc,dist_ddc));
                 }
-                dist_temp=dist_info;
-                state_district_info.put(state_name,dist_temp);
+                Collections.sort(dist_info, new CustomComparator());
+                state_district_info.put(state_name,dist_info);
                 location_card_info.add(new info_card(state_name, "India",state_tc,state_ac,state_rc,state_dc));
                 india_info.add(new info_card(state_name, "India",state_tc,state_rc,state_dc,state_ac,state_dtc,state_drc,state_ddc));
 
             }
+            Collections.sort(india_info, new CustomComparator());
         } catch (JSONException e) {
 
             location_card_info.add(new info_card("state name", MainActivity.spinner_location,1,2,3,4));

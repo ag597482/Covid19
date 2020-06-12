@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -27,27 +28,33 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     String [] state= {"India","Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttarakhand", "Uttar Pradesh", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh",
             "Dadra and Nagar Haveli", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Lakshadweep", "Puducherry"} ;
-
+    String [] sort_str={"Alphabetical","Total Case","Recovery Cases","Death Cases","Active Cases","Recovery Rate","Death Rate"};
 
     public static final String LOG_TAG = MainActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.v(LOG_TAG, "just under creat");
         super.onCreate(savedInstanceState);
+        EarthquakeAsyncTask task = new EarthquakeAsyncTask();
+        task.execute(USGS_REQUEST_URL);
         setContentView(R.layout.activity_main);
         ArrayList<String> statelist = new ArrayList<>();
         for(int i=0;i<state.length;i++)
         statelist.add(state[i]);
 
-        EarthquakeAsyncTask task = new EarthquakeAsyncTask();
-        task.execute(USGS_REQUEST_URL);
+        //spinner location
         Spinner location_spinner = (Spinner) findViewById(R.id.location_name);
-
         location_spinner.setOnItemSelectedListener(this );
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1, statelist);
-
         location_spinner.setAdapter(adapter);
+
+        //spinner sort
+        Spinner sort_list = (Spinner) findViewById(R.id.sort_list);
+//        sort_list.setOnItemSelectedListener(this );
+        ArrayAdapter<String> sort_list_adapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_list_item_1, sort_str);
+        sort_list.setAdapter(sort_list_adapter);
 
 
         //intend to prediction activity
@@ -69,7 +76,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinner_location = parent.getItemAtPosition(position).toString();
         ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
             progressBar.setVisibility(View.VISIBLE);
-            Update_location_card();
+            Toast.makeText(this,spinner_location,Toast.LENGTH_LONG);
+        Update_location_card();
     }
 
     @Override
@@ -90,6 +98,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         TextView total_active=(TextView) findViewById(R.id.total_active);
         int tc=0,tr=0,td=0,ta=0,dtc=0,dtr=0,dta=0,dtd=0;
+//        Log.i(LOG_TAG,"Size is "+arr.size());
+//        Log.i(LOG_TAG,"my message "+Utils.state_district_info.get("Jharkhand").size());
         for(int i=0;i<arr.size();i++)
         {
             tc=tc+arr.get(i).getLocation_total_cases();
@@ -116,15 +126,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         Location_card_addapter flavorAdapter;
-        if(spinner_location!="India")
-        {flavorAdapter = new Location_card_addapter(this, Utils.state_district_info.get(spinner_location));
-        total_sum(Utils.state_district_info.get(spinner_location));}
-        else
+        if(spinner_location.equals("India"))
         {flavorAdapter = new Location_card_addapter(this, Utils.india_info);total_sum(Utils.india_info);}
-        if(flavorAdapter==null)
-        {
-            flavorAdapter=new Location_card_addapter(this, Utils.india_info);total_sum(Utils.india_info);
-        }
+        else
+        {flavorAdapter = new Location_card_addapter(this, Utils.state_district_info.get(spinner_location));
+            total_sum(Utils.state_district_info.get(spinner_location));}
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(flavorAdapter);
     }

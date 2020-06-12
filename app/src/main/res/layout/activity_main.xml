@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="#FAF5E2"
+    android:background="@color/background"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -23,11 +23,7 @@
         android:id="@+id/location_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="3dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:gravity="center"
         android:popupBackground="@drawable/rectangular"
         android:spinnerMode="dropdown"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,10 +31,52 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:id="@+id/location_spinner_outer_layer"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/transparent_rectengle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/sort_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="210dp"
+        android:layout_marginLeft="210dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:popupBackground="@drawable/rectangular"
+        android:spinnerMode="dropdown"
+        app:layout_constraintBottom_toTopOf="@+id/list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <TextView
+        android:id="@+id/sort_list_cover"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:layout_marginStart="218dp"
+        android:layout_marginLeft="218dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/transparent_rectengle"
+        app:layout_constraintBottom_toBottomOf="@+id/sort_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sort_list" />
+
+    <TextView
         android:id="@+id/total_cases"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:layout_marginTop="3dp"
         android:background="@drawable/rounded_textview"
         android:gravity="center"
         android:text="1000000"
@@ -70,7 +108,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:background="#01A590"
+        android:background="@color/Recover"
         android:orientation="vertical"
         app:layout_constraintEnd_toStartOf="@+id/constraintLayout2"
         app:layout_constraintStart_toStartOf="parent"
@@ -132,7 +170,7 @@
         android:layout_width="120dp"
         android:layout_height="65dp"
         android:layout_marginTop="8dp"
-        android:background="#ba224d"
+        android:background="@color/colorPrimaryDark"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -220,7 +258,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="9dp"
         android:layout_marginRight="9dp"
-        android:background="#0277BD"
+        android:background="@color/Active"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/constraintLayout2"
@@ -281,9 +319,21 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="285dp"
+        android:layout_marginTop="300dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/Sort_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sorted By"
+        android:textColor="#150909"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/sort_list"
+        app:layout_constraintEnd_toStartOf="@+id/sort_list"
+        app:layout_constraintTop_toTopOf="@+id/sort_list" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
