@@ -11,13 +11,16 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.FilterQueryProvider;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import androidx.appcompat.widget.SearchView;
 import android.widget.Spinner;
@@ -29,10 +32,11 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
 
     public static final String LOG_TAG = MainActivity.class.getName();
     private static final String USGS_REQUEST_URL =
@@ -42,6 +46,10 @@ public class MainActivity extends AppCompatActivity {
     Spinner spinner;
     ListView listView;
     SearchView searchView;
+    ImageView sort_list;
+
+    String current_state;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -60,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
         listView = (ListView)findViewById(R.id.list);
         searchView =(SearchView)findViewById(R.id.serch);
 
+        current_state="India";
+
 
 
 
@@ -68,10 +78,36 @@ public class MainActivity extends AppCompatActivity {
         EarthquakeAsyncTask task = new EarthquakeAsyncTask();
         task.execute(USGS_REQUEST_URL);
 
+
+        //spinner sort
+        sort_list = findViewById(R.id.sort_list);
+
+        sort_list.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    PopupMenu popup = new PopupMenu(MainActivity.this , v);
+                    popup.setOnMenuItemClickListener(MainActivity.this);
+                    MenuInflater inflater = popup.getMenuInflater();
+                    inflater.inflate(R.menu.sort, popup.getMenu());
+                    popup.show();
+            }
+        });
+
+
+
+//        ArrayAdapter<String> sort_list_adapter = new ArrayAdapter<String>(
+//                this, android.R.layout.simple_list_item_1, sort_str);
+//        sort_list.setAdapter(sort_list_adapter);
+//        sort_list.getDropDownVerticalOffset();
+
+
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 String tutorialsName = parent.getItemAtPosition(position).toString();
+                current_state=tutorialsName;
 
                // ArrayList<String> distictsinstate = new ArrayList<String>(QueryUtils.disArray);
 
@@ -185,6 +221,96 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.alpha:
+                update_list("a");
+                return true;
+            case R.id.tot:
+                update_list("b");
+                return true;
+            case R.id.rec:
+                update_list("c");
+                return true;
+            case R.id.det:
+                update_list("d");
+                return true;
+            case R.id.act:
+                update_list("e");
+                return true;
+            case R.id.rrate:
+                update_list("f");
+                return true;
+            case R.id.drate:
+                update_list("g");
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    private void update_list(final String s) {
+        final ArrayList<info_card> num= new ArrayList<info_card>(QueryUtils.all.get(current_state));
+
+        if(current_state.equals("India-Districts"))
+        {
+
+        }
+        else {
+            num.add(0, total_sum(num,current_state));
+        }
+
+        Collections.sort(num, new Comparator<info_card>() {
+            @Override
+            public int compare(info_card o1, info_card o2) {
+                if(s.equals("a"))
+                {
+                    return o2.getLocation_name().compareTo(o2.getLocation_name());
+                }
+                else if(s.equals("b"))
+                {
+                    return Integer.valueOf(o1.getLocation_total_cases()).compareTo(o2.getLocation_total_cases());
+                }
+                else if(s.equals("c"))
+                {
+                    return Integer.valueOf(o1.getLocation_recovery()).compareTo(o2.getLocation_recovery());
+                }
+                else if(s.equals("d"))
+                {
+                    return Integer.valueOf(o1.getLocation_death()).compareTo(o2.getLocation_death());
+                }
+                else if(s.equals("e"))
+                {
+                    return Integer.valueOf(o1.getLocation_active()).compareTo(o2.getLocation_active());
+                }
+                else if(s.equals("f"))
+                {
+                    return Double.valueOf(o1.getrecoveryrate()).compareTo(o2.getrecoveryrate());
+                }
+                else if(s.equals("g"))
+                {
+                    return Double.valueOf(o1.getdeathrate()).compareTo(o2.getdeathrate());
+                }
+                return 0;
+
+            }
+        });
+
+        if(s.equals("a"))
+        {
+        }
+        else
+        {
+            Collections.reverse(num);
+        }
+
+        final Location_card_addapter location_card_addapter=new Location_card_addapter(MainActivity.this,num);
+        listView.setAdapter(location_card_addapter);
+
+
+    }
+
 //    public void Update_location_card(ArrayList<info_card> git)
 //    {
 //        total_sum(git);
@@ -208,6 +334,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+
         @Override
         protected void onPostExecute(List<String> data) {
             if (data != null && !data.isEmpty()) {
@@ -226,6 +353,7 @@ public class MainActivity extends AppCompatActivity {
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
 
                 spinner.setAdapter(arrayAdapter);
+
 
                 progressBar.setVisibility(View.GONE);
             }

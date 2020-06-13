@@ -1,5 +1,9 @@
 package com.example.android.covid19;
 
+import android.content.Intent;
+
+import java.util.Comparator;
+
 public class info_card {
 
     private String location_name;
@@ -63,4 +67,27 @@ public class info_card {
     public int getDelta_recover(){return delta_recover; }
     public int getDelta_deaths(){ return delta_deaths; }
 
+    public double getrecoveryrate(){
+
+        if(location_total_cases==0)
+            return 0;
+        return (double)(location_recovery/location_total_cases);
+
+    }
+
+    public double getdeathrate(){
+
+        if(location_total_cases==0)
+            return 0;
+        return (double)(location_death/location_total_cases);
+
+    }
+
+//    @Override
+//    public int compare(info_card o1, info_card o2) {
+//
+//        return Integer.valueOf(o1.getLocation_total_cases()).compareTo(o2.getLocation_total_cases());
+//
+//
+//    }
 }
