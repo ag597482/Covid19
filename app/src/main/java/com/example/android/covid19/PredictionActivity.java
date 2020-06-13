@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -39,7 +40,7 @@ public class PredictionActivity extends AppCompatActivity {
     SeekBar days,factor;
 
     TextView textView,active,deaths,rec,dttt,dtta,dttr,dttd,pred,tday,place;
-
+    ImageView aro;
 
 
     int[][] prediction = new int[3][11];
@@ -49,6 +50,8 @@ public class PredictionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prediction);
+
+        aro=findViewById(R.id.arrow);
 
 
         textView =(TextView)findViewById(R.id.total);
@@ -159,6 +162,10 @@ public class PredictionActivity extends AppCompatActivity {
 
         active.setText(infoCard.getLocation_active()+ "");
         dtta.setText("" + (infoCard.getDela_confirmed()-infoCard.getDelta_recover()-infoCard.getDelta_deaths()) );
+        if((infoCard.getDela_confirmed()-infoCard.getDelta_recover()-infoCard.getDelta_deaths())<0)
+        {
+            aro.setVisibility(View.INVISIBLE);
+        }
 
         rec.setText(infoCard.getLocation_recovery()+ "");
         dttr.setText("" +infoCard.getDelta_recover());

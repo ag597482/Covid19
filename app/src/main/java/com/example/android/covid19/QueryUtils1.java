@@ -15,8 +15,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class QueryUtils1 {
 
@@ -28,6 +30,7 @@ public class QueryUtils1 {
     static List<Integer> timeseries,tc,td,tr,dc,dd,dr;
     static int total,active,deaths,recovered;
 
+    public static Map<String,Integer> mdt,mdr,mdd,mdtime;
 
    // public String val;
 
@@ -130,6 +133,12 @@ public class QueryUtils1 {
         tr=new ArrayList<Integer>();
         dr=new ArrayList<Integer>();
 
+        mdt=new HashMap<>();
+        mdr=new HashMap<>();
+        mdd=new HashMap<>();
+        mdtime = new HashMap<>();
+
+
 
 
 
@@ -159,9 +168,19 @@ public class QueryUtils1 {
                 earthquakes.add(a);
             }
 
+
             JSONObject tot =statewise.getJSONObject(0);
             total = tot.getInt("confirmed");
             active = tot.getInt("active");
+
+            for(int i=0;i<statewise.length();i++)
+            {
+                JSONObject jo=statewise.getJSONObject(i);
+                mdt.put(jo.getString("state"),jo.getInt("deltaconfirmed"));
+                mdr.put(jo.getString("state"),jo.getInt("deltarecovered"));
+                mdd.put(jo.getString("state"),jo.getInt("deltadeaths"));
+                mdtime.put(jo.getString("state"),jo.getInt("lastupdatedtime"));
+            }
 //
 
 

@@ -43,6 +43,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     public static final String LOG_TAG = MainActivity.class.getName();
     private static final String USGS_REQUEST_URL =
             "https://api.covid19india.org/state_district_wise.json";
+
+    private static final String USGS_REQUEST_URL1 =
+            "https://api.covid19india.org/data.json";
+
     TextView textView,active,deaths,rec;
     ProgressBar progressBar;
     Spinner spinner;
@@ -70,7 +74,6 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         listView = (ListView)findViewById(R.id.list);
         searchView =(SearchView)findViewById(R.id.serch);
 
-        current_state="India";
 
 
 
@@ -80,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         EarthquakeAsyncTask task = new EarthquakeAsyncTask();
         task.execute(USGS_REQUEST_URL);
 
+        // EarthquakeAsyncTask task1 = new EarthquakeAsyncTask();
+       // task1.execute(USGS_REQUEST_URL1);
 
         //spinner sort
         sort_list = findViewById(R.id.sort_list);
@@ -255,17 +260,17 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     }
 
     private void update_list(final String s) {
-        final ArrayList<info_card> num= new ArrayList<info_card>(QueryUtils.all.get(current_state));
+        final ArrayList<info_card> num1= new ArrayList<info_card>(QueryUtils.all.get(current_state));
 
         if(current_state.equals("India-Districts"))
         {
 
         }
         else {
-            num.add(0, total_sum(num,current_state));
+            num1.add(0, total_sum(num1,current_state));
         }
 
-        Collections.sort(num, new Comparator<info_card>() {
+        Collections.sort(num1, new Comparator<info_card>() {
             @Override
             public int compare(info_card o1, info_card o2) {
                 if(s.equals("a"))
@@ -306,10 +311,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         }
         else
         {
-            Collections.reverse(num);
+            Collections.reverse(num1);
         }
 
-        final Location_card_addapter location_card_addapter=new Location_card_addapter(MainActivity.this,num);
+        final Location_card_addapter location_card_addapter=new Location_card_addapter(MainActivity.this,num1);
         listView.setAdapter(location_card_addapter);
 
 
@@ -334,6 +339,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
 
             List<String> result = QueryUtils.fetchEarthquakeData(urls[0]);
+            List<Integer> v=QueryUtils1.fetchEarthquakeData(USGS_REQUEST_URL1);
             return result;
 
         }
