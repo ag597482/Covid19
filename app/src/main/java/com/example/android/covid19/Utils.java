@@ -142,6 +142,9 @@ public final class Utils {
     private static ArrayList<info_card> extractFeatureFromJson(String earthquakeJSON) {
         // If the JSON string is empty or null, then return early.
 
+        india_info.clear();
+        state_district_info.clear();
+
         ArrayList<info_card> location_card_info = india_info_api(earthquakeJSON);
         return location_card_info;
     }
