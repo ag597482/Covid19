@@ -110,6 +110,7 @@ public class GraphActivity extends AppCompatActivity {
                 graph.addSeries(sdelc);
                 plotted=QueryUtils1.dc;
 
+                yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.dc)+1);
 
             }
@@ -128,6 +129,7 @@ public class GraphActivity extends AppCompatActivity {
                 graph.addSeries(stotc);
                 plotted=QueryUtils1.tc;
 
+                yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.tc)+1);
 
             }
@@ -145,6 +147,7 @@ public class GraphActivity extends AppCompatActivity {
                 graph.addSeries(sdelr);
                 plotted=QueryUtils1.dr;
 
+                yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.dr)+1);
 
             }
@@ -161,7 +164,7 @@ public class GraphActivity extends AppCompatActivity {
                 graph.removeAllSeries();
                 graph.addSeries(stotr);
                 plotted=QueryUtils1.tr;
-
+                yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.tr)+1);
 
             }
@@ -179,6 +182,7 @@ public class GraphActivity extends AppCompatActivity {
                 graph.addSeries(sdeld);
                 plotted=QueryUtils1.dd;
 
+                yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.dd)+1);
 
             }
@@ -196,6 +200,7 @@ public class GraphActivity extends AppCompatActivity {
                 graph.addSeries(stotd);
                 plotted=QueryUtils1.td;
 
+                yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.td)+1);
 
             }

@@ -6,8 +6,8 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 tools:context=".MainActivity"
 
-    android:layout_gravity="center"
-    android:gravity="center"
+    android:layout_gravity="center_horizontal"
+  
     android:background="#F4F3EF"
 android:orientation="vertical">
 
@@ -25,14 +25,13 @@ android:orientation="vertical">
             android:background="@drawable/incr"
             android:layout_gravity="center_horizontal"
             android:textAlignment="center"
-            android:contextClickable="true"
-            android:spinnerMode="dialog"
+
 
             />
 
 <LinearLayout
-    android:layout_width="150dp"
-    android:layout_height="150dp"
+    android:layout_width="130dp"
+    android:layout_height="130dp"
     android:layout_margin="5dp"
     android:background="@drawable/rounded_textview"
     android:gravity="center"
@@ -48,7 +47,7 @@ android:orientation="vertical">
         android:layout_gravity="center"
         android:text="Total Cases"
         android:textColor="@android:color/white"
-        android:textSize="16sp"
+        android:textSize="15sp"
         />
     <TextView
         android:id="@+id/total"
@@ -59,7 +58,7 @@ android:orientation="vertical">
         android:layout_gravity="center"
         android:text="------"
         android:textColor="@android:color/white"
-        android:textSize="30sp"
+        android:textSize="26sp"
         />
 
 </LinearLayout>
@@ -69,7 +68,7 @@ android:orientation="vertical">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="10dp">
+        android:layout_margin="5dp">
 
 
         <LinearLayout
@@ -208,15 +207,21 @@ android:orientation="vertical">
      android:orientation="vertical"
      >
 
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:orientation="horizontal"
+         android:layout_margin="5dp">
 <androidx.appcompat.widget.SearchView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:layout_height="35dp"
+    android:layout_weight="1"
     android:id="@+id/serch"
 
     android:layout_marginLeft="8dp"
     android:layout_marginRight="8dp"
     android:title="searchbar"
-    android:textSize="25sp"
+
     android:icon="@android:drawable/ic_menu_search"
     app:showAsAction="ifRoom|collapseActionView"
     app:actionViewClass="androidx.appcompat.widget.SearchView"
@@ -225,6 +230,15 @@ android:orientation="vertical">
     app:queryHint="Search ..."
 
     />
+         <Spinner
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:background="@drawable/s2"
+             android:dropDownWidth="wrap_content"
+             android:layout_gravity="center"
+             android:gravity="center"
+             />
+     </LinearLayout>
      <ProgressBar
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"

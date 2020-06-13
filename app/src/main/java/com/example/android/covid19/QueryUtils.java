@@ -160,6 +160,9 @@ public class QueryUtils {
             Iterator keys = jsonObject1.keys();
 
             ArrayList<info_card> state=new ArrayList<info_card>();
+
+            ArrayList<info_card> alldist=new ArrayList<info_card>();
+
             while(keys.hasNext()) {
                 // loop to get the dynamic key
                 String currentDynamicKey = (String)keys.next();
@@ -203,7 +206,9 @@ public class QueryUtils {
                      dd+=tdd;
 
                      dist.add(new info_card(currentDynamicKey1,"",Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
-                     detacard.put(currentDynamicKey1,new info_card(currentDynamicKey1,tdc,tdr,tdd,Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
+                     alldist.add(new info_card(currentDynamicKey1,"",Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
+
+                    detacard.put(currentDynamicKey1,new info_card(currentDynamicKey1,tdc,tdr,tdd,Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
 
                     disArray.add(currentDynamicKey1+ " -> " + val);
                     statesum+=Integer.valueOf(val);
@@ -233,6 +238,7 @@ public class QueryUtils {
             }
 
             all.put("India",state);
+            all.put("India-Districts",alldist);
             detacard.put("India",new info_card("India",fdt,fdr,fdd,ft,fa,fr,fd));
 
 

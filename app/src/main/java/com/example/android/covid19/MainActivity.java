@@ -77,7 +77,13 @@ public class MainActivity extends AppCompatActivity {
 
                 final ArrayList<info_card> num= new ArrayList<info_card>(QueryUtils.all.get(tutorialsName));
 
-                num.add(0,total_sum(num,tutorialsName));
+                if(tutorialsName.equals("India-Districts"))
+                {
+
+                }
+                else {
+                    num.add(0, total_sum(num, tutorialsName));
+                }
 
                 final Location_card_addapter location_card_addapter=new Location_card_addapter(MainActivity.this,num);
 
@@ -214,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
                 Collections.sort(states);
 
                 states.add(0,"India");
+                states.add(1,"India-Districts");
 
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getBaseContext(),android.R.layout.simple_spinner_item,states);
                 arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);

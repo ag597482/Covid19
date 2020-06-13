@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/graphs"
-        android:icon="@drawable/graph"
+        android:icon="@drawable/a2"
         android:title="graphs"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/feedback"
-        android:icon="@drawable/feed"
+        android:icon="@drawable/f1"
         android:title="feedback"
         app:showAsAction="ifRoom" />
 
