@@ -9,6 +9,26 @@
     android:orientation="vertical"
     tools:context=".MainActivity">
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/serch"
+        android:layout_width="345dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="8dp"
+
+        android:layout_marginLeft="8dp"
+        android:layout_weight="1"
+        android:background="@drawable/transparent_rectengle"
+        android:clickable="false"
+        android:icon="@android:drawable/ic_menu_search"
+
+        android:title="searchbar"
+        app:actionViewClass="androidx.appcompat.widget.SearchView"
+        app:layout_constraintBottom_toBottomOf="@+id/sort_list"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/sort_list"
+        app:queryHint="Search ..."
+        app:showAsAction="ifRoom|collapseActionView" />
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
@@ -22,7 +42,8 @@
     <Spinner
         android:id="@+id/location_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="33dp"
+        android:layout_marginTop="3dp"
         android:gravity="center"
         android:popupBackground="@drawable/rectangular"
         android:spinnerMode="dropdown"
@@ -33,10 +54,10 @@
     <TextView
         android:id="@+id/location_spinner_outer_layer"
         android:layout_width="match_parent"
-        android:layout_height="28dp"
+        android:layout_height="33dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/transparent_rectengle"
@@ -46,28 +67,31 @@
 
     <Spinner
         android:id="@+id/sort_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:layout_marginLeft="200dp"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="15dp"
+        android:background="@drawable/s2"
         android:gravity="center"
         android:popupBackground="@drawable/rectangular"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toTopOf="@+id/list"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout3"
+        app:layout_constraintStart_toEndOf="@+id/serch"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <TextView
         android:id="@+id/sort_list_cover"
         android:layout_width="match_parent"
-        android:layout_height="28dp"
-        android:layout_marginStart="208dp"
-        android:layout_marginLeft="208dp"
+        android:layout_height="33dp"
+        android:layout_marginStart="228dp"
+        android:layout_marginLeft="228dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/transparent_rectengle"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/sort_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,6 +101,7 @@
         android:id="@+id/total_cases"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_marginTop="4dp"
         android:background="@drawable/rounded_textview"
         android:gravity="center"
         android:text="1000000"
@@ -103,8 +128,8 @@
         android:id="@+id/constraintLayout"
         android:layout_width="120dp"
         android:layout_height="65dp"
-        android:layout_marginStart="9dp"
-        android:layout_marginLeft="9dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
@@ -256,8 +281,8 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginRight="9dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@color/Active"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
@@ -322,18 +347,6 @@
         android:layout_marginTop="310dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/Sort_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sorted By"
-        android:textColor="#150909"
-        android:textSize="15sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/sort_list"
-        app:layout_constraintEnd_toStartOf="@+id/sort_list"
-        app:layout_constraintTop_toTopOf="@+id/sort_list" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

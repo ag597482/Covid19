@@ -45,10 +45,9 @@ public final class Utils {
     /** Tag for the log messages */
     public static final String LOG_TAG = Utils.class.getSimpleName();
 
-
-
     static HashMap<String,ArrayList<info_card>> state_district_info=new HashMap<>();
     static ArrayList<info_card> india_info=new ArrayList<info_card>();
+    static ArrayList<info_card> india_state_dist_info=new ArrayList<info_card>();
 
     /**
      * Query the USGS dataset and return an {@link ArrayList<info_card>} object to represent a single earthquake.
@@ -220,10 +219,13 @@ public final class Utils {
                 }
                 Collections.sort(dist_info, new CustomComparator());
                 state_district_info.put(state_name,dist_info);
+                india_state_dist_info.addAll(dist_info);
                 location_card_info.add(new info_card(state_name, "India",state_tc,state_ac,state_rc,state_dc));
                 india_info.add(new info_card(state_name, "India",state_tc,state_rc,state_dc,state_ac,state_dtc,state_drc,state_ddc));
-
             }
+
+            india_state_dist_info.addAll(india_info);
+            Collections.sort(india_state_dist_info, new CustomComparator());
             Collections.sort(india_info, new CustomComparator());
         } catch (JSONException e) {
 

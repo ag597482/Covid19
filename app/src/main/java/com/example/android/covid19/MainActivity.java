@@ -1,6 +1,7 @@
 package com.example.android.covid19;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -24,6 +25,14 @@ import java.util.Collections;
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     public static String spinner_location,sort_by;
 
+
+    ArrayList<info_card> required_arraylist;
+
+    public int flag=0;
+
+
+//    SearchView searchView;
+
     public ArrayList<info_card> global_info;
 
     private static final String USGS_REQUEST_URL =
@@ -45,6 +54,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         for(int i=0;i<state.length;i++)
         statelist.add(state[i]);
 
+
+
+
         //spinner location
         Spinner location_spinner = (Spinner) findViewById(R.id.location_name);
         location_spinner.setOnItemSelectedListener(new CountriesSpinnerClass() );
@@ -61,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
         //intend to prediction activity
-        ListView listView = (ListView) findViewById(R.id.list);
+        final ListView listView = (ListView) findViewById(R.id.list);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -71,14 +83,69 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 startActivity(intent);
             }
         });
+
+
+
+        //Globle search
+        final SearchView searchView =(SearchView)findViewById(R.id.serch);
+        searchView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchView.setIconified(false);
+            }
+        });
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Update_location_card();
+//                TextView location =findViewById(R.id.loca)
+                return true;
+            }
+
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                ArrayList<info_card> results= new ArrayList<info_card>();
+                ArrayList<info_card> india_state_dist_info=new ArrayList<info_card>(Utils.india_state_dist_info);
+//
+                if(newText.length()==0) {
+                    Update_location_card();
+                    india_state_dist_info.addAll(required_arraylist);
+                    return true;
+                }
+                for(int i=0;i<india_state_dist_info.size();i++)
+                {
+                    if(india_state_dist_info.get(i).getLocation_name().toLowerCase().startsWith(newText.toLowerCase())) {
+                        results.add(india_state_dist_info.get(i));
+                    }
+                }
+                for(int i=0;i<india_state_dist_info.size();i++)
+                {
+                    if(india_state_dist_info.get(i).getLocation_name().toLowerCase().contains(newText.toLowerCase())) {
+                        if(results.indexOf(india_state_dist_info.get(i))==-1)
+                        results.add(india_state_dist_info.get(i));
+                    }
+                }
+                Location_card_addapter resadapter=new Location_card_addapter(MainActivity.this,results);
+                listView.setAdapter(resadapter);
+
+                return true;
+            }
+        });
+
+
+
     }
 
+
+
+
+    //sort implemented
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
          sort_by= parent.getItemAtPosition(position).toString();
         Update_location_card();
     }
-
     @Override
     public void onNothingSelected(AdapterView<?> parent) { }
 
@@ -99,22 +166,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
 
-// spinner
-//    @Override
-//    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//        spinner_location = parent.getItemAtPosition(position).toString();
-//        ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
-//            progressBar.setVisibility(View.VISIBLE);
-//            Toast.makeText(this,spinner_location,Toast.LENGTH_LONG);
-//        Update_location_card();
-//    }
-//
-//    @Override
-//    public void onNothingSelected(AdapterView<?> parent) {
-//
-//    }
-
-
+    //Graph menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -171,12 +223,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         delta_recovery.setText(String.valueOf(dtr));
     }
 
+    //update list
     public void Update_location_card()
     {
         ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         Location_card_addapter flavorAdapter;
-        ArrayList<info_card> required_arraylist;
         if(spinner_location.equals("India"))
         {
              required_arraylist=new ArrayList<info_card>(Utils.india_info);
@@ -193,40 +245,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setAdapter(flavorAdapter);
     }
 
-
-    //search_bar
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_edit,menu);
-//        MenuItem item=findViewById(R.id.search);
-//        SearchView searchView =(SearchView) item.getActionView();
-//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-//            @Override
-//            public boolean onQueryTextSubmit(String query) {
-//                return false;
-//            }
-//
-//            @Override
-//            public boolean onQueryTextChange(String newText) {
-//                ArrayList<info_card> results= new ArrayList<info_card>();
-//
-//                for(int i=0;i<global_info.size();i++)
-//                {
-//                    if(global_info.get(i).getLocation_name().toLowerCase().contains(newText.toLowerCase()))
-//                    {
-//                        results.add(global_info.get(i));
-//                    }
-//                }
-//                Location_card_addapter resadapter=new Location_card_addapter(MainActivity.this,results);
-//                ListView listView = (ListView) findViewById(R.id.list);
-//                listView.setAdapter(resadapter);
-//                return true;
-//            }
-//        });
-//
-//        return true;
-//    }
 
     private class EarthquakeAsyncTask extends AsyncTask<String, Void, ArrayList<info_card> > {
 
@@ -245,6 +263,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 return;
             }
             global_info=result;
+            flag=1;
             Update_location_card();
         }
     }
