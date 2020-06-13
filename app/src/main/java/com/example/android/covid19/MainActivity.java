@@ -23,6 +23,8 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
+
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -87,12 +89,14 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             public void onClick(View v) {
                     PopupMenu popup = new PopupMenu(MainActivity.this , v);
                     popup.setOnMenuItemClickListener(MainActivity.this);
+
                     MenuInflater inflater = popup.getMenuInflater();
                     inflater.inflate(R.menu.sort, popup.getMenu());
                     popup.show();
             }
         });
 
+      //  int res = ContextCompat.getDrawable(,R.drawable.rectangular);
 
 
 //        ArrayAdapter<String> sort_list_adapter = new ArrayAdapter<String>(
@@ -349,8 +353,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 states.add(0,"India");
                 states.add(1,"India-Districts");
 
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getBaseContext(),android.R.layout.simple_spinner_item,states);
-                arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getBaseContext(),R.layout.test,states);
+                arrayAdapter.setDropDownViewResource(R.layout.test);
 
                 spinner.setAdapter(arrayAdapter);
 
