@@ -69,11 +69,11 @@ public class PredictionActivity extends AppCompatActivity {
         place=(TextView)findViewById(R.id.place);
 
 
-        pred=(TextView)findViewById(R.id.prediction);
-        tday=(TextView)findViewById(R.id.tday);
+       // pred=(TextView)findViewById(R.id.prediction);
+      //  tday=(TextView)findViewById(R.id.tday);
 
-        days = (SeekBar) findViewById(R.id.days);
-        factor = (SeekBar) findViewById(R.id.social);
+       // days = (SeekBar) findViewById(R.id.days);
+       // factor = (SeekBar) findViewById(R.id.social);
 
 
         String cardclicked = getIntent().getData().toString();
@@ -102,62 +102,62 @@ public class PredictionActivity extends AppCompatActivity {
             }
         }
 
-        pred.setText(currr+"");
-        days.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-                if(progress==0)
-                {
-                 pred.setText(currr+"");
-                }
-                else {
-                    minc = prediction[factor.getProgress()][progress] - Math.max(0,(int) (progress * currr) / 100);
-                    maxc = prediction[factor.getProgress()][progress] + (int) (progress * currr) / 100;
-                    tday.setText("No of days after today : " + progress);
-                    pred.setText((currr+minc) + " - "+ (currr+maxc));
-                }
-
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
-        factor.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (days.getProgress()==0)
-                {
-                    pred.setText(currr+"");
-                }
-                else
-                {
-
-                    minc=prediction[progress][days.getProgress()]-Math.max(0,(int)(factor.getProgress()*currr)/100);
-                    maxc=prediction[progress][factor.getProgress()]+(int)(factor.getProgress()*currr)/100;
-                    pred.setText((currr+minc)+" - "+ (maxc+currr));
-                }
-
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-
-            }
-        });
+      //  pred.setText(currr+"");
+//        days.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//            @Override
+//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+//
+//                if(progress==0)
+//                {
+//                 pred.setText(currr+"");
+//                }
+//                else {
+//                    minc = prediction[factor.getProgress()][progress] - Math.max(0,(int) (progress * currr) / 100);
+//                    maxc = prediction[factor.getProgress()][progress] + (int) (progress * currr) / 100;
+//                    tday.setText("No of days after today : " + progress);
+//                    pred.setText((currr+minc) + " - "+ (currr+maxc));
+//                }
+//
+//
+//            }
+//
+//            @Override
+//            public void onStartTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//
+//            @Override
+//            public void onStopTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//        });
+//        factor.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+//            @Override
+//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+//                if (days.getProgress()==0)
+//                {
+//                    pred.setText(currr+"");
+//                }
+//                else
+//                {
+//
+//                    minc=prediction[progress][days.getProgress()]-Math.max(0,(int)(factor.getProgress()*currr)/100);
+//                    maxc=prediction[progress][factor.getProgress()]+(int)(factor.getProgress()*currr)/100;
+//                    pred.setText((currr+minc)+" - "+ (maxc+currr));
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onStartTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//
+//            @Override
+//            public void onStopTrackingTouch(SeekBar seekBar) {
+//
+//            }
+//        });
 
 
         active.setText(infoCard.getLocation_active()+ "");

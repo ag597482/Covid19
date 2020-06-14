@@ -382,7 +382,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 states.add(1,"India-Districts");
 
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getBaseContext(),R.layout.test,states);
-                arrayAdapter.setDropDownViewResource(R.layout.test);
+                arrayAdapter.setDropDownViewResource(R.layout.spinner_item_back);
 
                 spinner.setAdapter(arrayAdapter);
                 sort_list.setOnClickListener(new View.OnClickListener() {

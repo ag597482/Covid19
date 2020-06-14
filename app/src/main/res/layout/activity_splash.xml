@@ -4,12 +4,25 @@
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
+    android:background="#dee1e6"
+
 
     >
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/l1"
+        android:id="@+id/ic"
         android:layout_margin="10dp"
         android:scaleType="centerCrop"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#ffffff"
+        android:textSize="36sp"
+        android:layout_centerHorizontal="true"
+        android:textAlignment="center"
+        android:text="Covid-India"
+        android:layout_below="@+id/ic"/>
 </RelativeLayout>

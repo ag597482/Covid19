@@ -346,6 +346,7 @@ public class GraphActivity extends AppCompatActivity {
                 //Toast.makeText(PredictionActivity.this,"aman",Toast.LENGTH_SHORT).show();
                 // textView.setText(data.toString());
                 tv.setText("Total cases : "+ QueryUtils1.total + " Rows - " + data.size());
+                tv.setText("");
 
 
                 seekBar.setMax(data.size()-1);

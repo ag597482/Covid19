@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorPrimary"
     tools:context=".GraphActivity">
 
     <TextView
@@ -62,6 +63,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5dp"
         android:layout_marginTop="10dp">
         <LinearLayout
             android:layout_width="match_parent"
@@ -76,6 +79,7 @@
                 android:text="Daily Confirmed"
                 android:layout_gravity="center"
                 android:gravity="center"
+                android:textColor="#ffffff"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:id="@+id/dc"/>
@@ -84,6 +88,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="2dp"
+                android:textColor="#ffffff"
                 android:background="@drawable/sp_style"
                 android:text="Daily Recovered"
                 android:layout_gravity="center"
@@ -100,6 +105,8 @@
                 android:text="Daily Deaths"
                 android:layout_gravity="center"
                 android:gravity="center"
+
+                android:textColor="#ffffff"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:id="@+id/dd"/>
@@ -114,6 +121,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="2dp"
+
+                android:textColor="#ffffff"
                 android:background="@drawable/sp_style"
                 android:text="Total Confirmed"
                 android:layout_gravity="center"
@@ -126,6 +135,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:layout_margin="2dp"
+
+                android:textColor="#ffffff"
                 android:background="@drawable/sp_style"
                 android:text="Total Recovered"
                 android:layout_gravity="center"
@@ -141,6 +152,8 @@
                 android:background="@drawable/sp_style"
                 android:text="Total Deaths"
                 android:layout_gravity="center"
+
+                android:textColor="#ffffff"
                 android:gravity="center"
                 android:textSize="15sp"
                 android:textStyle="bold"
@@ -165,10 +178,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/notice"
-    android:text="Notice"
+    android:text=""
     android:gravity="center_horizontal"
     android:textSize="20sp"
-    android:background="@drawable/sp_style"
     android:layout_margin="9dp"
     />
 

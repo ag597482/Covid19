@@ -1,12 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">#AFB0B3</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:itemBackground">@drawable/sp_style</item>
+        <item name="android:itemBackground">@drawable/sp_list_item</item>
+
     </style>
 
     <style name="FullscreenTheme" parent="AppTheme">

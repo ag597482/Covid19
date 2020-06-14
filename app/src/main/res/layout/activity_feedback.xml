@@ -4,6 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+
+    android:background="@color/colorPrimary"
     android:layout_height="match_parent">
 <LinearLayout
     android:layout_width="match_parent"
@@ -63,17 +65,10 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Submit"
-        android:background="#B32020"
+        android:background="@color/colorAccent"
         android:textColor="#ffffff"
 />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textAlignment="center"
-        android:layout_gravity="center"
-        android:textSize="30sp"
-        android:text="About Us-\nAman Gupta \n Rajan Jaiswal"/>
 
 </LinearLayout>
 </ScrollView>
