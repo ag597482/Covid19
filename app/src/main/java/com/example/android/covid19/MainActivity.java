@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.Menu;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
 
 
@@ -140,23 +142,33 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
 
 
+                searchView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        searchView.onActionViewExpanded();
+                    }
+                });
 
 
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
-                        return false;
+                        update_list("a");
+                        return true;
                     }
 
                     @Override
                     public boolean onQueryTextChange(String newText) {
                         ArrayList<info_card> results= new ArrayList<info_card>();
 
-                        for(int i=0;i<num.size();i++)
+                        ArrayList<info_card> global = new ArrayList<info_card>(QueryUtils.detacard.values());
+
+
+                        for(int i=0;i<global.size();i++)
                         {
-                            if(num.get(i).getLocation_name().toLowerCase().contains(newText.toLowerCase()))
+                            if(global.get(i).getLocation_name().toLowerCase().contains(newText.toLowerCase()))
                             {
-                                results.add(num.get(i));
+                                results.add(global.get(i));
                             }
                         }
                         Location_card_addapter resadapter=new Location_card_addapter(MainActivity.this,results);
@@ -339,7 +351,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
 
             List<String> result = QueryUtils.fetchEarthquakeData(urls[0]);
-            List<Integer> v=QueryUtils1.fetchEarthquakeData(USGS_REQUEST_URL1);
+            //List<Integer> v=QueryUtils1.fetchEarthquakeData(USGS_REQUEST_URL1);
             return result;
 
         }

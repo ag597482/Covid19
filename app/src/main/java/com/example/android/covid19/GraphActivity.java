@@ -42,7 +42,7 @@ public class GraphActivity extends AppCompatActivity {
     public static final String MSG="notice";
 
     GraphView graph;
-    LineGraphSeries<DataPoint> series,series1,sdelc,sdelr,sdeld,stotc,stotr,stotd;
+    LineGraphSeries<DataPoint> series,series1,sdelc,sdelr,sdeld,stotc,stotr,stotd,loc1,loc2,loc3,loc4,loc5;
     SeekBar seekBar;
 
 
@@ -83,9 +83,43 @@ public class GraphActivity extends AppCompatActivity {
                 new DataPoint(0, 1)
         });
 
-        series1 = new LineGraphSeries<DataPoint>(new DataPoint[] {
-                new DataPoint(0, 1)
+        loc1 = new LineGraphSeries<DataPoint>(new DataPoint[] {
+                new DataPoint(51, 0),
+                new DataPoint(51,10000000)
         });
+        loc1.setColor(R.color.RED);
+
+        loc2 = new LineGraphSeries<DataPoint>(new DataPoint[] {
+                new DataPoint(72, 0),
+                new DataPoint(72,10000000)
+        });
+        loc2.setColor(R.color.RED);
+
+        loc3 = new LineGraphSeries<DataPoint>(new DataPoint[] {
+                new DataPoint(93, 0),
+                new DataPoint(93,10000000)
+        });
+        loc3.setColor(R.color.RED);
+
+        loc4= new LineGraphSeries<DataPoint>(new DataPoint[] {
+                new DataPoint(107, 0),
+                new DataPoint(107,10000000)
+        });
+        loc4.setColor(R.color.RED);
+
+        loc5 = new LineGraphSeries<DataPoint>(new DataPoint[] {
+                new DataPoint(121, 0),
+                new DataPoint(121,10000000)
+        });
+        loc5.setColor(R.color.RED);
+
+
+        graph.addSeries(loc1);
+        graph.addSeries(loc2);
+        graph.addSeries(loc3);
+        graph.addSeries(loc4);
+        graph.addSeries(loc5);
+
         sdelc = new LineGraphSeries<>();
         sdelr = new LineGraphSeries<>();
         sdeld = new LineGraphSeries<>();
@@ -110,6 +144,12 @@ public class GraphActivity extends AppCompatActivity {
                 graph.addSeries(sdelc);
                 plotted=QueryUtils1.dc;
 
+                graph.addSeries(loc1);
+                graph.addSeries(loc2);
+                graph.addSeries(loc3);
+                graph.addSeries(loc4);
+                graph.addSeries(loc5);
+
                 yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.dc)+1);
 
@@ -129,6 +169,13 @@ public class GraphActivity extends AppCompatActivity {
                 graph.addSeries(stotc);
                 plotted=QueryUtils1.tc;
 
+
+                graph.addSeries(loc1);
+                graph.addSeries(loc2);
+                graph.addSeries(loc3);
+                graph.addSeries(loc4);
+                graph.addSeries(loc5);
+
                 yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.tc)+1);
 
@@ -147,6 +194,13 @@ public class GraphActivity extends AppCompatActivity {
                 graph.addSeries(sdelr);
                 plotted=QueryUtils1.dr;
 
+
+                graph.addSeries(loc1);
+                graph.addSeries(loc2);
+                graph.addSeries(loc3);
+                graph.addSeries(loc4);
+                graph.addSeries(loc5);
+
                 yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.dr)+1);
 
@@ -164,6 +218,13 @@ public class GraphActivity extends AppCompatActivity {
                 graph.removeAllSeries();
                 graph.addSeries(stotr);
                 plotted=QueryUtils1.tr;
+
+                graph.addSeries(loc1);
+                graph.addSeries(loc2);
+                graph.addSeries(loc3);
+                graph.addSeries(loc4);
+                graph.addSeries(loc5);
+
                 yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.tr)+1);
 
@@ -182,6 +243,13 @@ public class GraphActivity extends AppCompatActivity {
                 graph.addSeries(sdeld);
                 plotted=QueryUtils1.dd;
 
+
+                graph.addSeries(loc1);
+                graph.addSeries(loc2);
+                graph.addSeries(loc3);
+                graph.addSeries(loc4);
+                graph.addSeries(loc5);
+
                 yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.dd)+1);
 
@@ -199,6 +267,13 @@ public class GraphActivity extends AppCompatActivity {
                 graph.removeAllSeries();
                 graph.addSeries(stotd);
                 plotted=QueryUtils1.td;
+
+                graph.addSeries(loc1);
+                graph.addSeries(loc2);
+                graph.addSeries(loc3);
+                graph.addSeries(loc4);
+                graph.addSeries(loc5);
+
 
                 yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.td)+1);
