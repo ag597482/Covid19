@@ -37,13 +37,25 @@ public class FeedbackActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                Feedback feedback = new Feedback(name.getText().toString().trim(),mobile.getText().toString().trim(),feedbackmessage.getText().toString().trim());
-                databaseReference.push().setValue(feedback);
+                if(name.getText().toString().trim().length()==0)
+                {
+                    Toast.makeText(FeedbackActivity.this,"Name Can't be left blank",Toast.LENGTH_SHORT).show();
+                }
+                else if(feedbackmessage.getText().toString().trim().length()==0)
+                {
+                    Toast.makeText(FeedbackActivity.this,"Feedback Can't be left blank",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Feedback feedback = new Feedback(name.getText().toString().trim(), mobile.getText().toString().trim(), feedbackmessage.getText().toString().trim());
 
-                feedbackmessage.setText("");
-                name.setText("");
-                mobile.setText("");
-                Toast.makeText(FeedbackActivity.this,"Feedback Recorded..!",Toast.LENGTH_SHORT).show();
+
+                    databaseReference.push().setValue(feedback);
+
+                    feedbackmessage.setText("");
+                    name.setText("");
+                    mobile.setText("");
+                    Toast.makeText(FeedbackActivity.this, "Feedback Recorded..!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

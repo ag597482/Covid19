@@ -91,17 +91,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         //spinner sort
         sort_list = findViewById(R.id.sort_list);
 
-        sort_list.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                    PopupMenu popup = new PopupMenu(MainActivity.this , v);
-                    popup.setOnMenuItemClickListener(MainActivity.this);
 
-                    MenuInflater inflater = popup.getMenuInflater();
-                    inflater.inflate(R.menu.sort, popup.getMenu());
-                    popup.show();
-            }
-        });
 
       //  int res = ContextCompat.getDrawable(,R.drawable.rectangular);
 
@@ -145,7 +135,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 searchView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        searchView.onActionViewExpanded();
+                        //searchView.onActionViewExpanded();
+                        searchView.setIconified(false);
                     }
                 });
 
@@ -153,8 +144,10 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
                     @Override
                     public boolean onQueryTextSubmit(String query) {
-                        update_list("a");
-                        return true;
+                        return false;
+                        //Location_card_addapter resadapter=new Location_card_addapter(MainActivity.this,num);
+                     //   listView.setAdapter(resadapter);
+                      //  return true;
                     }
 
                     @Override
@@ -163,17 +156,34 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
                         ArrayList<info_card> global = new ArrayList<info_card>(QueryUtils.detacard.values());
 
-
+                        if(newText.length()==0)
+                        {
+                            Location_card_addapter resadapter=new Location_card_addapter(MainActivity.this,num);
+                            listView.setAdapter(resadapter);
+                            return true;
+                        }
                         for(int i=0;i<global.size();i++)
                         {
-                            if(global.get(i).getLocation_name().toLowerCase().contains(newText.toLowerCase()))
-                            {
+                            if(global.get(i).getLocation_name().toLowerCase().startsWith(newText.toLowerCase())) {
                                 results.add(global.get(i));
                             }
                         }
+                        for(int i=0;i<global.size();i++)
+                        {
+                            if(global.get(i).getLocation_name().toLowerCase().contains(newText.toLowerCase())) {
+                                if(results.indexOf(global.get(i))==-1)
+                                    results.add(global.get(i));
+                            }
+                        }
+//                        for(int i=0;i<global.size();i++)
+//                        {
+//                            if(global.get(i).getLocation_name().toLowerCase().contains(newText.toLowerCase()))
+//                            {
+//                                results.add(global.get(i));
+//                            }
+//                        }
                         Location_card_addapter resadapter=new Location_card_addapter(MainActivity.this,results);
                         listView.setAdapter(resadapter);
-
 
 
                         return true;
@@ -375,7 +385,17 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 arrayAdapter.setDropDownViewResource(R.layout.test);
 
                 spinner.setAdapter(arrayAdapter);
+                sort_list.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        PopupMenu popup = new PopupMenu(MainActivity.this , v);
+                        popup.setOnMenuItemClickListener(MainActivity.this);
 
+                        MenuInflater inflater = popup.getMenuInflater();
+                        inflater.inflate(R.menu.sort, popup.getMenu());
+                        popup.show();
+                    }
+                });
 
                 progressBar.setVisibility(View.GONE);
             }
