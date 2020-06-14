@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -35,6 +36,7 @@ public class GraphActivity extends AppCompatActivity {
 
     TextView tv,xc,yc,delc,delr,deld,totc,totr,totd;
 
+
     TextView notice1;
     FirebaseRemoteConfig firebaseRemoteConfig;
 
@@ -43,6 +45,7 @@ public class GraphActivity extends AppCompatActivity {
 
     GraphView graph;
     LineGraphSeries<DataPoint> series,series1,sdelc,sdelr,sdeld,stotc,stotr,stotd,loc1,loc2,loc3,loc4,loc5;
+    CheckBox c1,c2,c3,c4,c5;
     SeekBar seekBar;
 
 
@@ -74,6 +77,13 @@ public class GraphActivity extends AppCompatActivity {
         totr=(TextView)findViewById(R.id.tr);
         totd=(TextView)findViewById(R.id.td);
 
+        c1=findViewById(R.id.l1);
+        c2=findViewById(R.id.l2);
+        c3=findViewById(R.id.l3);
+        c4=findViewById(R.id.l4);
+        c5=findViewById(R.id.l5);
+
+
         seekBar = (SeekBar) findViewById(R.id.seekBar);
 
 
@@ -88,6 +98,16 @@ public class GraphActivity extends AppCompatActivity {
                 new DataPoint(51,10000000)
         });
         loc1.setColor(R.color.RED);
+
+
+        if(c1.isChecked())
+        {
+            graph.addSeries(loc1);
+        }
+        else
+        {
+            graph.removeSeries(loc1);
+        }
 
         loc2 = new LineGraphSeries<DataPoint>(new DataPoint[] {
                 new DataPoint(72, 0),
@@ -114,12 +134,6 @@ public class GraphActivity extends AppCompatActivity {
         loc5.setColor(R.color.RED);
 
 
-        graph.addSeries(loc1);
-        graph.addSeries(loc2);
-        graph.addSeries(loc3);
-        graph.addSeries(loc4);
-        graph.addSeries(loc5);
-
         sdelc = new LineGraphSeries<>();
         sdelr = new LineGraphSeries<>();
         sdeld = new LineGraphSeries<>();
@@ -130,6 +144,73 @@ public class GraphActivity extends AppCompatActivity {
 
         GraphActivity.EarthquakeAsyncTask task1 = new GraphActivity.EarthquakeAsyncTask();
         task1.execute(USGS_REQUEST_URL);
+
+        c1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(c1.isChecked())
+                {
+                    graph.addSeries(loc1);
+                }
+                else
+                {
+                    graph.removeSeries(loc1);
+                }
+            }
+        });
+        c2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(c2.isChecked())
+                {
+                    graph.addSeries(loc2);
+                }
+                else
+                {
+                    graph.removeSeries(loc2);
+                }
+            }
+        });
+        c3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(c3.isChecked())
+                {
+                    graph.addSeries(loc3);
+                }
+                else
+                {
+                    graph.removeSeries(loc3);
+                }
+            }
+        });
+        c4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(c4.isChecked())
+                {
+                    graph.addSeries(loc4);
+                }
+                else
+                {
+                    graph.removeSeries(loc4);
+                }
+            }
+        });
+        c5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(c5.isChecked())
+                {
+                    graph.addSeries(loc5);
+                }
+                else
+                {
+                    graph.removeSeries(loc5);
+                }
+            }
+        });
+
 
         delc.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -144,11 +225,7 @@ public class GraphActivity extends AppCompatActivity {
                 graph.addSeries(sdelc);
                 plotted=QueryUtils1.dc;
 
-                graph.addSeries(loc1);
-                graph.addSeries(loc2);
-                graph.addSeries(loc3);
-                graph.addSeries(loc4);
-                graph.addSeries(loc5);
+                plotlockdown();
 
                 yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.dc)+1);
@@ -169,12 +246,7 @@ public class GraphActivity extends AppCompatActivity {
                 graph.addSeries(stotc);
                 plotted=QueryUtils1.tc;
 
-
-                graph.addSeries(loc1);
-                graph.addSeries(loc2);
-                graph.addSeries(loc3);
-                graph.addSeries(loc4);
-                graph.addSeries(loc5);
+                plotlockdown();
 
                 yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.tc)+1);
@@ -194,12 +266,7 @@ public class GraphActivity extends AppCompatActivity {
                 graph.addSeries(sdelr);
                 plotted=QueryUtils1.dr;
 
-
-                graph.addSeries(loc1);
-                graph.addSeries(loc2);
-                graph.addSeries(loc3);
-                graph.addSeries(loc4);
-                graph.addSeries(loc5);
+                plotlockdown();
 
                 yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.dr)+1);
@@ -219,11 +286,7 @@ public class GraphActivity extends AppCompatActivity {
                 graph.addSeries(stotr);
                 plotted=QueryUtils1.tr;
 
-                graph.addSeries(loc1);
-                graph.addSeries(loc2);
-                graph.addSeries(loc3);
-                graph.addSeries(loc4);
-                graph.addSeries(loc5);
+                plotlockdown();
 
                 yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.tr)+1);
@@ -244,11 +307,8 @@ public class GraphActivity extends AppCompatActivity {
                 plotted=QueryUtils1.dd;
 
 
-                graph.addSeries(loc1);
-                graph.addSeries(loc2);
-                graph.addSeries(loc3);
-                graph.addSeries(loc4);
-                graph.addSeries(loc5);
+                plotlockdown();
+
 
                 yc.setText("People : " + plotted.get(seekBar.getProgress()));
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.dd)+1);
@@ -268,11 +328,7 @@ public class GraphActivity extends AppCompatActivity {
                 graph.addSeries(stotd);
                 plotted=QueryUtils1.td;
 
-                graph.addSeries(loc1);
-                graph.addSeries(loc2);
-                graph.addSeries(loc3);
-                graph.addSeries(loc4);
-                graph.addSeries(loc5);
+                plotlockdown();
 
 
                 yc.setText("People : " + plotted.get(seekBar.getProgress()));
@@ -280,6 +336,7 @@ public class GraphActivity extends AppCompatActivity {
 
             }
         });
+
 
 
         FirebaseRemoteConfigSettings configSettings = new FirebaseRemoteConfigSettings.Builder()
@@ -294,6 +351,31 @@ public class GraphActivity extends AppCompatActivity {
         fetchconfig();
         
         
+    }
+
+    private void plotlockdown(){
+
+        if(c1.isChecked())
+            graph.addSeries(loc1);
+        if(c2.isChecked())
+            graph.addSeries(loc2);
+        if(c3.isChecked())
+            graph.addSeries(loc3);
+        if(c4.isChecked())
+            graph.addSeries(loc4);
+        if(c5.isChecked())
+            graph.addSeries(loc5);
+
+
+    }
+    private void alllockdown(){
+
+        graph.addSeries(loc1);
+        graph.addSeries(loc2);
+        graph.addSeries(loc3);
+        graph.addSeries(loc4);
+        graph.addSeries(loc5);
+
     }
     private void fetchconfig() {
 
