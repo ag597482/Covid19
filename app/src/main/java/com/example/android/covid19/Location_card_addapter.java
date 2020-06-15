@@ -20,7 +20,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -64,7 +63,7 @@ public class Location_card_addapter extends ArrayAdapter<info_card> {
         info_card currentAndroidFlavor = getItem(position);
 
         // Find the TextView in the list_item.xml layout with the ID version_name
-        TextView location_name = (TextView) listItemView.findViewById(R.id.location_name);
+        TextView location_name = (TextView) listItemView.findViewById(R.id.hospital_name);
         // Get the version name from the current AndroidFlavor object and
         // set this text on the name TextView
         location_name.setText(currentAndroidFlavor.getLocation_name());

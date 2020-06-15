@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/location_name"
+        android:id="@+id/hospital_name"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="6dp"
@@ -54,7 +54,7 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/location_total_cases"
-        app:layout_constraintTop_toBottomOf="@+id/location_name" />
+        app:layout_constraintTop_toBottomOf="@+id/hospital_name" />
 
     <TextView
         android:id="@+id/location_recovery"

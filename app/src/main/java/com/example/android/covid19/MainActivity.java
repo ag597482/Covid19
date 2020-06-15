@@ -17,7 +17,6 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -30,8 +29,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public int flag=0;
 
-
-//    SearchView searchView;
 
     public ArrayList<info_card> global_info;
 
@@ -58,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
         //spinner location
-        Spinner location_spinner = (Spinner) findViewById(R.id.location_name);
+        Spinner location_spinner = (Spinner) findViewById(R.id.hospital_name);
         location_spinner.setOnItemSelectedListener(new CountriesSpinnerClass() );
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_list_item_1, statelist);
@@ -73,7 +70,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
 
         //intend to prediction activity
-        final ListView listView = (ListView) findViewById(R.id.list);
+        final ListView listView = (ListView) findViewById(R.id.list_pre);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -241,7 +238,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         }
         flavorAdapter = new Location_card_addapter(this, required_arraylist);
         total_sum(required_arraylist);
-        ListView listView = (ListView) findViewById(R.id.list);
+        ListView listView = (ListView) findViewById(R.id.list_pre);
         listView.setAdapter(flavorAdapter);
     }
 
