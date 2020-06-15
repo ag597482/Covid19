@@ -24,7 +24,7 @@
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
         android:layout_height="220dip"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/graph" />
 
     <SeekBar
@@ -34,12 +34,19 @@
 
         android:progressDrawable="@drawable/seek"
 
-        android:layout_marginTop="30dp"/>
+        android:layout_marginTop="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:text="*Here day 0 is 31 January 2020 when 1st case was found"
+        android:gravity="center"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         >
         <TextView
             android:layout_width="0dp"
@@ -47,6 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="20sp"
+            android:background="@drawable/transparent_rectengle"
             android:text="Days : 0"
             android:gravity="center"/>
         <TextView
@@ -55,6 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="20sp"
+            android:background="@drawable/transparent_rectengle"
             android:text="People : 1"
             android:gravity="center"/>
 
