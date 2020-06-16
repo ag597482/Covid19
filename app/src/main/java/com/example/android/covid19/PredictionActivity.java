@@ -16,16 +16,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig;
-import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings;
+
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -37,11 +35,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.example.android.covid19.Utils1.LOG_TAG;
 import static java.lang.String.format;
 
 
 public class PredictionActivity extends AppCompatActivity {
 
+
+    int flag=0;
+
+    private static final String USGS_REQUEST_URL =
+            "https://api.rootnet.in/covid19-in/hospitals/medical-colleges";
+
+
+    public String location_slected,location_detail;
 
 
     SeekBar days,factor;
@@ -50,13 +57,15 @@ public class PredictionActivity extends AppCompatActivity {
     ImageView aro;
 
 
-    int[][] prediction = new int[3][11];
-    int minc,maxc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prediction);
+
+
+
+
 
         aro=findViewById(R.id.arrow);
 
@@ -76,11 +85,11 @@ public class PredictionActivity extends AppCompatActivity {
         place=(TextView)findViewById(R.id.place);
 
 
-       // pred=(TextView)findViewById(R.id.prediction);
-      //  tday=(TextView)findViewById(R.id.tday);
 
-       // days = (SeekBar) findViewById(R.id.days);
-       // factor = (SeekBar) findViewById(R.id.social);
+        location_slected = getIntent().getData().toString();
+        String address = getIntent().getStringExtra("address");
+        location_detail=address;
+
 
 
         String cardclicked = getIntent().getData().toString();
@@ -93,78 +102,8 @@ public class PredictionActivity extends AppCompatActivity {
 
         final int currr=infoCard.getLocation_total_cases();
 
-        prediction[0][0]=prediction[1][0]=prediction[2][0]=infoCard.getDela_confirmed();
 
-        for(int i=0;i<3;i++)
-        {
-            for(int j=1;j<11;j++)
-            {
-                if(i==0)
-                    prediction[i][j]=(int)(prediction[i][0]*j*(100/99));
-                if(i==1)
-                    prediction[i][j]=prediction[i][0]*j;
-                if(i==3)
-                    prediction[i][j]=(int)(prediction[i-1][j]*(1/100));
 
-            }
-        }
-
-      //  pred.setText(currr+"");
-//        days.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//            @Override
-//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//
-//                if(progress==0)
-//                {
-//                 pred.setText(currr+"");
-//                }
-//                else {
-//                    minc = prediction[factor.getProgress()][progress] - Math.max(0,(int) (progress * currr) / 100);
-//                    maxc = prediction[factor.getProgress()][progress] + (int) (progress * currr) / 100;
-//                    tday.setText("No of days after today : " + progress);
-//                    pred.setText((currr+minc) + " - "+ (currr+maxc));
-//                }
-//
-//
-//            }
-//
-//            @Override
-//            public void onStartTrackingTouch(SeekBar seekBar) {
-//
-//            }
-//
-//            @Override
-//            public void onStopTrackingTouch(SeekBar seekBar) {
-//
-//            }
-//        });
-//        factor.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-//            @Override
-//            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-//                if (days.getProgress()==0)
-//                {
-//                    pred.setText(currr+"");
-//                }
-//                else
-//                {
-//
-//                    minc=prediction[progress][days.getProgress()]-Math.max(0,(int)(factor.getProgress()*currr)/100);
-//                    maxc=prediction[progress][factor.getProgress()]+(int)(factor.getProgress()*currr)/100;
-//                    pred.setText((currr+minc)+" - "+ (maxc+currr));
-//                }
-//
-//            }
-//
-//            @Override
-//            public void onStartTrackingTouch(SeekBar seekBar) {
-//
-//            }
-//
-//            @Override
-//            public void onStopTrackingTouch(SeekBar seekBar) {
-//
-//            }
-//        });
 
 
         active.setText(infoCard.getLocation_active()+ "");
@@ -193,6 +132,8 @@ public class PredictionActivity extends AppCompatActivity {
 
 
 
+        EarthquakeAsyncTask task = new EarthquakeAsyncTask();
+        task.execute(USGS_REQUEST_URL);
 
     }
 
@@ -222,6 +163,72 @@ public class PredictionActivity extends AppCompatActivity {
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
     }
 
+    public void medi_sum(ArrayList<medi_info_card> list)
+    {
+        int total_bed=0,total_hospital=list.size();
+        for(int i=0;i<list.size();i++)
+            total_bed+= Integer.valueOf(list.get(i).getBed());
 
+        TextView total_hospitals=findViewById(R.id.hospital_value);
+
+        total_hospitals.setText(String.valueOf(total_hospital));
+
+        TextView total_beds=findViewById(R.id.bed_value);
+        total_beds.setText(String.valueOf(total_bed));
+    }
+    private void Update_location_card() {
+
+        if(flag==0)
+        {
+            EarthquakeAsyncTask task = new EarthquakeAsyncTask();
+            task.execute(USGS_REQUEST_URL);
+            Log.i(LOG_TAG,"--------------preprerrrrr----"+flag);
+            return ;}
+
+        medi_card_addapter flavorAdapter;
+        ArrayList<medi_info_card> required_list=null;
+        if(location_detail.equals("India"))
+        {
+            if(Utils1.state_medi_info.containsKey(location_slected))
+                required_list=new ArrayList<medi_info_card>(Utils1.state_medi_info.get(location_slected));
+        }
+        else
+        {
+            if(Utils1.state_medi_info.containsKey(location_detail))
+                required_list=new ArrayList<medi_info_card>(Utils1.state_medi_info.get(location_detail));
+        }
+        if(required_list.size()==0)
+            return ;
+        medi_sum(required_list);
+        flavorAdapter = new medi_card_addapter(this, required_list);
+        ListView listView = (ListView) findViewById(R.id.list_pre);
+        listView.setAdapter(flavorAdapter);
+
+    }
+
+    private class EarthquakeAsyncTask extends AsyncTask<String, Void, ArrayList<medi_info_card>> {
+
+        protected ArrayList<medi_info_card> doInBackground(String... urls) {
+            // Don't perform the request if there are no URLs, or the first URL is null.
+            if (urls.length < 1 || urls[0] == null) {
+                return null;
+            }
+            ArrayList<medi_info_card> result = Utils1.fetchEarthquakeData(urls[0]);
+            return result;
+        }
+
+
+        protected void onPostExecute(ArrayList<medi_info_card> result) {
+            if (result == null) {
+                return;
+            }
+            Log.i(LOG_TAG,"-------------prepre------------"+result.size());
+            if(result.size()==0)
+                flag=0;
+            else
+                flag=1;
+            Update_location_card();
+        }
+    }
 
 }
