@@ -68,11 +68,6 @@ public class Location_card_addapter extends ArrayAdapter<info_card> {
         // set this text on the name TextView
         location_name.setText(currentAndroidFlavor.getLocation_name());
 
-        // Find the TextView in the list_item.xml layout with the ID version_number
-        TextView location_detail = (TextView) listItemView.findViewById(R.id.location_detail);
-        // Get the version number from the current AndroidFlavor object and
-        // set this text on the number TextView
-        location_detail.setText(currentAndroidFlavor.getLocation_detail());
 
         TextView location_active = (TextView) listItemView.findViewById(R.id.location_active);
         // Get the version name from the current AndroidFlavor object and

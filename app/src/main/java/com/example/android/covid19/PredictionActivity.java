@@ -50,9 +50,7 @@ public class PredictionActivity extends AppCompatActivity {
 
     public String location_slected,location_detail;
 
-
-    SeekBar days,factor;
-
+    ProgressBar progressBar;
     TextView textView,active,deaths,rec,dttt,dtta,dttr,dttd,pred,tday,place,stname;
     ImageView aro;
 
@@ -84,6 +82,7 @@ public class PredictionActivity extends AppCompatActivity {
 
 
         place=(TextView)findViewById(R.id.place);
+        progressBar=findViewById(R.id.progres);
 
 
 
@@ -186,24 +185,7 @@ public class PredictionActivity extends AppCompatActivity {
             Log.i(LOG_TAG,"--------------preprerrrrr----"+flag);
             return ;}
 
-        medi_card_addapter flavorAdapter;
-        ArrayList<medi_info_card> required_list=new ArrayList<>();
-        if(location_detail.equals("India"))
-        {
-            if(Utils1.state_medi_info.containsKey(location_slected))
-                required_list=new ArrayList<medi_info_card>(Utils1.state_medi_info.get(location_slected));
-        }
-        else
-        {
-            if(Utils1.state_medi_info.containsKey(location_detail))
-                required_list=new ArrayList<medi_info_card>(Utils1.state_medi_info.get(location_detail));
-        }
-        if(required_list.size()==0)
-            return ;
-        medi_sum(required_list);
-        flavorAdapter = new medi_card_addapter(this, required_list);
-        ListView listView = (ListView) findViewById(R.id.list_pre);
-        listView.setAdapter(flavorAdapter);
+
 
     }
 
@@ -220,16 +202,54 @@ public class PredictionActivity extends AppCompatActivity {
 
 
         protected void onPostExecute(ArrayList<medi_info_card> result) {
-            if (result == null) {
-                return;
+            if(Utils1.state_medi_info.containsKey(location_detail))
+            {
+                progressBar.setVisibility(View.GONE);
+                medi_card_addapter flavorAdapter;
+                ArrayList<medi_info_card> required_list=new ArrayList<>();
+
+                Toast.makeText(PredictionActivity.this,Utils1.state_medi_info.get(location_detail).size(),Toast.LENGTH_SHORT).show();
+//                if(Utils1.state_medi_info.containsKey(location_detail))
+//                    required_list=new ArrayList<>(Utils1.state_medi_info.get(location_detail));
+//                else
+//                    return;
+////                if(location_detail.equals("India"))
+////                {
+////                    if(Utils1.state_medi_info.containsKey(location_slected))
+////                        required_list=new ArrayList<medi_info_card>(Utils1.state_medi_info.get(location_slected));
+////                }
+////                else
+////                {
+////                    if(Utils1.state_medi_info.containsKey(location_detail))
+////                        required_list=new ArrayList<medi_info_card>(Utils1.state_medi_info.get(location_detail));
+////                }
+////                if(required_list.size()==0)
+////                    return ;
+//                //medi_sum(required_list);
+//                flavorAdapter = new medi_card_addapter(PredictionActivity.this, required_list);
+//                ListView listView = (ListView) findViewById(R.id.list_pre);
+//                listView.setAdapter(flavorAdapter);
+
+
+
             }
-            Log.i(LOG_TAG,"-------------prepre------------"+result.size());
-            if(result.size()==0)
-                flag=0;
             else
-                flag=1;
-            Update_location_card();
+            {
+
+
+                Toast.makeText(PredictionActivity.this,Utils1.state_medi_info.size()+ " " + Utils1.state_medi_info.get("Delhi"),Toast.LENGTH_LONG).show();
+            }
+//            if (result == null) {
+//                return;
+//            }
+//            Log.i(LOG_TAG,"-------------prepre------------"+result.size());
+//            if(result.size()==0)
+//                flag=0;
+//            else
+//                flag=1;
+//            Update_location_card();
         }
+
     }
 
 }

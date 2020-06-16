@@ -37,17 +37,15 @@ import java.util.HashMap;
  * Utility class with methods to help perform the HTTP request and
  * parse the response.
  */
-public final class Utils1 {
+public class Utils1 {
 
     /** Tag for the log messages */
     public static final String LOG_TAG = Utils1.class.getSimpleName();
     static String test;
 
-    static String[] state= {"India","Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttarakhand", "Uttar Pradesh", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh",
-            "Dadra and Nagar Haveli", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Lakshadweep", "Puducherry"} ;
 
 
-    static HashMap<String, ArrayList<medi_info_card>> state_medi_info=new HashMap<>();
+    public static HashMap<String, ArrayList<medi_info_card>> state_medi_info=new HashMap<>();
 
     /**
      * Query the USGS dataset and return an {@link ArrayList <info_card>} object to represent a single earthquake.
@@ -65,8 +63,6 @@ public final class Utils1 {
         }
         // Extract relevant fields from the JSON response and create an {@link Event} object
         ArrayList<medi_info_card> earthquake = extractFeatureFromJson(jsonResponse);
-        if(state_medi_info.containsKey("Jharkhand"))
-        earthquake=state_medi_info.get("Jharkhand");
         return earthquake;
     }
 
@@ -151,36 +147,26 @@ public final class Utils1 {
     {
         ArrayList<medi_info_card> location_card_info =new ArrayList<medi_info_card>();
         ArrayList<medi_info_card> dist_temp =new ArrayList<medi_info_card>();
-        if (TextUtils.isEmpty(earthquakeJSON)) {
 
-            return location_card_info;
-        }
 
         int total1=0;
         try {
 
+            JSONObject jsonObject= new JSONObject(earthquakeJSON);
 
-            for(int i=0;i<state.length;i++)
+            JSONObject data = jsonObject.getJSONObject("data");
+
+            JSONArray mc = data.getJSONArray("medicalColleges");
+
+
+            for(int i=0;i<mc.length();i++)
             {
-                ArrayList<medi_info_card> temp=new ArrayList<medi_info_card>();
-                state_medi_info.put(state[i],temp);
-            }
-            ArrayList<medi_info_card> temp1=new ArrayList<medi_info_card>();
-            state_medi_info.put("State Unassigned",temp1);
-
-
-            JSONObject jsonObject1=new JSONObject(earthquakeJSON);
-
-            JSONObject data = jsonObject1.getJSONObject("data");
-            JSONArray medicalColleges_array = data.getJSONArray("medicalColleges");
-            for(int i = 0; i < medicalColleges_array.length(); i++)
-            {
-                JSONObject medi_info_obj = medicalColleges_array.getJSONObject(i);
-                String state_name,hospital_name,city,hospital_bed;
-                state_name=medi_info_obj.getString("state");
-                hospital_bed=medi_info_obj.getString("hospitalBeds");
-                city=medi_info_obj.getString("city");
-                hospital_name=medi_info_obj.getString("name");
+                JSONObject medi_info_obj = mc.getJSONObject(i);
+               // String hospital_name,city,hospital_bed;
+                String state_name=medi_info_obj.getString("state");
+                String hospital_bed=medi_info_obj.getString("hospitalBeds");
+                String city=medi_info_obj.getString("city");
+                String hospital_name=medi_info_obj.getString("name");
                 if(state_name.equals("Jammu & Kashmir"))
                     state_name="Jammu and Kashmir";
                 if(state_name.equals("A & N Islands"))
@@ -197,12 +183,13 @@ public final class Utils1 {
                 {
                     ArrayList<medi_info_card> temp=new ArrayList<medi_info_card>();
                     temp.add(new medi_info_card(hospital_name,hospital_bed,city));
-                    Log.i(LOG_TAG,""+temp.size());
                     state_medi_info.put(state_name,temp);
                 }
-
-                Log.i(LOG_TAG,state_name);
             }
+            ArrayList<medi_info_card> temp1=new ArrayList<medi_info_card>();
+            state_medi_info.put("State Unassigned",temp1);
+
+
         } catch (JSONException e) {
 
             Log.e(LOG_TAG, "Problem parsing the earthquake JSON results", e);

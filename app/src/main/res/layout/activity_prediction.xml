@@ -314,6 +314,7 @@ android:textSize="18sp"
         android:textSize="20sp"
         android:textAppearance="@style/TextAppearance.AppCompat"/>
 
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -328,6 +329,13 @@ android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/bed_value"/>
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/progres"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        />
     <ListView
         android:id="@+id/list_pre"
         android:layout_width="match_parent"
