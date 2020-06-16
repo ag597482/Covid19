@@ -2,6 +2,7 @@ package com.example.android.covid19;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,6 +15,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class PredictionActivity extends AppCompatActivity {
+
+
+
 
     int flag=0;
 
@@ -31,6 +35,7 @@ public class PredictionActivity extends AppCompatActivity {
         flag=0;
 //
 //        prog.setVisibility(View.VISIBLE);
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prediction);
