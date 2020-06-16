@@ -95,9 +95,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                Update_location_card();
-//                TextView location =findViewById(R.id.loca)
-                return true;
+//                Update_location_card();
+                return false;
             }
 
 
