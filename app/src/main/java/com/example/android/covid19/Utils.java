@@ -54,6 +54,9 @@ public final class Utils {
      */
     public static ArrayList<info_card> fetchEarthquakeData(String requestUrl) {
         // Create URL object
+        india_state_dist_info.clear();
+        state_district_info.clear();
+        india_info.clear();
         URL url = createUrl(requestUrl);
 
         // Perform HTTP request to the URL and receive a JSON response back

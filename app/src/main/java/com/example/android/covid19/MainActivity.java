@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-//                Update_location_card();
+                Update_location_card();
                 return false;
             }
 
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
          sort_by= parent.getItemAtPosition(position).toString();
-//        Update_location_card();
+        Update_location_card();
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) { }
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinner_location = parent.getItemAtPosition(position).toString();
         ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
             progressBar.setVisibility(View.VISIBLE);
-//        Update_location_card();
+        Update_location_card();
     }
 
     @Override
