@@ -208,7 +208,7 @@ public class QueryUtils {
                      dist.add(new info_card(currentDynamicKey1,"",Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
                      alldist.add(new info_card(currentDynamicKey1,"",Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
 
-                    detacard.put(currentDynamicKey1,new info_card(currentDynamicKey1,tdc,tdr,tdd,Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
+                    detacard.put(currentDynamicKey1,new info_card(currentDynamicKey1,currentDynamicKey,tdc,tdr,tdd,Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
 
                     disArray.add(currentDynamicKey1+ " -> " + val);
                     statesum+=Integer.valueOf(val);
@@ -227,7 +227,7 @@ public class QueryUtils {
                 fdr+=dr;
                 fdd+=dd;
                 all.put(currentDynamicKey,dist);
-                detacard.put(currentDynamicKey,new info_card(currentDynamicKey,dc,dr,dd,Integer.valueOf(total1),Integer.valueOf(active),Integer.valueOf(recovered),Integer.valueOf(deaths)));
+                detacard.put(currentDynamicKey,new info_card(currentDynamicKey,currentDynamicKey,dc,dr,dd,Integer.valueOf(total1),Integer.valueOf(active),Integer.valueOf(recovered),Integer.valueOf(deaths)));
 
                 earthquakes.add(currentDynamicKey+ " -> " + statesum);
                 state.add(new info_card(currentDynamicKey,"",Integer.valueOf(total1),Integer.valueOf(active),Integer.valueOf(recovered),Integer.valueOf(deaths)));
@@ -239,7 +239,7 @@ public class QueryUtils {
 
             all.put("India",state);
             all.put("India-Districts",alldist);
-            detacard.put("India",new info_card("India",fdt,fdr,fdd,ft,fa,fr,fd));
+            detacard.put("India",new info_card("India","India",fdt,fdr,fdd,ft,fa,fr,fd));
 
 
 //            earthquakes.add(jsonObject1.getString("USD"));

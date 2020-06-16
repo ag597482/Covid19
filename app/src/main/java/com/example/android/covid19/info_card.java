@@ -28,9 +28,11 @@ public class info_card {
         location_total_cases=vlocation_total_cases;
     }
 
-    public info_card(String name,int c,int r,int d,int tc,int ta,int tr,int td)
+    public info_card(String name,String ld,int c,int r,int d,int tc,int ta,int tr,int td)
     {
         location_name=name;
+
+        location_detail = ld;
         dela_confirmed=c;
         delta_recover=r;
         delta_deaths=d;

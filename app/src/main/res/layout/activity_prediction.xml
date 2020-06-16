@@ -313,6 +313,21 @@ android:textSize="18sp"
         android:id="@+id/dra"
         android:textSize="20sp"
         android:textAppearance="@style/TextAppearance.AppCompat"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="State name"
+        android:id="@+id/sname"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/hospital_value"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bed_value"/>
     <ListView
         android:id="@+id/list_pre"
         android:layout_width="match_parent"

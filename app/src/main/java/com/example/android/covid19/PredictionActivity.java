@@ -53,7 +53,7 @@ public class PredictionActivity extends AppCompatActivity {
 
     SeekBar days,factor;
 
-    TextView textView,active,deaths,rec,dttt,dtta,dttr,dttd,pred,tday,place;
+    TextView textView,active,deaths,rec,dttt,dtta,dttr,dttd,pred,tday,place,stname;
     ImageView aro;
 
 
@@ -80,6 +80,7 @@ public class PredictionActivity extends AppCompatActivity {
         dtta = (TextView)findViewById(R.id.dactive);
         dttr = (TextView)findViewById(R.id.drecovered);
         dttd = (TextView)findViewById(R.id.ddeaths);
+        stname =findViewById(R.id.sname);
 
 
         place=(TextView)findViewById(R.id.place);
@@ -87,13 +88,13 @@ public class PredictionActivity extends AppCompatActivity {
 
 
         location_slected = getIntent().getData().toString();
-        String address = getIntent().getStringExtra("address");
-        location_detail=address;
+        String location_detail = QueryUtils.detacard.get(location_slected).getLocation_detail();
 
 
 
         String cardclicked = getIntent().getData().toString();
         place.setText(cardclicked);
+        stname.setText(location_detail);
 
         info_card infoCard=QueryUtils.detacard.get(cardclicked);
         textView.setText(infoCard.getLocation_total_cases()+ "");
@@ -186,7 +187,7 @@ public class PredictionActivity extends AppCompatActivity {
             return ;}
 
         medi_card_addapter flavorAdapter;
-        ArrayList<medi_info_card> required_list=null;
+        ArrayList<medi_info_card> required_list=new ArrayList<>();
         if(location_detail.equals("India"))
         {
             if(Utils1.state_medi_info.containsKey(location_slected))
