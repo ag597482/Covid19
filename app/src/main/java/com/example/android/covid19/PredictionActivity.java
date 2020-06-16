@@ -15,6 +15,8 @@ import java.util.ArrayList;
 
 public class PredictionActivity extends AppCompatActivity {
 
+    int flag=0;
+
     private static final String USGS_REQUEST_URL =
             "https://api.rootnet.in/covid19-in/hospitals/medical-colleges";
 
@@ -26,7 +28,7 @@ public class PredictionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        flag=0;
 //
 //        prog.setVisibility(View.VISIBLE);
 
@@ -44,10 +46,10 @@ public class PredictionActivity extends AppCompatActivity {
         EarthquakeAsyncTask task = new EarthquakeAsyncTask();
         task.execute(USGS_REQUEST_URL);
 
-        if(spinner_location.equals("India"))
+        if(location_detail.equals("India"))
         {total_sum(Utils.india_info);}
         else
-        {total_sum(Utils.state_district_info.get(spinner_location));}
+        {total_sum(Utils.state_district_info.get(location_detail));}
     }
 
 
@@ -136,6 +138,14 @@ public class PredictionActivity extends AppCompatActivity {
     }
 
     private void Update_location_card() {
+
+        if(flag==0)
+        {
+            EarthquakeAsyncTask task = new EarthquakeAsyncTask();
+            task.execute(USGS_REQUEST_URL);
+            Log.i(LOG_TAG,"--------------preprerrrrr----"+flag);
+            return ;}
+
         medi_card_addapter flavorAdapter;
         ArrayList<medi_info_card> required_list=null;
         if(location_detail.equals("India"))
@@ -175,7 +185,11 @@ public class PredictionActivity extends AppCompatActivity {
             if (result == null) {
                 return;
             }
-
+            Log.i(LOG_TAG,"-------------prepre------------"+result.size());
+            if(result.size()==0)
+                flag=0;
+            else
+                flag=1;
             Update_location_card();
         }
     }

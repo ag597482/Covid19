@@ -43,16 +43,14 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.v(LOG_TAG, "just under creat");
+        flag=0;
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
         EarthquakeAsyncTask task = new EarthquakeAsyncTask();
         task.execute(USGS_REQUEST_URL);
-        setContentView(R.layout.activity_main);
         ArrayList<String> statelist = new ArrayList<>();
         for(int i=0;i<state.length;i++)
         statelist.add(state[i]);
-
-
-
 
         //spinner location
         Spinner location_spinner = (Spinner) findViewById(R.id.hospital_name);
@@ -103,10 +101,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             @Override
             public boolean onQueryTextChange(String newText) {
                 ArrayList<info_card> results= new ArrayList<info_card>();
-                ArrayList<info_card> india_state_dist_info=new ArrayList<info_card>(Utils.india_state_dist_info);
+                ArrayList<info_card> india_state_dist_info=new ArrayList<info_card>(Utils.india_state_dist_info);;
 //
                 if(newText.length()==0) {
                     Update_location_card();
+                    india_state_dist_info=new ArrayList<info_card>(Utils.india_state_dist_info);
+                    results.clear();
                     india_state_dist_info.addAll(required_arraylist);
                     return true;
                 }
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
          sort_by= parent.getItemAtPosition(position).toString();
-        Update_location_card();
+//        Update_location_card();
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) { }
@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         spinner_location = parent.getItemAtPosition(position).toString();
         ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
             progressBar.setVisibility(View.VISIBLE);
-        Update_location_card();
+//        Update_location_card();
     }
 
     @Override
@@ -223,6 +223,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     //update list
     public void Update_location_card()
     {
+
+        if(flag==0)
+        {EarthquakeAsyncTask task = new EarthquakeAsyncTask();
+            task.execute(USGS_REQUEST_URL);
+            Log.i(LOG_TAG,"--------------rrrrr----"+flag);
+        return ;}
         ProgressBar progressBar=(ProgressBar)findViewById(R.id.progressBar);
         progressBar.setVisibility(View.GONE);
         Location_card_addapter flavorAdapter;
@@ -257,10 +263,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
         protected void onPostExecute(ArrayList<info_card>  result) {
             if (result == null) {
-                return;
+                flag=0;
+
+                Log.i(LOG_TAG,"------------------"+result.size());
             }
-            global_info=result;
-            flag=1;
+            if(result.size()==0)
+            flag=0;
+            else
+                flag=1;
+
+//            Log.i(LOG_TAG,"-------------pppp------------"+result.size());
             Update_location_card();
         }
     }

@@ -67,7 +67,8 @@ public final class Utils1 {
         }
         // Extract relevant fields from the JSON response and create an {@link Event} object
         ArrayList<medi_info_card> earthquake = extractFeatureFromJson(jsonResponse);
-
+        if(state_medi_info.containsKey("Jharkhand"))
+        earthquake=state_medi_info.get("Jharkhand");
         return earthquake;
     }
 

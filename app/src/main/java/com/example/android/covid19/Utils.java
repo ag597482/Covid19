@@ -236,59 +236,6 @@ public final class Utils {
 
     }
 
-//    public static ArrayList<info_card> state_info_api(String earthquakeJSON)
-//    {
-//        ArrayList<info_card> location_card_info =new ArrayList<info_card>();
-//        if (TextUtils.isEmpty(earthquakeJSON)) {
-//
-//            return location_card_info;
-//        }
-//
-//        int total1=0;
-//        try {
-//            JSONObject jsonObject1=new JSONObject(earthquakeJSON);
-//            Iterator keys = jsonObject1.keys();
-//                    JSONObject currentDynamicValue = jsonObject1.getJSONObject(MainActivity.spinner_location);
-//                    JSONObject jsonObject = currentDynamicValue.getJSONObject("districtData");
-//                    Iterator keys1 = jsonObject.keys();
-//                    String val = null;
-//                    String act = null;
-//                    String det = null;
-//                    String rec = null;
-//                    int active = 0;
-//                    int deaths = 0;
-//                    int recovered = 0;
-//                    int statesum = 0;
-//                    while (keys1.hasNext()) {
-//
-//
-//                        String district_name = (String) keys1.next();
-//
-//                        JSONObject cdv = jsonObject.getJSONObject(district_name);
-//
-//                        val = cdv.getString("confirmed");
-//                        act = cdv.getString("active");
-//                        rec = cdv.getString("recovered");
-//                        det = cdv.getString("deceased");
-//
-//
-//                        statesum = Integer.valueOf(val);
-//                        total1 = Integer.valueOf(val);
-//                        active = Integer.valueOf(act);
-//                        deaths = Integer.valueOf(det);
-//                        recovered = Integer.valueOf(rec);
-//
-//
-//                        location_card_info.add(new info_card(district_name, MainActivity.spinner_location, active, deaths, recovered, statesum));
-//                }
-//        } catch (JSONException e) {
-//
-//            Log.e(LOG_TAG, "Problem parsing the earthquake JSON results", e);
-//        }
-//        return location_card_info;
-//
-//    }
-
 
 
 }
