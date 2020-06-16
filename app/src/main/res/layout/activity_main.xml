@@ -11,7 +11,7 @@
 
     <androidx.appcompat.widget.SearchView
         android:id="@+id/serch"
-        android:layout_width="345dp"
+        android:layout_width="0dp"
         android:layout_height="33dp"
         android:layout_marginStart="8dp"
 
@@ -72,19 +72,14 @@
         android:id="@+id/sort_list"
         android:layout_width="33dp"
         android:layout_height="33dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="15dp"
         android:background="@drawable/s2"
         android:gravity="center"
         android:popupBackground="@drawable/rectangular"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toTopOf="@+id/list_pre"
         app:layout_constraintEnd_toEndOf="@+id/constraintLayout3"
-        app:layout_constraintStart_toEndOf="@+id/serch"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
 
     <TextView
@@ -104,14 +99,14 @@
 
     <TextView
         android:id="@+id/total_cases"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/rounded_textview"
         android:gravity="center"
-        android:text="1000000"
+        android:text="10000000"
         android:textColor="#FFFFFF"
-        android:textSize="30sp"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/hospital_name" />
@@ -121,7 +116,7 @@
         android:id="@+id/total_case_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="30dp"
         android:text="Total Case"
         android:textColor="#FFFFFF"
         android:textStyle="bold|italic"
@@ -132,7 +127,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="120dp"
-        android:layout_height="65dp"
+        android:layout_height="55dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -179,6 +174,7 @@
             android:gravity="center"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/total_recovery" />
@@ -199,7 +195,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout2"
         android:layout_width="120dp"
-        android:layout_height="65dp"
+        android:layout_height="55dp"
         android:layout_marginTop="8dp"
         android:background="@color/colorPrimaryDark"
         android:orientation="vertical"
@@ -241,6 +237,7 @@
             android:gravity="center"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/total_death" />
@@ -267,6 +264,7 @@
         android:gravity="center"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/total_cases"
         app:layout_constraintStart_toStartOf="@+id/total_cases"
         app:layout_constraintTop_toTopOf="@+id/total_cases" />
@@ -276,6 +274,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="@+id/one_day_cases"
         app:layout_constraintStart_toStartOf="@+id/one_day_cases"
         app:layout_constraintTop_toBottomOf="@+id/one_day_cases"
@@ -284,7 +283,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout3"
         android:layout_width="120dp"
-        android:layout_height="65dp"
+        android:layout_height="55dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
@@ -331,6 +330,7 @@
             android:gravity="center"
             android:textColor="#FFFFFF"
             android:textSize="16sp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/total_active" />
@@ -352,7 +352,7 @@
         android:id="@+id/list_pre"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="310dp"
+        android:layout_marginTop="280dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

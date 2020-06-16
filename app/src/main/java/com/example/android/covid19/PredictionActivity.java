@@ -2,6 +2,7 @@ package com.example.android.covid19;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,7 +20,7 @@ public class PredictionActivity extends AppCompatActivity {
 
 
     public static final String LOG_TAG = PredictionActivity.class.getSimpleName();
-    public static String location_slected;
+    public static String location_slected,location_detail;
     public static String spinner_location=MainActivity.spinner_location;
 
 
@@ -32,6 +33,9 @@ public class PredictionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_prediction);
         location_slected = getIntent().getData().toString();
+        Intent intent = getIntent();
+        String address = intent.getStringExtra("address");
+        location_detail=address;
         Log.i(LOG_TAG,location_slected+" "+spinner_location);
         TextView top_location_name=findViewById(R.id.hospital_name);
         top_location_name.setText(location_slected);
@@ -134,15 +138,15 @@ public class PredictionActivity extends AppCompatActivity {
     private void Update_location_card() {
         medi_card_addapter flavorAdapter;
         ArrayList<medi_info_card> required_list=null;
-        if(spinner_location.equals("India"))
+        if(location_detail.equals("India"))
         {
             if(Utils1.state_medi_info.containsKey(location_slected))
             required_list=new ArrayList<medi_info_card>(Utils1.state_medi_info.get(location_slected));
         }
         else
         {
-            if(Utils1.state_medi_info.containsKey(spinner_location))
-            required_list=new ArrayList<medi_info_card>(Utils1.state_medi_info.get(spinner_location));
+            if(Utils1.state_medi_info.containsKey(location_detail))
+            required_list=new ArrayList<medi_info_card>(Utils1.state_medi_info.get(location_detail));
         }
         if(required_list.size()==0)
             return ;
