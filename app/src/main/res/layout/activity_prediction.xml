@@ -114,7 +114,7 @@ tools:context=".PredictionActivity">
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="65dp"
-            android:background="@drawable/rectangular"
+            android:background="@drawable/yellowrec"
             android:orientation="vertical"
             android:layout_gravity="center"
 
@@ -142,7 +142,7 @@ tools:context=".PredictionActivity">
 
                 android:gravity="center"
                 android:text="-------"
-                android:textColor="@color/yello"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 android:textSize="18sp"
 
@@ -182,7 +182,7 @@ tools:context=".PredictionActivity">
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="65dp"
-            android:background="@drawable/rectangular"
+            android:background="@drawable/greenrec"
             android:orientation="vertical"
             android:layout_gravity="center"
 
@@ -210,7 +210,7 @@ android:textSize="18sp"
                 android:gravity="center"
                 android:text="------"
                 android:textStyle="bold"
-                android:textColor="@color/green"
+                android:textColor="@color/colorPrimary"
 
                 />
             <LinearLayout
@@ -248,7 +248,7 @@ android:textSize="18sp"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_margin="1dp"
-            android:background="@drawable/rectangular"
+            android:background="@drawable/redrec"
             android:orientation="vertical"
             >
 
@@ -271,7 +271,7 @@ android:textSize="18sp"
                 android:gravity="center"
                 android:text="----"
                 android:textSize="18sp"
-                android:textColor="@color/red"
+                android:textColor="@color/colorPrimary"
                 android:textStyle="bold"
                 />
             <LinearLayout
@@ -385,11 +385,6 @@ android:textSize="18sp"
                 android:layout_height="wrap_content"
                 android:text="State Helpline No. "
                 android:textSize="20sp"/>
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/red"
-                app:srcCompat="@android:drawable/stat_sys_phone_call" />
 
             <TextView
                 android:layout_width="wrap_content"

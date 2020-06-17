@@ -193,11 +193,24 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent intent=new Intent(MainActivity.this,PredictionActivity.class);
+
+
+                        Intent intent1 = new Intent(MainActivity.this,ScrollPrediction.class);
+
                         info_card infoCard=(info_card)parent.getItemAtPosition(position);
-                        intent.setData(Uri.parse(infoCard.getLocation_name()));
-                       // intent.putExtra("address", infoCard.getLocation_detail());
-                        startActivity(intent);
+                        intent1.setData(Uri.parse(infoCard.getLocation_name()));
+                        startActivity(intent1);
+
+
+
+
+
+//
+//                        Intent intent=new Intent(MainActivity.this,PredictionActivity.class);
+//                        info_card infoCard=(info_card)parent.getItemAtPosition(position);
+//                        intent.setData(Uri.parse(infoCard.getLocation_name()));
+//                       // intent.putExtra("address", infoCard.getLocation_detail());
+//                        startActivity(intent);
                     }
                 });
 

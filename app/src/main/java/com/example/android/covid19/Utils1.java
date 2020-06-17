@@ -175,8 +175,11 @@ public class Utils1 {
                 if(state_medi_info.containsKey(state_name))
                 {
                     ArrayList<medi_info_card> temp=new ArrayList<medi_info_card>(state_medi_info.get(state_name));
+
+                    if(!temp.contains(hospital_name))
                     temp.add(new medi_info_card(hospital_name,hospital_bed,city));
 //                    Log.i(LOG_TAG,state_name+"  -  "+temp.size());
+                    state_medi_info.remove(state_name);
                     state_medi_info.put(state_name,temp);
                 }
                 else

@@ -1,6 +1,6 @@
 package com.example.android.covid19;
 
-public class medi_info_card {
+public class medi_info_card  {
 
     String hospital_name,bed,city;
     public medi_info_card(String hospital_namet, String bedt, String cityt)

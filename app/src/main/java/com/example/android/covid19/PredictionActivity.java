@@ -64,7 +64,6 @@ public class PredictionActivity extends AppCompatActivity {
 
 
 
-
         aro=findViewById(R.id.arrow);
 
 

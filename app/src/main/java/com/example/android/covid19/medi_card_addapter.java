@@ -28,7 +28,7 @@ import java.util.ArrayList;
 * {@link AndroidFlavorAdapter} is an {@link ArrayAdapter} that can provide the layout for each list
 * based on a data source, which is a list of {@link AndroidFlavor} objects.
 * */
-public class medi_card_addapter extends ArrayAdapter<medi_info_card> {
+public class medi_card_addapter extends ArrayAdapter<medi_info_card>  {
 
     private static final String LOG_TAG = medi_card_addapter.class.getSimpleName();
 

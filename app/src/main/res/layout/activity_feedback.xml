@@ -1,22 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
 
+    android:id="@+id/parent"
     android:background="@color/colorPrimary"
-    android:layout_height="match_parent">
-<LinearLayout
-    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+
     tools:context=".FeedbackActivity">
 
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:id="@+id/n1"
 
         android:layout_margin="8dp">
         <EditText
@@ -31,7 +29,8 @@
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:id="@+id/m1"
+        android:layout_below="@+id/n1"
         android:layout_margin="8dp">
         <EditText
             android:id="@+id/mobile"
@@ -39,7 +38,9 @@
             android:layout_height="wrap_content"
             android:inputType="number"
             android:maxLength="10"
+
             android:textSize="20sp"
+
             android:hint="Mobile No."/>
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -48,6 +49,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
+        android:id="@+id/f1"
+        android:layout_below="@+id/m1"
 
         >
         <EditText
@@ -65,10 +68,51 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Submit"
+        android:layout_centerHorizontal="true"
+
+        android:layout_below="@id/f1"
         android:background="@color/colorAccent"
         android:textColor="#ffffff"
 />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/contus"
+        android:orientation="vertical"
+
+        android:background="@color/colorAccent"
+        android:layout_alignParentBottom="true"
+
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
+            android:text="Contact Us"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            android:layout_margin="5dp"
+            android:text="Aman Gupta  (contactamanpublic@gmail.com)"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimary"
+            android:textSize="15sp"
+            android:layout_margin="5dp"
+            android:text="Rajan Jaiswal  (rajanjais4@gmail.com)"
+            />
+
+    </LinearLayout>
 
 
-</LinearLayout>
-</ScrollView>
+
+</RelativeLayout>
