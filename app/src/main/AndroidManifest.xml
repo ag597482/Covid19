@@ -13,6 +13,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ScrollPrediction"
+            android:label=""
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".MainActivity">
 
@@ -53,8 +54,7 @@
         <activity
             android:name=".PredictionActivity"
             android:label="Details and Prediction"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:parentActivityName=".MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data

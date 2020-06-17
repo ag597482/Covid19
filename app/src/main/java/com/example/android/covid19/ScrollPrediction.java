@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ScrollPrediction extends AppCompatActivity {
 
@@ -32,12 +33,23 @@ public class ScrollPrediction extends AppCompatActivity {
     public String location_slected,location_detail;
 
     ProgressBar progressBar;
-    TextView textView,active,deaths,rec,dttt,dtta,dttr,dttd,pred,tday,place,stname;
+    TextView textView,active,deaths,rec,dttt,dtta,dttr,dttd,pred,tday,place,stname,helpline;
     ImageView aro;
 
 
     private static final String USGS_REQUEST_URL =
             "https://api.rootnet.in/covid19-in/hospitals/medical-colleges";
+
+    static String [] state= {"India","Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar", "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh", "Jammu and Kashmir", "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra", "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab", "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura", "Uttarakhand", "Uttar Pradesh", "West Bengal", "Andaman and Nicobar Islands", "Chandigarh",
+            "Dadra and Nagar Haveli", "Dadra and Nagar Haveli and Daman and Diu", "Delhi", "Lakshadweep", "Puducherry"} ;
+
+    static String [] hno= {"011-23978046","0866-2410978", "9436055743", "6913347770", "104", "9779558282", "104", "104", "8558893911", "104", "01912520982", "104", "104", "0471-2552056", "104", "020-26127394", "3852411668", "108", "102", "7005539653", "9439994859", "104", "0141-2225624", "104", "044-29510500", "104", "0381-2315879", "104", "18001805145", "1800313444222", "03192-232102", "104",
+            "104", "104", "011-22307145", "104", "104"} ;
+
+    HashMap<String,String> shno;
+
+
+    String str;
 
 
 
@@ -48,9 +60,15 @@ public class ScrollPrediction extends AppCompatActivity {
         setContentView(R.layout.activity_scroll_prediction);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setVisibility(View.GONE);
+
+       // toolbar.setVisibility(View.GONE);
 
 
+        shno=new HashMap<>();
+        for(int i=0;i<state.length;i++)
+        {
+            shno.put(state[i],hno[i]);
+        }
 
         aro=findViewById(R.id.arrow);
 
@@ -73,10 +91,19 @@ public class ScrollPrediction extends AppCompatActivity {
 
 
 
+
         location_slected = getIntent().getData().toString();
 
 
         location_detail = QueryUtils.detacard.get(location_slected).getLocation_detail();
+
+
+        String no="104";
+        if(shno.containsKey(location_detail))
+            no=shno.get(location_detail);
+
+        helpline=findViewById(R.id.shn);
+        helpline.setText("State Helpline No: "+no);
 
 
         String cardclicked = getIntent().getData().toString();
@@ -125,7 +152,9 @@ public class ScrollPrediction extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                String str="tel:104";
+                 str="tel:104";
+                if(shno.containsKey(location_detail));
+                str="tel:"+shno.get(location_detail);
                 Intent intent = new Intent(Intent.ACTION_DIAL);
                 intent.setData(Uri.parse(str));
                 startActivity(intent);

@@ -341,7 +341,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/colorPrimaryDark"
                 android:layout_margin="5dp">
 
                 <TextView
@@ -362,6 +361,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:id="@+id/shn"
+                        android:layout_marginLeft="10dp"
                         android:textColor="#000000"
                         android:text="State Helpline No. : 104"
                         android:textSize="20sp"
