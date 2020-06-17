@@ -180,6 +180,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 Intent intent =new Intent(MainActivity.this,GraphActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.feedback:
+                Intent intent1 =new Intent(MainActivity.this,FeedbackActivity.class);
+                startActivity(intent1);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
