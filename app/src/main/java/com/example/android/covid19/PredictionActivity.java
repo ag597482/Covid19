@@ -9,6 +9,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jjoe64.graphview.GraphView;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
@@ -77,11 +79,9 @@ public class PredictionActivity extends AppCompatActivity {
         dtta = (TextView)findViewById(R.id.dactive);
         dttr = (TextView)findViewById(R.id.drecovered);
         dttd = (TextView)findViewById(R.id.ddeaths);
-        stname =findViewById(R.id.sname);
 
 
         place=(TextView)findViewById(R.id.place);
-        progressBar=findViewById(R.id.progres);
 
 
 
@@ -94,7 +94,6 @@ public class PredictionActivity extends AppCompatActivity {
         String cardclicked = getIntent().getData().toString();
         place.setText(cardclicked);
 
-        stname.setText(location_detail);
 
         info_card infoCard=QueryUtils.detacard.get(cardclicked);
         textView.setText(infoCard.getLocation_total_cases()+ "");
@@ -132,9 +131,17 @@ public class PredictionActivity extends AppCompatActivity {
 
 
 
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        EarthquakeAsyncTask task = new EarthquakeAsyncTask();
-        task.execute(USGS_REQUEST_URL);
+
+                Intent intent = new Intent(Intent.ACTION_DIAL);
+                intent.setData(Uri.parse("tel:011-23978046"));
+                startActivity(intent);
+            }
+        });
 
     }
 
@@ -164,63 +171,5 @@ public class PredictionActivity extends AppCompatActivity {
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
     }
 
-
-
-    private class EarthquakeAsyncTask extends AsyncTask<String, Void, ArrayList<medi_info_card>> {
-
-        protected ArrayList<medi_info_card> doInBackground(String... urls) {
-            // Don't perform the request if there are no URLs, or the first URL is null.
-            if (urls.length < 1 || urls[0] == null) {
-                return null;
-            }
-            ArrayList<medi_info_card> result = Utils1.fetchEarthquakeData(urls[0]);
-            return result;
-        }
-
-
-        protected void onPostExecute(ArrayList<medi_info_card> result) {
-
-
-            if(Utils1.state_medi_info.containsKey(location_detail))
-            {
-                progressBar.setVisibility(View.GONE);
-                medi_card_addapter flavorAdapter;
-                ArrayList<medi_info_card> required_list=new ArrayList<>();
-
-                    required_list=new ArrayList<>(Utils1.state_medi_info.get(location_detail));
-
-
-                if(required_list.size()==0)
-                    return ;
-
-
-                flavorAdapter = new medi_card_addapter(PredictionActivity.this, required_list);
-                ListView listView = (ListView) findViewById(R.id.list_pre);
-                listView.setAdapter(flavorAdapter);
-                int tb=0;
-                for (int i=0;i<required_list.size();i++)
-                {
-                  tb=tb+Integer.valueOf(required_list.get(i).getBed());
-                }
-                TextView total_hospitals=findViewById(R.id.hospital_value);
-
-                total_hospitals.setText(String.valueOf(required_list.size()));
-
-                TextView total_beds=findViewById(R.id.bed_value);
-                total_beds.setText(String.valueOf(tb));
-
-
-
-            }
-            else
-            {
-
-                progressBar.setVisibility(View.GONE);
-                Toast.makeText(PredictionActivity.this,"Hospital Data not found",Toast.LENGTH_SHORT).show();
-            }
-
-        }
-
-    }
 
 }

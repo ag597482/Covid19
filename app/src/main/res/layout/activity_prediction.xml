@@ -297,7 +297,7 @@ android:textSize="18sp"
         android:layout_gravity="center"
         android:textAlignment="center"
 
-        android:background="@drawable/sp_list_item"
+        android:background="@color/black_overlay"
         android:textAppearance="@style/TextAppearance.AppCompat"/>
 
     <TextView
@@ -309,7 +309,7 @@ android:textSize="18sp"
         android:padding="5dp"
         android:textStyle="bold"
         android:textColor="#ffffff"
-        android:background="@drawable/sp_list_item"
+        android:background="@color/black_overlay"
 
         android:layout_gravity="center"
         android:textAlignment="center"

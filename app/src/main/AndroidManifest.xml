@@ -53,7 +53,7 @@
         </activity>
         <activity
             android:name=".PredictionActivity"
-            android:label="Details and Prediction"
+            android:label="Details"
             android:parentActivityName=".MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->

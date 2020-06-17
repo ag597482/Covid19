@@ -197,16 +197,24 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
                         Intent intent1 = new Intent(MainActivity.this,ScrollPrediction.class);
 
+
+                        Intent intent=new Intent(MainActivity.this,PredictionActivity.class);
+
                         info_card infoCard=(info_card)parent.getItemAtPosition(position);
                         intent1.setData(Uri.parse(infoCard.getLocation_name()));
+                        intent.setData(Uri.parse(infoCard.getLocation_name()));
+
+
+                        if(infoCard.getLocation_name().equals("India"))
+                        startActivity(intent);
+                        else
                         startActivity(intent1);
 
 
 
 
 
-//
-//                        Intent intent=new Intent(MainActivity.this,PredictionActivity.class);
+
 //                        info_card infoCard=(info_card)parent.getItemAtPosition(position);
 //                        intent.setData(Uri.parse(infoCard.getLocation_name()));
 //                       // intent.putExtra("address", infoCard.getLocation_detail());
