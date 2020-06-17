@@ -1,18 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:layout_height="match_parent"
+
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+
+xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+android:background="@color/colorPrimary"
+tools:context=".PredictionActivity">
 
-    android:background="@color/colorPrimary"
-    tools:context=".PredictionActivity">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+    <com.google.android.material.appbar.CollapsingToolbarLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:contentScrim="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|snap|enterAlways"
+        app:toolbarId="@+id/toolbar">
+
 <LinearLayout
-
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-    android:orientation="vertical"
->
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -27,8 +47,8 @@ android:layout_height="match_parent"
         />
 
     <LinearLayout
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
         android:layout_margin="5dp"
         android:background="@drawable/rounded_textview"
         android:gravity="center"
@@ -44,7 +64,7 @@ android:layout_height="match_parent"
             android:layout_gravity="center"
             android:text="Total Cases"
             android:textColor="@android:color/white"
-            android:textSize="16sp"
+            android:textSize="15sp"
             />
         <TextView
             android:id="@+id/total"
@@ -55,7 +75,7 @@ android:layout_height="match_parent"
             android:layout_gravity="center"
             android:text="------"
             android:textColor="@android:color/white"
-            android:textSize="30sp"
+            android:textSize="26sp"
             />
         <LinearLayout
             android:layout_width="wrap_content"
@@ -281,9 +301,13 @@ android:textSize="18sp"
         </LinearLayout>
     </LinearLayout>
 
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="Recovery rate : 0.1%"
         android:textStyle="bold"
@@ -299,7 +323,8 @@ android:textSize="18sp"
         android:textAppearance="@style/TextAppearance.AppCompat"/>
 
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="wrap_content"
         android:text="Mortality rate : 0.1%"
         android:layout_margin="3dp"
@@ -313,22 +338,70 @@ android:textSize="18sp"
         android:id="@+id/dra"
         android:textSize="20sp"
         android:textAppearance="@style/TextAppearance.AppCompat"/>
+</LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rectangular"
+        android:layout_margin="5dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="State name"
+        android:textColor="#000000"
+        android:layout_margin="2dp"
+        android:layout_gravity="center_horizontal"
+        android:textSize="29sp"
         android:id="@+id/sname"
         />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/hospital_value"/>
+        android:id="@+id/hospital_value"
+
+        android:layout_margin="2dp"
+        android:text="No. of Hospitals in State  : 30"
+        android:textSize="20sp"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/bed_value"/>
+        android:id="@+id/bed_value"
+        android:textSize="20sp"
+
+        android:layout_margin="2dp"
+        android:text="No. of beds in State          : 345"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+
+            android:layout_margin="2dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="State Helpline No. "
+                android:textSize="20sp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/red"
+                app:srcCompat="@android:drawable/stat_sys_phone_call" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="     909093332"
+                android:textSize="20sp"/>
+
+        </LinearLayout>
+
+
+
+    </LinearLayout>
     <ProgressBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -336,18 +409,77 @@ android:textSize="18sp"
         android:layout_gravity="center"
         android:layout_margin="20dp"
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="5"
+            android:layout_height="wrap_content"
+            android:text="Hospital Name"
+            android:textStyle="bold"
+
+            android:textSize="18sp"
+
+            android:layout_gravity="center"
+            android:textAlignment="center"
+
+            android:background="@drawable/sp_list_item"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:text="City"
+
+            android:textStyle="bold"
+            android:textColor="#000000"
+
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="wrap_content"
+            android:text="Bed Count"
+
+            android:layout_gravity="center"
+            android:textAlignment="center"
+
+            android:textStyle="bold"
+            android:textColor="#000000"
+            android:background="@drawable/sp_list_item"
+            />
+    </LinearLayout>
+</LinearLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
     <ListView
         android:id="@+id/list_pre"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_marginTop="10dp">
 
     </ListView>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/fab_margin"
+        app:layout_anchor="@id/app_bar"
+        app:layout_anchorGravity="bottom|end"
+        app:srcCompat="@drawable/common_full_open_on_phone" />
 
 
-
-
-
-</LinearLayout>
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

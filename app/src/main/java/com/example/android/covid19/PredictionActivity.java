@@ -87,12 +87,14 @@ public class PredictionActivity extends AppCompatActivity {
 
 
         location_slected = getIntent().getData().toString();
-        String location_detail = QueryUtils.detacard.get(location_slected).getLocation_detail();
 
+
+        location_detail = QueryUtils.detacard.get(location_slected).getLocation_detail();
 
 
         String cardclicked = getIntent().getData().toString();
         place.setText(cardclicked);
+
         stname.setText(location_detail);
 
         info_card infoCard=QueryUtils.detacard.get(cardclicked);
@@ -163,31 +165,7 @@ public class PredictionActivity extends AppCompatActivity {
         exampleDialog.show(getSupportFragmentManager(), "example dialog");
     }
 
-    public void medi_sum(ArrayList<medi_info_card> list)
-    {
-        int total_bed=0,total_hospital=list.size();
-        for(int i=0;i<list.size();i++)
-            total_bed+= Integer.valueOf(list.get(i).getBed());
 
-        TextView total_hospitals=findViewById(R.id.hospital_value);
-
-        total_hospitals.setText(String.valueOf(total_hospital));
-
-        TextView total_beds=findViewById(R.id.bed_value);
-        total_beds.setText(String.valueOf(total_bed));
-    }
-    private void Update_location_card() {
-
-        if(flag==0)
-        {
-            EarthquakeAsyncTask task = new EarthquakeAsyncTask();
-            task.execute(USGS_REQUEST_URL);
-            Log.i(LOG_TAG,"--------------preprerrrrr----"+flag);
-            return ;}
-
-
-
-    }
 
     private class EarthquakeAsyncTask extends AsyncTask<String, Void, ArrayList<medi_info_card>> {
 
@@ -202,33 +180,35 @@ public class PredictionActivity extends AppCompatActivity {
 
 
         protected void onPostExecute(ArrayList<medi_info_card> result) {
+
+
             if(Utils1.state_medi_info.containsKey(location_detail))
             {
                 progressBar.setVisibility(View.GONE);
                 medi_card_addapter flavorAdapter;
                 ArrayList<medi_info_card> required_list=new ArrayList<>();
 
-                Toast.makeText(PredictionActivity.this,Utils1.state_medi_info.get(location_detail).size(),Toast.LENGTH_SHORT).show();
-//                if(Utils1.state_medi_info.containsKey(location_detail))
-//                    required_list=new ArrayList<>(Utils1.state_medi_info.get(location_detail));
-//                else
-//                    return;
-////                if(location_detail.equals("India"))
-////                {
-////                    if(Utils1.state_medi_info.containsKey(location_slected))
-////                        required_list=new ArrayList<medi_info_card>(Utils1.state_medi_info.get(location_slected));
-////                }
-////                else
-////                {
-////                    if(Utils1.state_medi_info.containsKey(location_detail))
-////                        required_list=new ArrayList<medi_info_card>(Utils1.state_medi_info.get(location_detail));
-////                }
-////                if(required_list.size()==0)
-////                    return ;
-//                //medi_sum(required_list);
-//                flavorAdapter = new medi_card_addapter(PredictionActivity.this, required_list);
-//                ListView listView = (ListView) findViewById(R.id.list_pre);
-//                listView.setAdapter(flavorAdapter);
+                    required_list=new ArrayList<>(Utils1.state_medi_info.get(location_detail));
+
+
+                if(required_list.size()==0)
+                    return ;
+
+
+                flavorAdapter = new medi_card_addapter(PredictionActivity.this, required_list);
+                ListView listView = (ListView) findViewById(R.id.list_pre);
+                listView.setAdapter(flavorAdapter);
+                int tb=0;
+                for (int i=0;i<required_list.size();i++)
+                {
+                  tb=tb+Integer.valueOf(required_list.get(i).getBed());
+                }
+                TextView total_hospitals=findViewById(R.id.hospital_value);
+
+                total_hospitals.setText(String.valueOf(required_list.size()));
+
+                TextView total_beds=findViewById(R.id.bed_value);
+                total_beds.setText(String.valueOf(tb));
 
 
 
@@ -236,18 +216,10 @@ public class PredictionActivity extends AppCompatActivity {
             else
             {
 
-
-                Toast.makeText(PredictionActivity.this,Utils1.state_medi_info.size()+ " " + Utils1.state_medi_info.get("Delhi"),Toast.LENGTH_LONG).show();
+                progressBar.setVisibility(View.GONE);
+                Toast.makeText(PredictionActivity.this,"Hospital Data not found",Toast.LENGTH_SHORT).show();
             }
-//            if (result == null) {
-//                return;
-//            }
-//            Log.i(LOG_TAG,"-------------prepre------------"+result.size());
-//            if(result.size()==0)
-//                flag=0;
-//            else
-//                flag=1;
-//            Update_location_card();
+
         }
 
     }

@@ -377,9 +377,14 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
                 deaths.setText(String.valueOf(QueryUtils.deaths));
                 rec.setText(String.valueOf(QueryUtils.recovered));
                 ArrayList<String> states = new ArrayList<>(QueryUtils.all.keySet());
+
+                states.remove("India");
+                states.remove("India-Districts");
                 Collections.sort(states);
 
+                if(!states.contains("India"))
                 states.add(0,"India");
+                if(!states.contains("India-Districts"))
                 states.add(1,"India-Districts");
 
                 ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getBaseContext(),R.layout.test,states);

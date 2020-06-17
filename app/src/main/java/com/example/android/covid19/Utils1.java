@@ -188,6 +188,7 @@ public class Utils1 {
             }
             ArrayList<medi_info_card> temp1=new ArrayList<medi_info_card>();
             state_medi_info.put("State Unassigned",temp1);
+            state_medi_info.put("India",temp1);
 
 
         } catch (JSONException e) {
