@@ -1,6 +1,7 @@
 package com.example.android.covid19;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.security.SecureRandom;
+import java.util.Date;
 
 public class FeedbackActivity extends AppCompatActivity {
 
@@ -33,7 +37,10 @@ public class FeedbackActivity extends AppCompatActivity {
         name2=findViewById(R.id.name2);
         mobi2=findViewById(R.id.mobi2);
 
-        int random = (int )(Math.random())%2;
+        long i = (long) new Date().getTime();
+        i=i%2;
+        int random=(int)i;
+        Log.i(String.valueOf(this),"---------time------ time"+i);
         if(random==1)
         {
             name1.setText("Rajan Jaiswal");
