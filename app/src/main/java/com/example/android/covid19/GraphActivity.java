@@ -40,7 +40,7 @@ public class GraphActivity extends AppCompatActivity {
     TextView notice1;
     FirebaseRemoteConfig firebaseRemoteConfig;
 
-    public static final String TEXTE="noTICE";
+    public static final String TEXTE="..No Internet..";
     public static final String MSG="notice";
 
     GraphView graph;
@@ -56,6 +56,8 @@ public class GraphActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
+
+
 
 
         firebaseRemoteConfig=FirebaseRemoteConfig.getInstance();
@@ -212,130 +214,6 @@ public class GraphActivity extends AppCompatActivity {
         });
 
 
-        delc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                delc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.clicked_style));
-                delr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                deld.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                totc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                totd.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                totr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                graph.removeAllSeries();
-                graph.addSeries(sdelc);
-                plotted=QueryUtils1.dc;
-
-                plotlockdown();
-
-                yc.setText("People : " + plotted.get(seekBar.getProgress()));
-                graph.getViewport().setMaxY(Collections.max(QueryUtils1.dc)+1);
-
-            }
-        });
-
-        totc.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                totc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.clicked_style));
-                delr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                deld.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                delc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                totd.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                totr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                graph.removeAllSeries();
-                graph.addSeries(stotc);
-                plotted=QueryUtils1.tc;
-
-                plotlockdown();
-
-                yc.setText("People : " + plotted.get(seekBar.getProgress()));
-                graph.getViewport().setMaxY(Collections.max(QueryUtils1.tc)+1);
-
-            }
-        });
-        delr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                delr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.clicked_style));
-                delc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                deld.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                totc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                totd.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                totr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                graph.removeAllSeries();
-                graph.addSeries(sdelr);
-                plotted=QueryUtils1.dr;
-
-                plotlockdown();
-
-                yc.setText("People : " + plotted.get(seekBar.getProgress()));
-                graph.getViewport().setMaxY(Collections.max(QueryUtils1.dr)+1);
-
-            }
-        });
-        totr.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                totr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.clicked_style));
-                delr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                deld.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                delc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                totd.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                totc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                graph.removeAllSeries();
-                graph.addSeries(stotr);
-                plotted=QueryUtils1.tr;
-
-                plotlockdown();
-
-                yc.setText("People : " + plotted.get(seekBar.getProgress()));
-                graph.getViewport().setMaxY(Collections.max(QueryUtils1.tr)+1);
-
-            }
-        });
-        deld.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deld.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.clicked_style));
-                delr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                totc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                delc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                totd.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                totr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                graph.removeAllSeries();
-                graph.addSeries(sdeld);
-                plotted=QueryUtils1.dd;
-
-
-                plotlockdown();
-
-
-                yc.setText("People : " + plotted.get(seekBar.getProgress()));
-                graph.getViewport().setMaxY(Collections.max(QueryUtils1.dd)+1);
-
-            }
-        });
-        totd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                totd.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.clicked_style));
-                delr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                deld.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                delc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                totc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                totr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.sp_style));
-                graph.removeAllSeries();
-                graph.addSeries(stotd);
-                plotted=QueryUtils1.td;
-
-                plotlockdown();
-
-
-                yc.setText("People : " + plotted.get(seekBar.getProgress()));
-                graph.getViewport().setMaxY(Collections.max(QueryUtils1.td)+1);
-
-            }
-        });
 
 
 
@@ -470,6 +348,131 @@ public class GraphActivity extends AppCompatActivity {
                 graph.getViewport().setMaxY(Collections.max(QueryUtils1.dc)+1);
 
                 delc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this,R.drawable.clicked_style));
+
+                delc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        delc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.clicked_style));
+                        delr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        deld.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        totc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        totd.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        totr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        graph.removeAllSeries();
+                        graph.addSeries(sdelc);
+                        plotted = QueryUtils1.dc;
+
+                        plotlockdown();
+
+                        yc.setText("People : " + plotted.get(seekBar.getProgress()));
+                        graph.getViewport().setMaxY(Collections.max(QueryUtils1.dc) + 1);
+
+                    }
+                });
+
+                totc.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        totc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.clicked_style));
+                        delr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        deld.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        delc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        totd.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        totr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        graph.removeAllSeries();
+                        graph.addSeries(stotc);
+                        plotted = QueryUtils1.tc;
+
+                        plotlockdown();
+
+                        yc.setText("People : " + plotted.get(seekBar.getProgress()));
+                        graph.getViewport().setMaxY(Collections.max(QueryUtils1.tc) + 1);
+
+                    }
+                });
+                delr.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        delr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.clicked_style));
+                        delc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        deld.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        totc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        totd.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        totr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        graph.removeAllSeries();
+                        graph.addSeries(sdelr);
+                        plotted = QueryUtils1.dr;
+
+                        plotlockdown();
+
+                        yc.setText("People : " + plotted.get(seekBar.getProgress()));
+                        graph.getViewport().setMaxY(Collections.max(QueryUtils1.dr) + 1);
+
+                    }
+                });
+                totr.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        totr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.clicked_style));
+                        delr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        deld.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        delc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        totd.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        totc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        graph.removeAllSeries();
+                        graph.addSeries(stotr);
+                        plotted = QueryUtils1.tr;
+
+                        plotlockdown();
+
+                        yc.setText("People : " + plotted.get(seekBar.getProgress()));
+                        graph.getViewport().setMaxY(Collections.max(QueryUtils1.tr) + 1);
+
+                    }
+                });
+                deld.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        deld.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.clicked_style));
+                        delr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        totc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        delc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        totd.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        totr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        graph.removeAllSeries();
+                        graph.addSeries(sdeld);
+                        plotted = QueryUtils1.dd;
+
+
+                        plotlockdown();
+
+
+                        yc.setText("People : " + plotted.get(seekBar.getProgress()));
+                        graph.getViewport().setMaxY(Collections.max(QueryUtils1.dd) + 1);
+
+                    }
+                });
+                totd.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        totd.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.clicked_style));
+                        delr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        deld.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        delc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        totc.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        totr.setBackgroundDrawable(ContextCompat.getDrawable(GraphActivity.this, R.drawable.sp_style));
+                        graph.removeAllSeries();
+                        graph.addSeries(stotd);
+                        plotted = QueryUtils1.td;
+
+                        plotlockdown();
+
+
+                        yc.setText("People : " + plotted.get(seekBar.getProgress()));
+                        graph.getViewport().setMaxY(Collections.max(QueryUtils1.td) + 1);
+
+                    }
+                });
 
 
 

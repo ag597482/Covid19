@@ -48,6 +48,8 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     private static final String USGS_REQUEST_URL1 =
             "https://api.covid19india.org/data.json";
 
+    MenuItem item;
+
     TextView textView,active,deaths,rec;
     ProgressBar progressBar;
     Spinner spinner;
@@ -91,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         //spinner sort
         sort_list = findViewById(R.id.sort_list);
 
+        item=findViewById(R.id.graphs);
 
 
       //  int res = ContextCompat.getDrawable(,R.drawable.rectangular);
@@ -391,6 +394,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
         @Override
         protected void onPostExecute(List<String> data) {
+
             if (data != null && !data.isEmpty()) {
                // textView.setText(data.toString());
                 textView.setText(String.valueOf(QueryUtils.total1));

@@ -214,24 +214,25 @@
 
     </LinearLayout>
     <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/notice"
+        android:text="No Internet"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        android:layout_margin="9dp"
+        />
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="Total cases"
+        android:text=""
         android:textSize="20dp"
 
         />
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/notice"
-    android:text=""
-    android:gravity="center_horizontal"
-    android:textSize="20sp"
-    android:layout_margin="9dp"
-    />
 
 
 </LinearLayout>

@@ -231,15 +231,24 @@ android:orientation="vertical">
     app:queryHint="Search ..."
 
     />
-
+         <LinearLayout
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:clickable="true"
+             android:background="@drawable/transparent_rectengle"
+             >
          <ImageView
              android:id="@+id/sort_list"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content"
              android:background="@drawable/s2"
+             android:clickable="true"
+             android:tint="@color/colorPrimaryDark"
              android:layout_gravity="center"
              android:gravity="center"
              />
+         </LinearLayout>
+
      </LinearLayout>
      <ProgressBar
          android:layout_width="wrap_content"

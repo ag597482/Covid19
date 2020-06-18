@@ -261,8 +261,7 @@ public class ScrollPrediction extends AppCompatActivity {
                     required_list = new ArrayList<>(Utils1.state_medi_info.get(location_detail));
 
 
-                    if (required_list.size() == 0)
-                        return;
+
 
 
                    // flavorAdapter = new medi_card_addapter(ScrollPrediction.this, required_list);
