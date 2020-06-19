@@ -214,40 +214,40 @@ android:orientation="vertical">
          android:layout_margin="2dp">
 
 
-<androidx.appcompat.widget.SearchView
-    android:layout_width="wrap_content"
-    android:layout_height="35dp"
-    android:layout_weight="6"
-    android:id="@+id/serch"
+         <androidx.appcompat.widget.SearchView
+             android:id="@+id/serch"
+             android:layout_width="350dp"
+             android:layout_height="35dp"
+             android:layout_marginLeft="8dp"
 
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:title="searchbar"
-    android:icon="@android:drawable/ic_menu_search"
-    app:showAsAction="ifRoom|collapseActionView"
-    app:actionViewClass="androidx.appcompat.widget.SearchView"
-    android:background="@drawable/et_style"
-    android:clickable="true"
-    app:queryHint="Search ..."
+             android:layout_marginRight="8dp"
+             android:layout_weight="1"
+             android:background="@drawable/et_style"
+             android:clickable="true"
+             android:icon="@android:drawable/ic_menu_search"
+             android:title="searchbar"
+             app:actionViewClass="androidx.appcompat.widget.SearchView"
+             app:queryHint="Search ..."
+             app:showAsAction="ifRoom|collapseActionView"
 
-    />
+             />
+
          <LinearLayout
-             android:layout_width="0dp"
+             android:layout_width="wrap_content"
              android:layout_height="match_parent"
              android:layout_weight="1"
-             android:clickable="true"
              android:background="@drawable/transparent_rectengle"
-             >
-         <ImageView
-             android:id="@+id/sort_list"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@mipmap/round_sort_black_24"
-             android:clickable="true"
-             android:tint="@color/colorPrimaryDark"
-             android:layout_gravity="center"
-             android:gravity="center"
-             />
+             android:clickable="true">
+
+             <ImageView
+                 android:id="@+id/sort_list"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 android:background="@mipmap/round_sort_black_48"
+                 android:clickable="true"
+                 android:gravity="center"
+                 android:tint="@color/colorPrimaryDark" />
          </LinearLayout>
 
      </LinearLayout>

@@ -1,6 +1,4 @@
-package com.example.android.covid19;
-
-import com.google.android.gms.common.internal.Objects;
+package com.indra.android.covid19;
 
 public class Feedback {
 

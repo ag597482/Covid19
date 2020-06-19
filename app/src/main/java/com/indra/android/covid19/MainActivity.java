@@ -1,42 +1,30 @@
-package com.example.android.covid19;
+package com.indra.android.covid19;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.ContentUris;
 import android.content.Intent;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.FilterQueryProvider;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import androidx.appcompat.widget.SearchView;
-import androidx.core.content.ContextCompat;
 
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
-
 
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
@@ -115,7 +103,14 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
 
                // ArrayList<String> distictsinstate = new ArrayList<String>(QueryUtils.disArray);
 
+
                 final ArrayList<info_card> num= new ArrayList<info_card>(QueryUtils.all.get(tutorialsName));
+                Collections.sort(num, new Comparator<info_card>() {
+                    @Override
+                    public int compare(info_card o1, info_card o2) {
+                        return o1.getLocation_name().compareTo(o2.getLocation_name());
+                    }
+                });
 
                 if(tutorialsName.equals("India-Districts"))
                 {
@@ -322,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             public int compare(info_card o1, info_card o2) {
                 if(s.equals("a"))
                 {
-                    return o2.getLocation_name().compareTo(o2.getLocation_name());
+                    return o1.getLocation_name().compareTo(o2.getLocation_name());
                 }
                 else if(s.equals("b"))
                 {

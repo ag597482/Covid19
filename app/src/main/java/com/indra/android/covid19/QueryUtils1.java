@@ -1,4 +1,4 @@
-package com.example.android.covid19;
+package com.indra.android.covid19;
 
 import android.util.Log;
 
@@ -16,7 +16,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 

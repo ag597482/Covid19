@@ -1,8 +1,4 @@
-package com.example.android.covid19;
-
-import android.content.Intent;
-
-import java.util.Comparator;
+package com.indra.android.covid19;
 
 public class info_card {
 

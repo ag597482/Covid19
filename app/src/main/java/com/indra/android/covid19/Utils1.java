@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.android.covid19;
+package com.indra.android.covid19;
 
-import android.text.TextUtils;
 import android.util.Log;
 
 import org.json.JSONArray;

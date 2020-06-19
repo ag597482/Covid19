@@ -1,4 +1,4 @@
-package com.example.android.covid19;
+package com.indra.android.covid19;
 
 import org.junit.Test;
 
