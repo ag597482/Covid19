@@ -217,7 +217,7 @@ android:orientation="vertical">
 <androidx.appcompat.widget.SearchView
     android:layout_width="wrap_content"
     android:layout_height="35dp"
-    android:layout_weight="1"
+    android:layout_weight="6"
     android:id="@+id/serch"
 
     android:layout_marginLeft="8dp"
@@ -232,16 +232,17 @@ android:orientation="vertical">
 
     />
          <LinearLayout
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
+             android:layout_width="0dp"
+             android:layout_height="match_parent"
+             android:layout_weight="1"
              android:clickable="true"
              android:background="@drawable/transparent_rectengle"
              >
          <ImageView
              android:id="@+id/sort_list"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:background="@drawable/s2"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@mipmap/round_sort_black_24"
              android:clickable="true"
              android:tint="@color/colorPrimaryDark"
              android:layout_gravity="center"

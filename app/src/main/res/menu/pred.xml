@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/insights"
-        android:icon="@drawable/i1"
+        android:icon="@mipmap/outline_help_outline_black_36"
         android:title="insight"
         app:showAsAction="ifRoom" />
 

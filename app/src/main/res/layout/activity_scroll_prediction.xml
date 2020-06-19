@@ -393,6 +393,6 @@
         android:layout_marginRight="10dp"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        app:srcCompat="@drawable/c1" />
+        app:srcCompat="@mipmap/baseline_call_white_36" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
