@@ -209,6 +209,7 @@ android:orientation="vertical">
      <LinearLayout
          android:layout_width="match_parent"
          android:layout_height="wrap_content"
+
          android:orientation="horizontal"
 
          android:layout_margin="2dp">
@@ -216,7 +217,8 @@ android:orientation="vertical">
 
          <androidx.appcompat.widget.SearchView
              android:id="@+id/serch"
-             android:layout_width="350dp"
+             android:layout_width="match_parent"
+
              android:layout_height="35dp"
              android:layout_marginLeft="8dp"
 
@@ -235,7 +237,7 @@ android:orientation="vertical">
          <LinearLayout
              android:layout_width="wrap_content"
              android:layout_height="match_parent"
-             android:layout_weight="1"
+
              android:background="@drawable/transparent_rectengle"
              android:clickable="true">
 
@@ -244,7 +246,7 @@ android:orientation="vertical">
                  android:layout_width="match_parent"
                  android:layout_height="wrap_content"
                  android:layout_gravity="center"
-                 android:background="@mipmap/round_sort_black_48"
+                 android:background="@mipmap/round_sort_black_36"
                  android:clickable="true"
                  android:gravity="center"
                  android:tint="@color/colorPrimaryDark" />
