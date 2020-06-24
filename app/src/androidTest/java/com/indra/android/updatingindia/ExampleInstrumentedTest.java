@@ -1,4 +1,4 @@
-package com.indra.android.covid19;
+package com.indra.android.updatingindia;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.android.covid19", appContext.getPackageName());
+        assertEquals("com.example.android.updatingindia", appContext.getPackageName());
     }
 }

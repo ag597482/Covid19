@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.indra.android.covid19;
+package com.indra.android.updatingindia;
 
 import android.util.Log;
 

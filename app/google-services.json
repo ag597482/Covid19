@@ -1,42 +1,42 @@
 {
   "project_info": {
-    "project_number": "114115315910",
-    "firebase_url": "https://covid-india-f6107.firebaseio.com",
-    "project_id": "covid-india-f6107",
-    "storage_bucket": "covid-india-f6107.appspot.com"
+    "project_number": "792878288394",
+    "firebase_url": "https://updating-india.firebaseio.com",
+    "project_id": "updating-india",
+    "storage_bucket": "updating-india.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:114115315910:android:0018efbef823422531efc7",
+        "mobilesdk_app_id": "1:792878288394:android:0de31b024e2e88cf10d9f3",
         "android_client_info": {
-          "package_name": "com.indra.android.covid19"
+          "package_name": "com.indra.android.updatingindia"
         }
       },
       "oauth_client": [
         {
-          "client_id": "114115315910-him1dkg0q31jogqj8nltglik1785tt62.apps.googleusercontent.com",
+          "client_id": "792878288394-kab5uqtd9p1n5elma49ntpkhm692qdgr.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.indra.android.covid19",
+            "package_name": "com.indra.android.updatingindia",
             "certificate_hash": "d394e5ab38ae19b418705d71090d07834f25aa7e"
           }
         },
         {
-          "client_id": "114115315910-okr9mv2lh92hc0cps3ojrd7qorf0v942.apps.googleusercontent.com",
+          "client_id": "792878288394-aeocn3689qj4fen0qpinsrb9cjt5p0p4.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCQjWphWquzbqiOHOtJQ_xAoHJf0l6VFzQ"
+          "current_key": "AIzaSyCcbPerfGamw9R_V4joHtnDLEclLQ57WUU"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "114115315910-okr9mv2lh92hc0cps3ojrd7qorf0v942.apps.googleusercontent.com",
+              "client_id": "792878288394-aeocn3689qj4fen0qpinsrb9cjt5p0p4.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

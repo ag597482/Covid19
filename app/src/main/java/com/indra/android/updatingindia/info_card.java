@@ -1,4 +1,4 @@
-package com.indra.android.covid19;
+package com.indra.android.updatingindia;
 
 public class info_card {
 

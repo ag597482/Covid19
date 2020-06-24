@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.indra.android.covid19">
+    package="com.indra.android.updatingindia">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -12,18 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.indra.android.covid19.ScrollPrediction"
+            android:name="com.indra.android.updatingindia.ScrollPrediction"
             android:label=""
             android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName="com.indra.android.covid19.MainActivity">
+            android:parentActivityName="com.indra.android.updatingindia.MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.indra.android.covid19.MainActivity" />
+                android:value="com.indra.android.updatingindia.MainActivity" />
         </activity>
         <activity
-            android:name="com.indra.android.covid19.Splash"
+            android:name="com.indra.android.updatingindia.Splash"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,38 +32,38 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.indra.android.covid19.FeedbackActivity"
+            android:name="com.indra.android.updatingindia.FeedbackActivity"
             android:label="Feedback"
-            android:parentActivityName="com.indra.android.covid19.MainActivity">
+            android:parentActivityName="com.indra.android.updatingindia.MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.indra.android.covid19.MainActivity" />
+                android:value="com.indra.android.updatingindia.MainActivity" />
         </activity>
         <activity
-            android:name="com.indra.android.covid19.GraphActivity"
+            android:name="com.indra.android.updatingindia.GraphActivity"
             android:label="Analytics"
-            android:parentActivityName="com.indra.android.covid19.MainActivity">
+            android:parentActivityName="com.indra.android.updatingindia.MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.indra.android.covid19.MainActivity" />
+                android:value="com.indra.android.updatingindia.MainActivity" />
         </activity>
         <activity
-            android:name="com.indra.android.covid19.PredictionActivity"
+            android:name="com.indra.android.updatingindia.PredictionActivity"
             android:label="Details"
-            android:parentActivityName="com.indra.android.covid19.MainActivity">
+            android:parentActivityName="com.indra.android.updatingindia.MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.indra.android.covid19.MainActivity" />
+                android:value="com.indra.android.updatingindia.MainActivity" />
         </activity>
         <activity
-            android:name="com.indra.android.covid19.MainActivity"
-            android:label="Covid-India"></activity>
+            android:name="com.indra.android.updatingindia.MainActivity"
+            android:label="Updating India"></activity>
     </application>
 
 </manifest>
