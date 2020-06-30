@@ -229,7 +229,7 @@ android:orientation="vertical">
              android:icon="@android:drawable/ic_menu_search"
              android:title="searchbar"
              app:actionViewClass="androidx.appcompat.widget.SearchView"
-             app:queryHint="Search ..."
+             app:queryHint="Search Any State/District ..."
              app:showAsAction="ifRoom|collapseActionView"
 
              />
