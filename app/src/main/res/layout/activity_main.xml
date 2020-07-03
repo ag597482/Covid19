@@ -17,13 +17,23 @@ android:orientation="vertical">
         android:orientation="vertical"
         android:layout_margin="5dp">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select State"
+            android:layout_gravity="center"
+            android:textAlignment="center"
+            android:textColor="#000000"
+            android:textSize="9sp"
+
+            />
         <Spinner
             android:id="@+id/spinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:dropDownWidth="280dp"
             android:popupBackground="@drawable/rectangular"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="8dp"
             android:layout_marginLeft="30dp"
             />
 
@@ -73,7 +83,7 @@ android:orientation="vertical">
             android:id="@+id/constraintLayout"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="65dp"
+            android:layout_height="60dp"
             android:background="@drawable/yellowrec"
             android:orientation="vertical"
             android:layout_gravity="center"
@@ -88,7 +98,7 @@ android:orientation="vertical">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Active Cases"
-
+                android:textSize="12sp"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold|italic"
                 android:layout_gravity="center"
@@ -119,7 +129,7 @@ android:orientation="vertical">
             android:id="@+id/constraintLayout2"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="65dp"
+            android:layout_height="60dp"
             android:background="@drawable/greenrec"
             android:orientation="vertical"
             android:layout_gravity="center"
@@ -132,6 +142,7 @@ android:orientation="vertical">
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Recovered Cases"
+                android:textSize="12sp"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold|italic"
                 android:layout_gravity="center"
@@ -161,7 +172,7 @@ android:orientation="vertical">
             android:id="@+id/constraintLayout3"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="65dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
             android:gravity="center"
             android:layout_margin="1dp"
@@ -175,6 +186,7 @@ android:orientation="vertical">
                 android:layout_height="wrap_content"
                 android:text="Death Cases"
                 android:textColor="#FFFFFF"
+                android:textSize="12sp"
                 android:textStyle="bold|italic"
                 android:layout_gravity="center"
                 android:gravity="center"
@@ -228,6 +240,7 @@ android:orientation="vertical">
              android:clickable="true"
              android:icon="@android:drawable/ic_menu_search"
              android:title="searchbar"
+             app:iconifiedByDefault="false"
              app:actionViewClass="androidx.appcompat.widget.SearchView"
              app:queryHint="Search Any State/District ..."
              app:showAsAction="ifRoom|collapseActionView"
@@ -244,7 +257,7 @@ android:orientation="vertical">
              <ImageView
                  android:id="@+id/sort_list"
                  android:layout_width="match_parent"
-                 android:layout_height="wrap_content"
+                 android:layout_height="25dp"
                  android:layout_gravity="center"
                  android:background="@mipmap/round_sort_black_36"
                  android:clickable="true"

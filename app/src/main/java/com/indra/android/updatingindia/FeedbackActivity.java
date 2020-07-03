@@ -49,7 +49,7 @@ public class FeedbackActivity extends AppCompatActivity {
                     Feedback feedback = new Feedback(name.getText().toString().trim(), mobile.getText().toString().trim(), feedbackmessage.getText().toString().trim());
 
 
-                    databaseReference.push().setValue(feedback);
+                    //databaseReference.push().setValue(feedback);
 
                     feedbackmessage.setText("");
                     name.setText("");
