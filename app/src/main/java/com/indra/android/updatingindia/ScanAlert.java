@@ -42,6 +42,9 @@ public class ScanAlert extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+
+                        Toast.makeText(getBaseContext(), "Clickeddddd"+result.getText() , Toast.LENGTH_SHORT).show();
+
                         textView.setText(result.getText());
                     }
                 });
@@ -55,6 +58,8 @@ public class ScanAlert extends AppCompatActivity {
             }
         });
     }
+
+
     @Override
     public void onResume() {
         super.onResume();
@@ -90,7 +95,10 @@ public class ScanAlert extends AppCompatActivity {
                 startActivity(intent);
                 return true;
         }
+
+
         return super.onOptionsItemSelected(item);
+
     }
 
 

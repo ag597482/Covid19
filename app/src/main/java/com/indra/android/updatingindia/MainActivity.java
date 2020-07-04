@@ -23,6 +23,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -227,6 +229,16 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             }
         });
 
+        FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.assist);
+        fab1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                Intent intent = new Intent(MainActivity.this,Assest.class);
+                startActivity(intent);
+            }
+        });
 
 
     }

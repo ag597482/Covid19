@@ -273,6 +273,11 @@ android:orientation="vertical">
          android:layout_gravity="center"
          android:layout_margin="20dp"
          />
+
+     <RelativeLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:id="@+id/rel">
 <ListView
     android:id="@+id/list"
     android:layout_width="match_parent"
@@ -280,7 +285,20 @@ android:orientation="vertical">
     android:background="@drawable/transparent_rectengle"
     />
 
+         <com.google.android.material.floatingactionbutton.FloatingActionButton
+             android:id="@+id/assist"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_margin="16dp"
+             android:layout_alignParentBottom="true"
+             android:layout_alignParentRight="true"
+             app:srcCompat="@mipmap/twotone_local_hospital_white_48" />
+
+     </RelativeLayout>
+
+
  </LinearLayout>
+
 
 
 

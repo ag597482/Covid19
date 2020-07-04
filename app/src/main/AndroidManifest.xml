@@ -2,14 +2,60 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.indra.android.updatingindia">
 
+    <meta-data
+        android:name="firebase_analytics_collection_enabled"
+        android:value="false" />
+    <meta-data
+        android:name="firebase_messaging_auto_init_enabled"
+        android:value="false" />
+    <meta-data
+        android:name="com.google.android.gms.vision.DEPENDENCIES"
+        android:value="face" />
+
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/l1"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".QrCodeGenerate"></activity>
-        <activity android:name=".ScanAlert" />
+        <activity android:name=".Assest"
+
+            android:label="Self Assisment"
+            android:parentActivityName=".MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.indra.android.updatingindia.MainActivity" />
+        </activity>
+        <activity
+            android:name=".QrCodeGenerate"
+            android:label="Generate QR"
+            android:parentActivityName=".MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.indra.android.updatingindia.MainActivity" />
+        </activity>
+        <activity android:name=".ScanAlert"
+            android:label="Scan QR"
+            android:parentActivityName=".MainActivity">
+
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.indra.android.updatingindia.MainActivity" />
+        </activity>
         <activity
             android:name=".ScrollPrediction"
             android:label=""
@@ -64,25 +110,5 @@
             android:name=".MainActivity"
             android:label="Updating India" />
     </application>
-
-    <meta-data
-        android:name="firebase_analytics_collection_enabled"
-        android:value="false" />
-
-    <meta-data
-        android:name="firebase_messaging_auto_init_enabled"
-        android:value="false" />
-    <meta-data
-        android:name="com.google.android.gms.vision.DEPENDENCIES"
-        android:value="face" />
-    <uses-feature
-        android:name="android.hardware.camera.front"
-        android:required="true" />
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-
-    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>

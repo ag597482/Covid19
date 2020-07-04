@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Assest">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangular"
+        android:text="*Your Identity is kept Secret. \n*Your response will help the people to quarintie and take precationary measures. \n*Please don't provide and fake information otherwise beaware of consquences under Artcle 316."
+        android:layout_margin="10dp"
+        android:padding="5dp"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/n1"
+
+        android:layout_margin="8dp">
+        <EditText
+            android:id="@+id/nid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:hint="Name / Id"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/m1"
+        android:layout_below="@+id/n1"
+        android:layout_margin="8dp">
+        <EditText
+            android:id="@+id/rno"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="10"
+
+            android:textSize="20sp"
+
+            android:hint="Report No."/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:id="@+id/f1"
+        android:layout_below="@+id/m1"
+
+        >
+        <EditText
+            android:id="@+id/rd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lines="6"
+            android:hint="Report Details"
+            android:gravity="top"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <Button
+        android:id="@+id/submittest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Submit"
+        android:layout_centerHorizontal="true"
+
+        android:layout_below="@id/f1"
+        android:background="@color/colorAccent"
+        android:textColor="#ffffff"
+        />
+
+</LinearLayout>
