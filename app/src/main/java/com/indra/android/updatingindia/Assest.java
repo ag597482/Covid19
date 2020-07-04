@@ -11,6 +11,9 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+
 public class Assest extends AppCompatActivity {
 
 
@@ -52,7 +55,9 @@ public class Assest extends AppCompatActivity {
                 }
                 else {
 
-                    String time ="tai";
+
+                    Calendar calendar=Calendar.getInstance();
+                    String time= DateFormat.getDateInstance().format(calendar.getTime());
                     Report report = new Report(nameid.getText().toString().trim(),reportno.getText().toString().trim(),time);
 
 
