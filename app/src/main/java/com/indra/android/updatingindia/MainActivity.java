@@ -20,6 +20,7 @@ import androidx.appcompat.widget.SearchView;
 
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -249,6 +250,11 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
             case R.id.feedback:
                 Intent intent1 =new Intent(MainActivity.this,FeedbackActivity.class);
                 startActivity(intent1);
+                return true;
+
+            case R.id.scan:
+                Intent intent2 =new Intent(MainActivity.this,ScanAlert.class);
+                startActivity(intent2);
                 return true;
         }
         return super.onOptionsItemSelected(item);

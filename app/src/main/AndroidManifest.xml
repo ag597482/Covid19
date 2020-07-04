@@ -2,28 +2,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.indra.android.updatingindia">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-
-    <meta-data
-        android:name="firebase_messaging_auto_init_enabled"
-        android:value="false" />
-    <meta-data
-        android:name="firebase_analytics_collection_enabled"
-        android:value="false" />
-
     <application
         android:allowBackup="true"
         android:icon="@drawable/l1"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".QrCodeGenerate"></activity>
+        <activity android:name=".ScanAlert" />
         <activity
-            android:name="com.indra.android.updatingindia.ScrollPrediction"
+            android:name=".ScrollPrediction"
             android:label=""
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName="com.indra.android.updatingindia.MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -31,7 +22,7 @@
                 android:value="com.indra.android.updatingindia.MainActivity" />
         </activity>
         <activity
-            android:name="com.indra.android.updatingindia.Splash"
+            android:name=".Splash"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,9 +31,9 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.indra.android.updatingindia.FeedbackActivity"
+            android:name=".FeedbackActivity"
             android:label="Feedback"
-            android:parentActivityName="com.indra.android.updatingindia.MainActivity">
+            android:parentActivityName=".MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -50,9 +41,9 @@
                 android:value="com.indra.android.updatingindia.MainActivity" />
         </activity>
         <activity
-            android:name="com.indra.android.updatingindia.GraphActivity"
+            android:name=".GraphActivity"
             android:label="Analytics"
-            android:parentActivityName="com.indra.android.updatingindia.MainActivity">
+            android:parentActivityName=".MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -60,9 +51,9 @@
                 android:value="com.indra.android.updatingindia.MainActivity" />
         </activity>
         <activity
-            android:name="com.indra.android.updatingindia.PredictionActivity"
+            android:name=".PredictionActivity"
             android:label="Details"
-            android:parentActivityName="com.indra.android.updatingindia.MainActivity">
+            android:parentActivityName=".MainActivity">
 
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
@@ -70,8 +61,28 @@
                 android:value="com.indra.android.updatingindia.MainActivity" />
         </activity>
         <activity
-            android:name="com.indra.android.updatingindia.MainActivity"
-            android:label="Updating India"></activity>
+            android:name=".MainActivity"
+            android:label="Updating India" />
     </application>
+
+    <meta-data
+        android:name="firebase_analytics_collection_enabled"
+        android:value="false" />
+
+    <meta-data
+        android:name="firebase_messaging_auto_init_enabled"
+        android:value="false" />
+    <meta-data
+        android:name="com.google.android.gms.vision.DEPENDENCIES"
+        android:value="face" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
 </manifest>
