@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class Assest extends AppCompatActivity {
@@ -57,7 +58,8 @@ public class Assest extends AppCompatActivity {
 
 
                     Calendar calendar=Calendar.getInstance();
-                    String time= DateFormat.getDateInstance().format(calendar.getTime());
+                    DateFormat df = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+                    String time= df.format(calendar.getTime());
                     Report report = new Report(nameid.getText().toString().trim(),reportno.getText().toString().trim(),time);
 
 
