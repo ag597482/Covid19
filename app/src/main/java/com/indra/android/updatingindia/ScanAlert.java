@@ -91,7 +91,7 @@ public class ScanAlert extends AppCompatActivity {
             case R.id.qr_gen:
 
                 Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show();
-                Intent intent =new Intent(ScanAlert.this,QrCodeGenerate.class);
+                Intent intent =new Intent(ScanAlert.this,ScanHistory.class);
                 startActivity(intent);
                 return true;
         }
