@@ -5,16 +5,28 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
-    android:background="@color/colorAccent"
+    android:background="@color/colorPrimary"
 
 
     >
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ic"
+        android:layout_margin="30dp"
+        android:gravity="center"
+        android:text="UPDATING"
+        android:textColor="#000000"
+        android:textAlignment="center"
+        android:textStyle="bold"
+
+        android:textSize="40sp" />
 
     <ImageView
         android:layout_width="280dp"
         android:layout_height="280dp"
-        android:background="@drawable/l1"
+        android:background="@drawable/finallogonbg"
         android:id="@+id/ic"
         android:layout_margin="20dp"
         android:scaleType="centerCrop"/>
@@ -24,9 +36,12 @@
         android:layout_below="@+id/ic"
         android:layout_marginTop="30dp"
         android:gravity="center"
-        android:text="Updating India..."
+        android:text="INDIA"
+
+        android:textColor="#000000"
         android:textAlignment="center"
-        android:textColor="#ffffff"
+        android:textStyle="bold"
+
         android:textSize="40sp" />
 
 </LinearLayout>
