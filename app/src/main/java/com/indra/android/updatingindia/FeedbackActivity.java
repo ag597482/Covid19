@@ -2,12 +2,14 @@ package com.indra.android.updatingindia;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -16,6 +18,9 @@ public class FeedbackActivity extends AppCompatActivity {
     TextView name,mobile,feedbackmessage;
     Button submit;
 
+    protected Button signout;
+
+    FirebaseAuth mauth;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
 
@@ -28,6 +33,12 @@ public class FeedbackActivity extends AppCompatActivity {
         feedbackmessage = findViewById(R.id.feedback);
         submit=findViewById(R.id.submit);
 
+
+        mauth= FirebaseAuth.getInstance();
+
+
+
+        signout=findViewById(R.id.sign_Out);
         firebaseDatabase=FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("feedbacks");
 
@@ -56,6 +67,17 @@ public class FeedbackActivity extends AppCompatActivity {
                     mobile.setText("");
                     Toast.makeText(FeedbackActivity.this, "Feedback Recorded..!", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+
+        signout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mauth.signOut();
+                Intent intent=new Intent(FeedbackActivity.this,Registration.class);
+                startActivity(intent);
+                finish();
             }
         });
 

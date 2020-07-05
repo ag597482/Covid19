@@ -62,18 +62,37 @@
             android:gravity="top"
 />
     </com.google.android.material.textfield.TextInputLayout>
+
     <Button
         android:id="@+id/submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Submit"
-        android:layout_centerHorizontal="true"
-
         android:layout_below="@id/f1"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+
         android:background="@color/colorAccent"
-        android:textColor="#ffffff"
-/>
+        android:text="Submit"
+        android:textColor="#ffffff" />
+
+    <Button
+        android:id="@+id/sign_Out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/contus"
+        android:layout_alignEnd="@+id/submit"
+
+        android:layout_alignStart="@+id/submit"
+        android:layout_below="@id/f1"
+        android:layout_gravity="center"
+        android:layout_marginBottom="114dp"
+        android:layout_marginEnd="-1dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="167dp"
+        android:background="@color/colorAccent"
+        android:text="Sign Out"
+        android:textColor="#ffffff" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
