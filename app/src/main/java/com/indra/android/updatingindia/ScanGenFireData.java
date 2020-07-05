@@ -1,6 +1,8 @@
 package com.indra.android.updatingindia;
 
 public class ScanGenFireData {
+
+
     private String location_name;
     private long qr_num;
 
@@ -19,4 +21,6 @@ public class ScanGenFireData {
     public void setQr_num(long qr_num) {
         this.qr_num = qr_num;
     }
+
+
 }

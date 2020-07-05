@@ -42,6 +42,7 @@ public class QrCodeGenerate extends AppCompatActivity {
     int width=200,hight=200;
     
     private Button button;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +50,8 @@ public class QrCodeGenerate extends AppCompatActivity {
         user=mauth.getCurrentUser();
         user_mail=user.getEmail();
         user_id=user_mail.replace(".",",");
+
+
         dataref= FirebaseDatabase.getInstance().getReference().child("users");
         setContentView(R.layout.activity_qr_code_generate);
         imageView=findViewById(R.id.qr_image);
@@ -56,6 +59,8 @@ public class QrCodeGenerate extends AppCompatActivity {
         button=findViewById(R.id.generate_qr_button);
         location_text=findViewById(R.id.location_editview);
         String old_location_slected = getIntent().getData().toString();
+
+
         if(old_location_slected.isEmpty())
         {}
         else
@@ -63,6 +68,8 @@ public class QrCodeGenerate extends AppCompatActivity {
             text_to_qr=old_location_slected;
             QRCodeButton_Intent();
         }
+
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +95,8 @@ public class QrCodeGenerate extends AppCompatActivity {
 
     public void QRCodeButton(View view)
     {
+
+
         FirebaseDatabase.getInstance().getReference().child("globle").child("globle num").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -96,7 +105,7 @@ public class QrCodeGenerate extends AppCompatActivity {
                 QRCodeWriter qrCodeWriter=new QRCodeWriter();
                 try {
 
-                    text_to_qr =input_location+"@"+text_to_qr+"@"+num;
+                    text_to_qr = user_mail+"@"+input_location+"@"+text_to_qr;
                     BitMatrix bitMatrix=qrCodeWriter.encode(text_to_qr, BarcodeFormat.QR_CODE,width,hight);
                     Bitmap bitmap=Bitmap.createBitmap(width,hight,Bitmap.Config.RGB_565);
                     for (int x = 0; x<200; x++){

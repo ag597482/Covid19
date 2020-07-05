@@ -23,19 +23,26 @@ import java.util.ArrayList;
 
 public class ScanHistory extends AppCompatActivity {
 
-    static ArrayList<scan_history_info> scan_history_infos_array=new ArrayList<scan_history_info>();
-    ListView listView;
+    static ArrayList<scan_history_info> scan_history_infos_array;//=new ArrayList<scan_history_info>();
 
+
+    ListView listView;
     String user_mail;
     String user_id;
     FirebaseAuth mauth;
     FirebaseUser user;
     DatabaseReference dataref;
 
+    private ValueEventListener eventListener;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_history);
+
+
+        scan_history_infos_array=new ArrayList<scan_history_info>();
+
         FloatingActionButton fab1 = (FloatingActionButton) findViewById(R.id.generate);
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,28 +60,67 @@ public class ScanHistory extends AppCompatActivity {
         user_mail=user.getEmail();
         user_id=user_mail.replace(".",",");
         dataref= FirebaseDatabase.getInstance().getReference().child("users").child(user_id).child("qr generated");
-        dataref.addListenerForSingleValueEvent(new ValueEventListener() {
+
+
+        listView=findViewById(R.id.listview_scan_history);
+
+
+//        dataref.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                scan_history_infos_array.clear();
+//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//
+//                    ScanGenFireData qrdata=ds.getValue(ScanGenFireData.class);
+//
+//                    scan_history_infos_array.add(new scan_history_info(qrdata.getLocation_name()));
+//
+//                }
+//
+//
+//                ScanHistoryAddapter list_addapter = new ScanHistoryAddapter(ScanHistory.this, scan_history_infos_array);
+//                listView.setAdapter(list_addapter);
+//
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+
+
+
+        eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
                     ScanGenFireData qrdata=ds.getValue(ScanGenFireData.class);
-
                     scan_history_infos_array.add(new scan_history_info(qrdata.getLocation_name()));
                     listView=findViewById(R.id.listview_scan_history);
                     ScanHistoryAddapter list_addapter = new ScanHistoryAddapter(ScanHistory.this, scan_history_infos_array);
                     listView.setAdapter(list_addapter);
                 }
+
+
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        };
+        dataref.addValueEventListener(eventListener);
 
 
-        listView=findViewById(R.id.listview_scan_history);
+
+
+
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -86,5 +132,14 @@ public class ScanHistory extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        dataref.removeEventListener(eventListener);
     }
 }
