@@ -110,8 +110,6 @@ public class QrCodeGenerate extends AppCompatActivity {
                     qrdata.setLocation_name(input_location);
                     qrdata.setQr_num(num);
                     dataref.child(user_id).child("qr generated").child(input_location).setValue(qrdata);
-
-                    ScanHistory.scan_history_infos_array.add(new scan_history_info(location_text.getText().toString()));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
