@@ -55,7 +55,7 @@ public class Registration extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if(currentUser!=null)
         {
-            Intent i=new Intent(Registration.this,MainActivity.class);
+            Intent i=new Intent(Registration.this,Splash.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
             finish();
@@ -67,9 +67,12 @@ public class Registration extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        name=findViewById(R.id.name);
-        email=findViewById(R.id.email);
-        pass=findViewById(R.id.pass);
+//        name=findViewById(R.id.name);
+//        email=findViewById(R.id.email);
+
+//        compass=findViewById(R.id.confirm_pass);
+//        register=findViewById(R.id.signin_button);
+//        pass=findViewById(R.id.pass);
 //        LoginButton loginButton = mBinding.buttonFacebookLogin;
 
 
@@ -85,8 +88,6 @@ public class Registration extends AppCompatActivity {
         }
 
         mAuth = FirebaseAuth.getInstance();
-        compass=findViewById(R.id.confirm_pass);
-        register=findViewById(R.id.signin_button);
         fireauth=FirebaseAuth.getInstance();
         google_Sign_Request();
         findViewById(R.id.google_signin).setOnClickListener(new View.OnClickListener() {
@@ -95,27 +96,27 @@ public class Registration extends AppCompatActivity {
                 signIn();
             }
         });
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                user_name=name.getText().toString();
-                user_email=email.getText().toString();
-                user_pass=pass.getText().toString();
-                user_compass=compass.getText().toString();
-                if(user_name.isEmpty()||user_email.isEmpty()||user_pass.isEmpty()||user_compass.isEmpty())
-                {
-                    Toast.makeText(Registration.this,"No Field should empty",Toast.LENGTH_LONG).show();
-                }
-                if(user_compass.equals(user_pass))
-                {
-                    RegisterNow(user_name,user_email,user_pass);
-                }
-                else
-                {
-                    Toast.makeText(Registration.this,"Password and Comfirm password must be same",Toast.LENGTH_LONG).show();
-                }
-            }
-        });
+//        register.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                user_name=name.getText().toString();
+//                user_email=email.getText().toString();
+//                user_pass=pass.getText().toString();
+//                user_compass=compass.getText().toString();
+//                if(user_name.isEmpty()||user_email.isEmpty()||user_pass.isEmpty()||user_compass.isEmpty())
+//                {
+//                    Toast.makeText(Registration.this,"No Field should empty",Toast.LENGTH_LONG).show();
+//                }
+//                if(user_compass.equals(user_pass))
+//                {
+//                    RegisterNow(user_name,user_email,user_pass);
+//                }
+//                else
+//                {
+//                    Toast.makeText(Registration.this,"Password and Comfirm password must be same",Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
 
     }
 
@@ -174,43 +175,43 @@ public class Registration extends AppCompatActivity {
                 });
     }
     
-    private void  RegisterNow(final String user_name, final String user_email, String pass)
-    {
-        fireauth.createUserWithEmailAndPassword(user_email,user_pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful())
-                {
-                    Toast.makeText(Registration.this, "your data successfully added", Toast.LENGTH_LONG).show();
-                    FirebaseUser firebaseuser= fireauth.getCurrentUser();
-                    String uid=firebaseuser.getUid();
-                    dataref= FirebaseDatabase.getInstance().getReference("my users").child(uid);
-                    HashMap<String,String> user_info_map=new HashMap<>();
-                    user_info_map.put("id",uid);
-                    user_info_map.put("name",user_name);
-                    user_info_map.put("email",user_email);
-                    Toast.makeText(Registration.this,"Your user_id is "+uid,Toast.LENGTH_LONG).show();
-                    dataref.setValue(user_info_map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful())
-                            {
-                                FirebaseUser currentUser = mAuth.getCurrentUser();
-                                updateUI(currentUser);
-                            }else
-                            {
-                                Toast.makeText(Registration.this, "your data successfully added complite", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-
-                }
-                else {
-                    Toast.makeText(Registration.this,"Sign UP not successfull "+user_email+"  "+user_pass,Toast.LENGTH_LONG).show();
-                }
-            }
-        });
-    }
+//    private void  RegisterNow(final String user_name, final String user_email, String pass)
+//    {
+//        fireauth.createUserWithEmailAndPassword(user_email,user_pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if(task.isSuccessful())
+//                {
+//                    Toast.makeText(Registration.this, "your data successfully added", Toast.LENGTH_LONG).show();
+//                    FirebaseUser firebaseuser= fireauth.getCurrentUser();
+//                    String uid=firebaseuser.getUid();
+//                    dataref= FirebaseDatabase.getInstance().getReference("my users").child(uid);
+//                    HashMap<String,String> user_info_map=new HashMap<>();
+//                    user_info_map.put("id",uid);
+//                    user_info_map.put("name",user_name);
+//                    user_info_map.put("email",user_email);
+//                    Toast.makeText(Registration.this,"Your user_id is "+uid,Toast.LENGTH_LONG).show();
+//                    dataref.setValue(user_info_map).addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if(task.isSuccessful())
+//                            {
+//                                FirebaseUser currentUser = mAuth.getCurrentUser();
+//                                updateUI(currentUser);
+//                            }else
+//                            {
+//                                Toast.makeText(Registration.this, "your data successfully added complite", Toast.LENGTH_LONG).show();
+//                            }
+//                        }
+//                    });
+//
+//                }
+//                else {
+//                    Toast.makeText(Registration.this,"Sign UP not successfull "+user_email+"  "+user_pass,Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
+//    }
     private void updateUI(final FirebaseUser useres) {
 
         final FirebaseUser user = mAuth.getCurrentUser();
