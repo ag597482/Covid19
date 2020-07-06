@@ -15,6 +15,10 @@ import android.widget.Toast;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.zxing.Result;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
@@ -27,11 +31,31 @@ import java.util.Scanner;
 
 public class ScanAlert extends AppCompatActivity {
 
+
+
+    String user_mail;
+    String user_id;
+    FirebaseAuth mauth;
+    FirebaseUser user;
+    DatabaseReference dataref;
+
+
     CodeScanner codeScanner;
     CodeScannerView scannerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mauth=FirebaseAuth.getInstance();
+        user=mauth.getCurrentUser();
+        user_mail=user.getEmail();
+        user_id=user_mail.replace(".",",");
+
+
+        dataref= FirebaseDatabase.getInstance().getReference().child("users");
+
+
+
         setContentView(R.layout.activity_scan_alert);
         scannerView= findViewById(R.id.scanner_view);
         codeScanner= new CodeScanner(this,scannerView);
@@ -44,6 +68,9 @@ public class ScanAlert extends AppCompatActivity {
                     public void run() {
 
                         Toast.makeText(getBaseContext(), "Clickeddddd"+result.getText() , Toast.LENGTH_SHORT).show();
+
+
+                       // dataref.child(user_id).child("qr generated").child(input_location).setValue(qrdata);
 
                         textView.setText(result.getText());
                     }

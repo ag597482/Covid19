@@ -35,7 +35,7 @@ public class QrCodeGenerate extends AppCompatActivity {
     DatabaseReference dataref;
     String constant="Indra_co";
     String input_location;
-    String text_to_qr="Indra_co";
+    String text_to_qr="Indra";
 
     private ImageView imageView;
     private EditText location_text;
@@ -65,7 +65,8 @@ public class QrCodeGenerate extends AppCompatActivity {
         {}
         else
         {
-            text_to_qr=old_location_slected;
+
+            text_to_qr = user_id+"#"+old_location_slected+"#Indra";
             QRCodeButton_Intent();
         }
 
@@ -105,7 +106,7 @@ public class QrCodeGenerate extends AppCompatActivity {
                 QRCodeWriter qrCodeWriter=new QRCodeWriter();
                 try {
 
-                    text_to_qr = user_mail+"@"+input_location+"@"+text_to_qr;
+                    text_to_qr = user_id+"#"+input_location+"#Indra";
                     BitMatrix bitMatrix=qrCodeWriter.encode(text_to_qr, BarcodeFormat.QR_CODE,width,hight);
                     Bitmap bitmap=Bitmap.createBitmap(width,hight,Bitmap.Config.RGB_565);
                     for (int x = 0; x<200; x++){
@@ -118,7 +119,7 @@ public class QrCodeGenerate extends AppCompatActivity {
                     ScanGenFireData qrdata=new ScanGenFireData();
                     qrdata.setLocation_name(input_location);
                     qrdata.setQr_num(num);
-                    dataref.child(user_id).child("qr generated").child(input_location).setValue(qrdata);
+                    dataref.child(user_id).child("qr generated").child(text_to_qr).setValue(qrdata);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
