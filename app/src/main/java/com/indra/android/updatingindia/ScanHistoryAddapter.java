@@ -50,7 +50,7 @@ import java.util.ArrayList;
 
             TextView scan_count = (TextView) listItemView.findViewById(R.id.total_scan_edittext);
 
-            scan_count.setText(Integer.toString(currentAndroidFlavor.getScan_count()));
+            scan_count.setText(Long.toString(currentAndroidFlavor.getScan_count()));
             return listItemView;
         }
 

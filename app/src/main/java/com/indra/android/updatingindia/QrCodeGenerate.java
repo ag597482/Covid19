@@ -52,7 +52,7 @@ public class QrCodeGenerate extends AppCompatActivity {
         user_id=user_mail.replace(".",",");
 
 
-        dataref= FirebaseDatabase.getInstance().getReference().child("users");
+        dataref= FirebaseDatabase.getInstance().getReference();
         setContentView(R.layout.activity_qr_code_generate);
         imageView=findViewById(R.id.qr_image);
 
@@ -78,9 +78,9 @@ public class QrCodeGenerate extends AppCompatActivity {
                 {
                     Toast.makeText(QrCodeGenerate.this, "You Must fill the location name", Toast.LENGTH_SHORT).show();
                 }
-                else if(input_location.contains("."))
+                else if(input_location.contains(".")||input_location.contains("#")||input_location.contains("$")||input_location.contains("[")||input_location.contains("]"))
                 {
-                    Toast.makeText(QrCodeGenerate.this, "location name can NOT have Dot", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(QrCodeGenerate.this, "location name can NOT have \"#, period(.) ,[ , ] , $ \" ", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     button.setVisibility(View.GONE);
@@ -97,6 +97,29 @@ public class QrCodeGenerate extends AppCompatActivity {
     {
 
 
+//        QRCodeWriter qrCodeWriter=new QRCodeWriter();
+//        try {
+//
+//            text_to_qr = user_id+"#"+input_location+"#"+text_to_qr;
+//            BitMatrix bitMatrix=qrCodeWriter.encode(text_to_qr, BarcodeFormat.QR_CODE,width,hight);
+//            Bitmap bitmap=Bitmap.createBitmap(width,hight,Bitmap.Config.RGB_565);
+//            for (int x = 0; x<200; x++){
+//                for (int y=0; y<200; y++){
+//                    bitmap.setPixel(x,y,bitMatrix.get(x,y)? Color.BLACK : Color.WHITE);
+//                }
+//            }
+//            imageView.setImageBitmap(bitmap);
+//
+//            ScanGenFireData qrdata=new ScanGenFireData();
+//            qrdata.setLocation_name(input_location);
+//            qrdata.setUser_email(user_mail);
+//            qrdata.setQr_text(text_to_qr);
+//            dataref.child(user_id).child("qr generated").child(text_to_qr).setValue(qrdata);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+
+
         FirebaseDatabase.getInstance().getReference().child("globle").child("globle num").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -105,7 +128,7 @@ public class QrCodeGenerate extends AppCompatActivity {
                 QRCodeWriter qrCodeWriter=new QRCodeWriter();
                 try {
 
-                    text_to_qr = user_mail+"@"+input_location+"@"+text_to_qr;
+                    text_to_qr = num+"@"+input_location+"@"+constant;
                     BitMatrix bitMatrix=qrCodeWriter.encode(text_to_qr, BarcodeFormat.QR_CODE,width,hight);
                     Bitmap bitmap=Bitmap.createBitmap(width,hight,Bitmap.Config.RGB_565);
                     for (int x = 0; x<200; x++){
@@ -118,7 +141,9 @@ public class QrCodeGenerate extends AppCompatActivity {
                     ScanGenFireData qrdata=new ScanGenFireData();
                     qrdata.setLocation_name(input_location);
                     qrdata.setQr_num(num);
-                    dataref.child(user_id).child("qr generated").child(input_location).setValue(qrdata);
+                    qrdata.setQr_text(text_to_qr);
+                    dataref.child("users").child(user_id).child("qr generated").child(text_to_qr).setValue(qrdata);
+                    dataref.child("globle").child("qr location").child(text_to_qr).child("qr detail").setValue(qrdata);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

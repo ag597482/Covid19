@@ -64,48 +64,18 @@ public class ScanHistory extends AppCompatActivity {
 
         listView=findViewById(R.id.listview_scan_history);
 
-
-//        dataref.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                scan_history_infos_array.clear();
-//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//
-//                    ScanGenFireData qrdata=ds.getValue(ScanGenFireData.class);
-//
-//                    scan_history_infos_array.add(new scan_history_info(qrdata.getLocation_name()));
-//
-//                }
-//
-//
-//                ScanHistoryAddapter list_addapter = new ScanHistoryAddapter(ScanHistory.this, scan_history_infos_array);
-//                listView.setAdapter(list_addapter);
-//
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-
-
-
         eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
+                scan_history_infos_array.clear();
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
                     ScanGenFireData qrdata=ds.getValue(ScanGenFireData.class);
-                    scan_history_infos_array.add(new scan_history_info(qrdata.getLocation_name()));
+                    scan_history_infos_array.add(new scan_history_info(qrdata.getLocation_name(),qrdata.getTotal_scan_Count(),qrdata.getQr_text()));
                     listView=findViewById(R.id.listview_scan_history);
                     ScanHistoryAddapter list_addapter = new ScanHistoryAddapter(ScanHistory.this, scan_history_infos_array);
                     listView.setAdapter(list_addapter);
                 }
-
-
 
             }
 
@@ -128,7 +98,7 @@ public class ScanHistory extends AppCompatActivity {
                 Intent intent=new Intent(ScanHistory.this,QrCodeGenerate.class);
 
                 scan_history_info infoCard=(scan_history_info) parent.getItemAtPosition(position);
-                intent.setData(Uri.parse(infoCard.getLocation_name()));
+                intent.setData(Uri.parse(infoCard.getQr_text()));
                 startActivity(intent);
             }
         });
