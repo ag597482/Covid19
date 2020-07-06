@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:text="*Here day 0 is 31 January 2020 when 1st case was found"
+        android:text="*First case in india was found on 30 January 2020"
         android:gravity="center"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -59,7 +59,7 @@
             android:layout_weight="1"
             android:textSize="20sp"
             android:background="@drawable/transparent_rectengle"
-            android:text="Days : 0"
+            android:text="Day : 30 January"
             android:gravity="center"/>
         <TextView
             android:layout_width="0dp"

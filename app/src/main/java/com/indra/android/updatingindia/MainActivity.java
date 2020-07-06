@@ -22,12 +22,24 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.play.core.appupdate.AppUpdateInfo;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.model.AppUpdateType;
+import com.google.android.play.core.install.model.UpdateAvailability;
+import com.google.android.play.core.tasks.Task;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener {
+import eu.dkaratzas.android.inapp.update.Constants;
+import eu.dkaratzas.android.inapp.update.InAppUpdateManager;
+import eu.dkaratzas.android.inapp.update.InAppUpdateStatus;
+
+public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener, InAppUpdateManager.InAppUpdateHandler {
 
     public static final String LOG_TAG = MainActivity.class.getName();
     private static final String USGS_REQUEST_URL =
@@ -46,12 +58,24 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
     ImageView sort_list;
 
     String current_state;
+    InAppUpdateManager inAppUpdateManager;
 
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        inAppUpdateManager = InAppUpdateManager.Builder(this,101)
+                .resumeUpdates(true)
+                .mode(Constants.UpdateMode.FLEXIBLE)
+                .snackBarMessage("An update has been downloaded")
+                .snackBarAction("RESTART")
+                .handler(this);
+
+        inAppUpdateManager.checkForAppUpdate();
+
 
 
 
@@ -359,6 +383,34 @@ public class MainActivity extends AppCompatActivity implements PopupMenu.OnMenuI
         final Location_card_addapter location_card_addapter=new Location_card_addapter(MainActivity.this,num1);
         listView.setAdapter(location_card_addapter);
 
+
+    }
+
+    @Override
+    public void onInAppUpdateError(int code, Throwable error) {
+
+    }
+
+    @Override
+    public void onInAppUpdateStatus(InAppUpdateStatus status) {
+
+        if(status.isDownloaded())
+        {
+            View rootview = getWindow().getDecorView().findViewById(android.R.id.content);
+
+            Snackbar snackbar = Snackbar.make(rootview,
+                    "An Update has been Downloaded.",
+                    Snackbar.LENGTH_INDEFINITE);
+
+            snackbar.setAction("Restart", new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    inAppUpdateManager.completeUpdate();
+                }
+            });
+
+
+        }
 
     }
 

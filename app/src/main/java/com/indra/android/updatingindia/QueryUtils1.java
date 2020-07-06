@@ -27,6 +27,7 @@ public class QueryUtils1 {
     private static final String LOG_TAG = QueryUtils1.class.getSimpleName();
 
     static List<Integer> timeseries,tc,td,tr,dc,dd,dr;
+    static List<String> dates;
     static int total,active,deaths,recovered;
 
     public static Map<String,Integer> mdt,mdr,mdd,mdtime;
@@ -131,6 +132,7 @@ public class QueryUtils1 {
         dd=new ArrayList<Integer>();
         tr=new ArrayList<Integer>();
         dr=new ArrayList<Integer>();
+        dates = new ArrayList<String>();
 
         mdt=new HashMap<>();
         mdr=new HashMap<>();
@@ -162,6 +164,7 @@ public class QueryUtils1 {
                 dr.add(jo.getInt("dailyrecovered"));
                 td.add(jo.getInt("totaldeceased"));
                 dd.add(jo.getInt("dailydeceased"));
+                dates.add(jo.getString("date"));
 
 
                 earthquakes.add(a);
@@ -179,6 +182,8 @@ public class QueryUtils1 {
                 mdr.put(jo.getString("state"),jo.getInt("deltarecovered"));
                 mdd.put(jo.getString("state"),jo.getInt("deltadeaths"));
                 mdtime.put(jo.getString("state"),jo.getInt("lastupdatedtime"));
+
+
             }
 //
 

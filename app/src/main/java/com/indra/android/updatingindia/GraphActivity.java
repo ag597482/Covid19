@@ -479,7 +479,7 @@ public class GraphActivity extends AppCompatActivity {
                 seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                     @Override
                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                        xc.setText("Days : " + String.valueOf(progress+1));
+                        xc.setText("Day : " + QueryUtils1.dates.get(progress));
                         yc.setText("People : " + plotted.get(progress));
 
 //
