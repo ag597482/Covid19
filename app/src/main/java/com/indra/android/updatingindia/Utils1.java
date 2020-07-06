@@ -170,6 +170,8 @@ public class Utils1 {
                     state_name="Jammu and Kashmir";
                 if(state_name.equals("A & N Islands"))
                     state_name="Andaman and Nicobar Islands";
+                if(state_name.equals("Maharastra"))
+                    state_name="Maharashtra";
 
                 if(state_medi_info.containsKey(state_name))
                 {

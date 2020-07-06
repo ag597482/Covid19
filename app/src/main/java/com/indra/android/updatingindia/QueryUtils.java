@@ -204,11 +204,22 @@ public class QueryUtils {
                      dr+=tdr;
                      dd+=tdd;
 
-                     dist.add(new info_card(currentDynamicKey1,"",Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
-                     alldist.add(new info_card(currentDynamicKey1,"",Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
+                    if(currentDynamicKey1.equals("Aurangabad")) {
+                        dist.add(new info_card(currentDynamicKey1+ "(" + currentDynamicKey + ")", "", Integer.valueOf(val), Integer.valueOf(act), Integer.valueOf(rec), Integer.valueOf(det)));
+                        alldist.add(new info_card(currentDynamicKey1+ "(" + currentDynamicKey + ")", "", Integer.valueOf(val), Integer.valueOf(act), Integer.valueOf(rec), Integer.valueOf(det)));
+                    }
+                    else {
+                        dist.add(new info_card(currentDynamicKey1, "", Integer.valueOf(val), Integer.valueOf(act), Integer.valueOf(rec), Integer.valueOf(det)));
+                        alldist.add(new info_card(currentDynamicKey1, "", Integer.valueOf(val), Integer.valueOf(act), Integer.valueOf(rec), Integer.valueOf(det)));
+                    }
+                     if(currentDynamicKey1.equals("Aurangabad")) {
+                         detacard.put(currentDynamicKey1 + "(" + currentDynamicKey + ")", new info_card(currentDynamicKey1+ "(" + currentDynamicKey + ")", currentDynamicKey, tdc, tdr, tdd, Integer.valueOf(val), Integer.valueOf(act), Integer.valueOf(rec), Integer.valueOf(det)));
+                         //detacard.put(currentDynamicKey1, new info_card(currentDynamicKey1, currentDynamicKey, tdc, tdr, tdd, Integer.valueOf(val), Integer.valueOf(act), Integer.valueOf(rec), Integer.valueOf(det)));
 
-                    detacard.put(currentDynamicKey1,new info_card(currentDynamicKey1,currentDynamicKey,tdc,tdr,tdd,Integer.valueOf(val),Integer.valueOf(act),Integer.valueOf(rec),Integer.valueOf(det)));
-
+                     }
+                     else {
+                         detacard.put(currentDynamicKey1, new info_card(currentDynamicKey1, currentDynamicKey, tdc, tdr, tdd, Integer.valueOf(val), Integer.valueOf(act), Integer.valueOf(rec), Integer.valueOf(det)));
+                     }
                     disArray.add(currentDynamicKey1+ " -> " + val);
                     statesum+=Integer.valueOf(val);
                     total1 = total1 + Integer.valueOf(val);

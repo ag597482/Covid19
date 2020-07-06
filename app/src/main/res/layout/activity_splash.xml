@@ -26,7 +26,7 @@
     <ImageView
         android:layout_width="280dp"
         android:layout_height="280dp"
-        android:background="@drawable/finallogonbg"
+        android:background="@drawable/flogo"
         android:id="@+id/ic"
         android:layout_margin="20dp"
         android:scaleType="centerCrop"/>
