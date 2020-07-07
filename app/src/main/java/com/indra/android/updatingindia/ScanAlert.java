@@ -32,6 +32,9 @@ import com.karumi.dexter.listener.PermissionGrantedResponse;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.single.PermissionListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Scanner;
 
 public class ScanAlert extends AppCompatActivity {
@@ -101,6 +104,9 @@ public class ScanAlert extends AppCompatActivity {
                                 public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                                     if(dataSnapshot.exists())
                                     {
+                                        Calendar calendar=Calendar.getInstance();
+                                        DateFormat df = new SimpleDateFormat("dd-MM-yy_HH:mm");
+                                        final String time= df.format(calendar.getTime());
 
                                         location_name=dataSnapshot.child("location_name").getValue(String.class);
                                         total_covid_cases_in_last_7_days=dataSnapshot.child("total_covid_cases_in_last_7_days").getValue(long.class);
@@ -118,9 +124,7 @@ public class ScanAlert extends AppCompatActivity {
 
 
                                         Toast.makeText(getBaseContext(), "location  "+dataSnapshot.getValue() , Toast.LENGTH_SHORT).show();
-                                        Log.i("location","--------------------------"+location_name+" --------"+result.getText());
-
-
+                                        Log.i("location","--------------------------"+time+" --------"+result.getText());
 
 
                                         dataref.child("users").child(user_id).child("qr scan history").child("scan detail").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -128,21 +132,34 @@ public class ScanAlert extends AppCompatActivity {
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
                                                 if(dataSnapshot2.exists())
                                                 {
+                                                    Log.i("location","--------inside scan detail ------------------"+dataSnapshot2.child("in location").getValue(String.class)+" --------"+result.getText());
                                                     if(dataSnapshot2.child("in location").getValue(String.class).equals("nothing"))
                                                     {
+                                                        Log.i("location","--------inside scan detail ------------------"+qr_text);
                                                         dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
-                                                                .child("in location").setValue(qr_text);
+                                                                .child("in location").setValue(result.getText());
+                                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+                                                                .child("in entry time").setValue(time);
+                                                        set_scan_history_start_time(result.getText(),time);
+
                                                     }
                                                     else
                                                     {
-                                                        dataref.child("users").child(user_id).child("qr scan history").child("qr scan history list")
-                                                                .child(result.getText()).child("location name")
-                                                                .setValue(dataSnapshot.child("location_name").getValue(String.class));
+                                                        Log.i("location","--------inside scan detail ------------------"+dataSnapshot2.child("in location").getValue(String.class)+" --------"+result.getText());
+                                                        String pre_time=dataSnapshot2.child("in entry time").getValue(String.class);
+//                                                        set_scan_history_end_time(result.getText(),time);
+                                                        set_scan_history_start_time(result.getText(),time);
+
+                                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+                                                                .child("in location").setValue("nothing");
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    dataref.child("users").child(user_id).child("qr scan history").child("scan detail").child("in location").setValue("nothing");
+                                                    dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+                                                            .child("in location").setValue(result.getText());
+                                                    dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+                                                            .child("in entry time").setValue(time);
                                                 }
                                             }
 
@@ -182,6 +199,24 @@ public class ScanAlert extends AppCompatActivity {
         });
     }
 
+    private void set_scan_history_end_time(String text, String time) {
+
+        Log.i("---end time","000000000000------------------------------"+text+" "+time);
+        dataref.child("users").child(user_id).child("qr scan history").child("qr scan history list").child(qr_text).child(time).child("entry time").setValue(time);
+//        In globle
+//        dataref.child("globle").child("qr location").child(qr_text).child("scan history").child(user_id).child(time).child("entry time").setValue(time);
+
+    }
+
+    private void set_scan_history_start_time(String qr_text,String time) {
+
+//        In user history
+        dataref.child("users").child(user_id).child("qr scan history").child("qr scan history list").child(qr_text).child(time).child("entry time").setValue(time);
+//        In globle
+        dataref.child("globle").child("qr location").child(qr_text).child("scan history").child(user_id).child(time).child("entry time").setValue(time);
+
+    }
+
 
     @Override
     public void onResume() {
@@ -191,7 +226,7 @@ public class ScanAlert extends AppCompatActivity {
 
     @Override
     public void onPause() {
-        codeScanner.releaseResources();
+//        codeScanner.releaseResources();
         super.onPause();
     }
 
@@ -202,6 +237,8 @@ public class ScanAlert extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.qr_generate, menu);
         return true;
     }
+
+
 
 
     @Override

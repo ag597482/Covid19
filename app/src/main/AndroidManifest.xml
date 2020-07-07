@@ -60,14 +60,7 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.indra.android.updatingindia.MainActivity" />
-        </activity> <!-- <activity -->
-        <!-- android:name=".Splash" -->
-        <!-- android:theme="@style/Theme.AppCompat.NoActionBar"> -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
+        </activity>
         <activity
             android:name=".FeedbackActivity"
             android:label="Feedback"
@@ -124,6 +117,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
