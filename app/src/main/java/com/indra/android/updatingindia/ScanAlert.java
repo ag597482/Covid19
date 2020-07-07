@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,13 @@ public class ScanAlert extends AppCompatActivity {
     FirebaseUser user;
     DatabaseReference dataref;
     CodeScanner codeScanner;
+    Button exit_button;
+
+    int inlocation=0;
+
+    String location_name = "nothing";
+    String qr_text;
+    long qr_num,total_scan_Count=0,present_scan_count=0,total_covid_cases_in_last_7_days=0;
     CodeScannerView scannerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +67,28 @@ public class ScanAlert extends AppCompatActivity {
         total_people_inside=findViewById(R.id.total_people_inside);
         covid_cases_in_last_7_days=findViewById(R.id.covid_cases_in_last);
 
+//        exit_button.findViewById(R.id.exit_button);
+//        exit_button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+//
+//        if(inlocation==1)
+//        {
+//            location_name_scan.setText(location_name);
+//            total_people_inside.setText(String.valueOf(present_scan_count));
+//            covid_cases_in_last_7_days.setText(String.valueOf(total_covid_cases_in_last_7_days));
+//        }
+
         scannerView= findViewById(R.id.scanner_view);
         codeScanner= new CodeScanner(this,scannerView);
         final TextView textView=findViewById(R.id.scan_text_view);
         codeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
             public void onDecoded(@NonNull final Result result) {
+
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -74,37 +98,59 @@ public class ScanAlert extends AppCompatActivity {
                         {
                             dataref.child("globle").child("qr location").child(result.getText()).child("qr detail").addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
                                     if(dataSnapshot.exists())
                                     {
-                                        String location_name = "nothing";
-                                        String qr_text;
-                                        long qr_num,total_scan_Count,present_scan_count=0,total_covid_cases_in_last_7_days=0;
-                                        for(DataSnapshot ds: dataSnapshot.getChildren())
-                                        {
-                                            Log.i("-------","-------------------------------"+ds.getKey());
-                                            if(ds.getKey().equals("location_name"))
-                                                location_name=ds.getValue(String.class);
-                                            if(ds.getKey().equals("total_covid_cases_in_last_7_days"))
-                                                total_covid_cases_in_last_7_days=ds.getValue(long.class);
-                                            if(ds.getKey().equals("present_scan_count"))
-                                            {
-                                                present_scan_count=ds.getValue(long.class)+1;
-                                                dataref.child("globle").child("qr location").child(result.getText()).child("qr detail").child("present_scan_count").setValue(present_scan_count);
-                                            }
-                                            if(ds.getKey().equals("total_scan_Count"))
-                                            {
-                                                total_scan_Count=ds.getValue(long.class)+1;
-                                                dataref.child("globle").child("qr location").child(result.getText()).child("qr detail").child("total_scan_Count").setValue(total_scan_Count);
 
-                                            }
-                                        }
+                                        location_name=dataSnapshot.child("location_name").getValue(String.class);
+                                        total_covid_cases_in_last_7_days=dataSnapshot.child("total_covid_cases_in_last_7_days").getValue(long.class);
+
+                                        present_scan_count=dataSnapshot.child("present_scan_count").getValue(long.class)+1;
+                                        dataref.child("globle").child("qr location").child(result.getText()).child("qr detail").child("present_scan_count").setValue(present_scan_count);
+
+                                        total_scan_Count=dataSnapshot.child("total_scan_Count").getValue(long.class)+1;
+                                        dataref.child("globle").child("qr location").child(result.getText()).child("qr detail").child("total_scan_Count").setValue(total_scan_Count);
+
 
                                         location_name_scan.setText(location_name);
                                         total_people_inside.setText(String.valueOf(present_scan_count));
                                         covid_cases_in_last_7_days.setText(String.valueOf(total_covid_cases_in_last_7_days));
+
+
                                         Toast.makeText(getBaseContext(), "location  "+dataSnapshot.getValue() , Toast.LENGTH_SHORT).show();
                                         Log.i("location","--------------------------"+location_name+" --------"+result.getText());
+
+
+
+
+                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail").addListenerForSingleValueEvent(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+                                                if(dataSnapshot2.exists())
+                                                {
+                                                    if(dataSnapshot2.child("in location").getValue(String.class).equals("nothing"))
+                                                    {
+                                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+                                                                .child("in location").setValue(qr_text);
+                                                    }
+                                                    else
+                                                    {
+                                                        dataref.child("users").child(user_id).child("qr scan history").child("qr scan history list")
+                                                                .child(result.getText()).child("location name")
+                                                                .setValue(dataSnapshot.child("location_name").getValue(String.class));
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    dataref.child("users").child(user_id).child("qr scan history").child("scan detail").child("in location").setValue("nothing");
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
 
                                     }
                                     else
