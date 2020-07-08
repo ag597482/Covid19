@@ -123,7 +123,7 @@ public class ScanAlert extends AppCompatActivity {
                                         covid_cases_in_last_7_days.setText(String.valueOf(total_covid_cases_in_last_7_days));
 
 
-                                        Toast.makeText(getBaseContext(), "location  "+dataSnapshot.getValue() , Toast.LENGTH_SHORT).show();
+
                                         Log.i("location","--------------------------"+time+" --------"+result.getText());
 
 
@@ -145,9 +145,13 @@ public class ScanAlert extends AppCompatActivity {
                                                     }
                                                     else
                                                     {
-                                                        Log.i("location","--------inside scan detail ------------------"+dataSnapshot2.child("in location").getValue(String.class)+" --------"+result.getText());
-                                                        String pre_time=dataSnapshot2.child("in entry time").getValue(String.class);
-//                                                        set_scan_history_end_time(result.getText(),time);
+
+                                                        String pre_time=time;
+                                                        pre_time=dataSnapshot2.child("in entry time").getValue(String.class);
+                                                        Log.i("location","--------inside pre time detail ------------------"+pre_time+" --------"+result.getText());
+
+                                                        Toast.makeText(getBaseContext(), "location  "+pre_time , Toast.LENGTH_SHORT).show();
+                                                        set_scan_history_end_time(dataSnapshot2.child("in location").getValue(String.class),pre_time,time);
                                                         set_scan_history_start_time(result.getText(),time);
 
                                                         dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
@@ -199,12 +203,13 @@ public class ScanAlert extends AppCompatActivity {
         });
     }
 
-    private void set_scan_history_end_time(String text, String time) {
+    private void set_scan_history_end_time(String text, String enter_time,String exit_time) {
 
-        Log.i("---end time","000000000000------------------------------"+text+" "+time);
-        dataref.child("users").child(user_id).child("qr scan history").child("qr scan history list").child(qr_text).child(time).child("entry time").setValue(time);
+        Log.i("---end time","000000000000------------------------------"+text+" "+enter_time);
+
+        dataref.child("users").child(user_id).child("qr scan history").child("qr scan history list").child(text).child(enter_time).child("exit time").setValue(exit_time);
 //        In globle
-//        dataref.child("globle").child("qr location").child(qr_text).child("scan history").child(user_id).child(time).child("entry time").setValue(time);
+        dataref.child("globle").child("qr location").child(text).child("scan history").child(user_id).child(enter_time).child("exit time").setValue(exit_time);
 
     }
 
@@ -277,7 +282,6 @@ public class ScanAlert extends AppCompatActivity {
             @Override
             public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
                 token.continuePermissionRequest();
-
             }
         }).check();
     }
