@@ -2,6 +2,7 @@ package com.indra.android.updatingindia;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.Guideline;
 
 import android.Manifest;
 import android.content.Intent;
@@ -40,13 +41,16 @@ import java.util.Scanner;
 public class ScanAlert extends AppCompatActivity {
 
     TextView location_name_scan,total_people_inside,covid_cases_in_last_7_days;
+    Guideline guideline;
+    Button exit_button;
     String user_mail;
     String user_id;
     FirebaseAuth mauth;
     FirebaseUser user;
     DatabaseReference dataref;
     CodeScanner codeScanner;
-    Button exit_button;
+    String pre_entry_time,pre_qr_text;
+//    Button exit_button;
 
     int inlocation=0;
 
@@ -66,17 +70,34 @@ public class ScanAlert extends AppCompatActivity {
         dataref= FirebaseDatabase.getInstance().getReference();
 
 
+
+        scannerView= findViewById(R.id.scanner_view);
+        codeScanner= new CodeScanner(this,scannerView);
+
         location_name_scan=findViewById(R.id.location_name_scan);
         total_people_inside=findViewById(R.id.total_people_inside);
         covid_cases_in_last_7_days=findViewById(R.id.covid_cases_in_last);
+        guideline=findViewById(R.id.guideline);
+        guideline.setGuidelinePercent(0.0f);
 
-//        exit_button.findViewById(R.id.exit_button);
-//        exit_button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        scannerView.setVisibility(View.GONE);
+
+
+        exit_button=findViewById(R.id.exit_button);
+        exit_button.setVisibility(View.GONE);
+        exit_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar=Calendar.getInstance();
+                DateFormat df = new SimpleDateFormat("dd-MM-yy_HH:mm");
+                final String time= df.format(calendar.getTime());
+                dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+                        .child("in location").setValue("nothing");
+                set_scan_history_end_time(pre_qr_text,pre_entry_time,time);
+                scannerView.setVisibility(View.VISIBLE);
+                guideline.setGuidelinePercent(1);
+            }
+        });
 //
 //        if(inlocation==1)
 //        {
@@ -85,113 +106,200 @@ public class ScanAlert extends AppCompatActivity {
 //            covid_cases_in_last_7_days.setText(String.valueOf(total_covid_cases_in_last_7_days));
 //        }
 
-        scannerView= findViewById(R.id.scanner_view);
-        codeScanner= new CodeScanner(this,scannerView);
         final TextView textView=findViewById(R.id.scan_text_view);
-        codeScanner.setDecodeCallback(new DecodeCallback() {
-            @Override
-            public void onDecoded(@NonNull final Result result) {
 
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
+
+        dataref.child("users").child(user_id).child("qr scan history").child("scan detail").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                if((!dataSnapshot.exists())||dataSnapshot.child("in location").getValue(String.class).equals("nothing"))
+                {
+                    scannerView.setVisibility(View.VISIBLE);
+                    guideline.setGuidelinePercent(1);
+                    codeScanner.setDecodeCallback(new DecodeCallback() {
+                        @Override
+                        public void onDecoded(@NonNull final Result result) {
+
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
 
 //                        Toast.makeText(getBaseContext(), "Clickeddddd"+result.getText() , Toast.LENGTH_SHORT).show();
-                        if(result.getText().contains("Indra_co"))
-                        {
-                            dataref.child("globle").child("qr location").child(result.getText()).child("qr detail").addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
-                                    if(dataSnapshot.exists())
+                                    if(result.getText().contains("Indra_co"))
                                     {
                                         Calendar calendar=Calendar.getInstance();
                                         DateFormat df = new SimpleDateFormat("dd-MM-yy_HH:mm");
                                         final String time= df.format(calendar.getTime());
 
-                                        location_name=dataSnapshot.child("location_name").getValue(String.class);
-                                        total_covid_cases_in_last_7_days=dataSnapshot.child("total_covid_cases_in_last_7_days").getValue(long.class);
 
-                                        present_scan_count=dataSnapshot.child("present_scan_count").getValue(long.class)+1;
-                                        dataref.child("globle").child("qr location").child(result.getText()).child("qr detail").child("present_scan_count").setValue(present_scan_count);
+//                            dataref.child("globle").child("qr location").child(result.getText()).child("qr detail").addListenerForSingleValueEvent(new ValueEventListener() {
+//                                @Override
+//                                public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+//                                    if(dataSnapshot.exists())
+//                                    {
+//                                        Calendar calendar=Calendar.getInstance();
+//                                        DateFormat df = new SimpleDateFormat("dd-MM-yy_HH:mm");
+//                                        final String time= df.format(calendar.getTime());
+//
+//                                        location_name=dataSnapshot.child("location_name").getValue(String.class);
+//                                        total_covid_cases_in_last_7_days=dataSnapshot.child("total_covid_cases_in_last_7_days").getValue(long.class);
+//
+//                                        present_scan_count=dataSnapshot.child("present_scan_count").getValue(long.class)+1;
+//                                        dataref.child("globle").child("qr location").child(result.getText()).child("qr detail").child("present_scan_count").setValue(present_scan_count);
+//
+//                                        total_scan_Count=dataSnapshot.child("total_scan_Count").getValue(long.class)+1;
+//                                        dataref.child("globle").child("qr location").child(result.getText()).child("qr detail").child("total_scan_Count").setValue(total_scan_Count);
+//
+//
+//                                        location_name_scan.setText(location_name);
+//                                        total_people_inside.setText(String.valueOf(present_scan_count));
+//                                        covid_cases_in_last_7_days.setText(String.valueOf(total_covid_cases_in_last_7_days));
+//
+//
+//
+//                                        Log.i("location","--------------------------"+time+" --------"+result.getText());
+//
+//
+//                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail").addListenerForSingleValueEvent(new ValueEventListener() {
+//                                            @Override
+//                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+//                                                if(dataSnapshot2.exists())
+//                                                {
+//                                                    Log.i("location","--------inside scan detail ------------------"+dataSnapshot2.child("in location").getValue(String.class)+" --------"+result.getText());
+//                                                    if(dataSnapshot2.child("in location").getValue(String.class).equals("nothing"))
+//                                                    {
+//                                                        Log.i("location","--------inside scan detail ------------------"+qr_text);
+//                                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+//                                                                .child("in location").setValue(result.getText());
+//                                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+//                                                                .child("in entry time").setValue(time);
+//                                                        set_scan_history_start_time(result.getText(),time);
+//
+//                                                    }
+//                                                    else
+//                                                    {
+//
+//                                                        String pre_time=time;
+//                                                        pre_time=dataSnapshot2.child("in entry time").getValue(String.class);
+//                                                        Log.i("location","--------inside pre time detail ------------------"+pre_time+" --------"+result.getText());
+//
+//                                                        Toast.makeText(getBaseContext(), "location  "+pre_time , Toast.LENGTH_SHORT).show();
+//                                                        set_scan_history_end_time(dataSnapshot2.child("in location").getValue(String.class),pre_time,time);
+//                                                        set_scan_history_start_time(result.getText(),time);
+//
+//                                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+//                                                                .child("in location").setValue("nothing");
+//                                                    }
+//                                                }
+//                                                else
+//                                                {
+//                                                    dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+//                                                            .child("in location").setValue(result.getText());
+//                                                    dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+//                                                            .child("in entry time").setValue(time);
+//                                                }
+//                                            }
+//
+//                                            @Override
+//                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                                            }
+//                                        });
+//
+//                                    }
+//                                    else
+//                                    {
+//                                        Toast.makeText(getBaseContext(), "Incorect QR in ondatachange code"+result.getText() , Toast.LENGTH_SHORT).show();
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void onCancelled(@NonNull DatabaseError databaseError) {
+//                                    Toast.makeText(getBaseContext(), "Error in class ScanAlert in onDecode"+result.getText() , Toast.LENGTH_SHORT).show();
+//                                }
+//                            });
+                                        get_qr_detail_from_firebase_set_ui(result.getText());
+                                        guideline.setGuidelinePercent(0.0f);
 
-                                        total_scan_Count=dataSnapshot.child("total_scan_Count").getValue(long.class)+1;
-                                        dataref.child("globle").child("qr location").child(result.getText()).child("qr detail").child("total_scan_Count").setValue(total_scan_Count);
+                                        scannerView.setVisibility(View.GONE);
 
+                                        Log.i("location","--------inside scan real he he  detail ------------------"+result.getText());
+                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+                                                .child("in location").setValue(result.getText());
+                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+                                                .child("in entry time").setValue(time);
+                                        pre_qr_text=result.getText();
+                                        pre_entry_time=time;
+                                        set_scan_history_start_time(result.getText(),time);
 
-                                        location_name_scan.setText(location_name);
-                                        total_people_inside.setText(String.valueOf(present_scan_count));
-                                        covid_cases_in_last_7_days.setText(String.valueOf(total_covid_cases_in_last_7_days));
-
-
-
-                                        Log.i("location","--------------------------"+time+" --------"+result.getText());
-
-
-                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail").addListenerForSingleValueEvent(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
-                                                if(dataSnapshot2.exists())
-                                                {
-                                                    Log.i("location","--------inside scan detail ------------------"+dataSnapshot2.child("in location").getValue(String.class)+" --------"+result.getText());
-                                                    if(dataSnapshot2.child("in location").getValue(String.class).equals("nothing"))
-                                                    {
-                                                        Log.i("location","--------inside scan detail ------------------"+qr_text);
-                                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
-                                                                .child("in location").setValue(result.getText());
-                                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
-                                                                .child("in entry time").setValue(time);
-                                                        set_scan_history_start_time(result.getText(),time);
-
-                                                    }
-                                                    else
-                                                    {
-
-                                                        String pre_time=time;
-                                                        pre_time=dataSnapshot2.child("in entry time").getValue(String.class);
-                                                        Log.i("location","--------inside pre time detail ------------------"+pre_time+" --------"+result.getText());
-
-                                                        Toast.makeText(getBaseContext(), "location  "+pre_time , Toast.LENGTH_SHORT).show();
-                                                        set_scan_history_end_time(dataSnapshot2.child("in location").getValue(String.class),pre_time,time);
-                                                        set_scan_history_start_time(result.getText(),time);
-
-                                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
-                                                                .child("in location").setValue("nothing");
-                                                    }
-                                                }
-                                                else
-                                                {
-                                                    dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
-                                                            .child("in location").setValue(result.getText());
-                                                    dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
-                                                            .child("in entry time").setValue(time);
-                                                }
-                                            }
-
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                            }
-                                        });
+//                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail").addListenerForSingleValueEvent(new ValueEventListener() {
+//                                            @Override
+//                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot2) {
+//                                                if(dataSnapshot2.exists())
+//                                                {
+//                                                    Log.i("location","--------inside scan detail ------------------"+dataSnapshot2.child("in location").getValue(String.class)+" --------"+result.getText());
+//                                                    if(dataSnapshot2.child("in location").getValue(String.class).equals("nothing"))
+//                                                    {
+//                                                        Log.i("location","--------inside scan detail ------------------"+qr_text);
+//                                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+//                                                                .child("in location").setValue(result.getText());
+//                                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+//                                                                .child("in entry time").setValue(time);
+//                                                        set_scan_history_start_time(result.getText(),time);
+//
+//                                                    }
+//                                                    else
+//                                                    {
+//
+//                                                        String pre_time=time;
+//                                                        pre_time=dataSnapshot2.child("in entry time").getValue(String.class);
+//                                                        Log.i("location","--------inside pre time detail ------------------"+pre_time+" --------"+result.getText());
+//
+//                                                        Toast.makeText(getBaseContext(), "location  "+pre_time , Toast.LENGTH_SHORT).show();
+//                                                        set_scan_history_end_time(dataSnapshot2.child("in location").getValue(String.class),pre_time,time);
+//                                                        set_scan_history_start_time(result.getText(),time);
+//
+//                                                        dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+//                                                                .child("in location").setValue("nothing");
+//                                                    }
+//                                                }
+//                                                else
+//                                                {
+//                                                    dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+//                                                            .child("in location").setValue(result.getText());
+//                                                    dataref.child("users").child(user_id).child("qr scan history").child("scan detail")
+//                                                            .child("in entry time").setValue(time);
+//                                                }
+//                                            }
+//
+//                                            @Override
+//                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                                            }
+//                                        });
 
                                     }
                                     else
                                     {
-                                        Toast.makeText(getBaseContext(), "Incorect QR in ondatachange code"+result.getText() , Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(getBaseContext(), "Incorect QR code not indra"+result.getText() , Toast.LENGTH_SHORT).show();
                                     }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-                                    Toast.makeText(getBaseContext(), "Error in class ScanAlert in onDecode"+result.getText() , Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
-                        else
-                        {
-                            Toast.makeText(getBaseContext(), "Incorect QR code not indra"+result.getText() , Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                    });
+                }
+                else
+                {
+                    pre_qr_text=dataSnapshot.child("in location").getValue(String.class);
+                    pre_entry_time=dataSnapshot.child("in entry time").getValue(String.class);
+                    get_qr_detail_from_firebase_set_ui(dataSnapshot.child("in location").getValue(String.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
@@ -203,10 +311,61 @@ public class ScanAlert extends AppCompatActivity {
         });
     }
 
+    private void check_if_already_in_location()
+    {
+
+    }
+
+    private void get_qr_detail_from_firebase_set_ui(final String qr_text)
+    {
+        guideline.setGuidelinePercent(0.0f);
+
+        scannerView.setVisibility(View.GONE);
+        exit_button.setVisibility(View.VISIBLE);
+
+        dataref.child("globle").child("qr location").child(qr_text).child("qr detail").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull final DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                {
+                    Calendar calendar=Calendar.getInstance();
+                    DateFormat df = new SimpleDateFormat("dd-MM-yy_HH:mm");
+                    final String time= df.format(calendar.getTime());
+
+                    location_name=dataSnapshot.child("location_name").getValue(String.class);
+                    total_covid_cases_in_last_7_days=dataSnapshot.child("total_covid_cases_in_last_7_days").getValue(long.class);
+
+                    present_scan_count=dataSnapshot.child("present_scan_count").getValue(long.class)+1;
+                    dataref.child("globle").child("qr location").child(qr_text).child("qr detail").child("present_scan_count").setValue(present_scan_count);
+
+                    total_scan_Count=dataSnapshot.child("total_scan_Count").getValue(long.class)+1;
+                    dataref.child("globle").child("qr location").child(qr_text).child("qr detail").child("total_scan_Count").setValue(total_scan_Count);
+
+
+                    location_name_scan.setText(location_name);
+                    total_people_inside.setText(String.valueOf(present_scan_count));
+                    covid_cases_in_last_7_days.setText(String.valueOf(total_covid_cases_in_last_7_days));
+
+
+
+                    Log.i("IN SET UI","--------------------------"+time+" --------"+qr_text);
+
+                }
+                else
+                {
+                    Toast.makeText(getBaseContext(), "Incorect QR in ondatachange code"+qr_text , Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(getBaseContext(), "Error in class ScanAlert in onDecode"+qr_text , Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void set_scan_history_end_time(String text, String enter_time,String exit_time) {
-
-        Log.i("---end time","000000000000------------------------------"+text+" "+enter_time);
-
+//        Log.i("in history end time","-----------------------------------"+text+"          "+enter_time+"      "+exit_time);
         dataref.child("users").child(user_id).child("qr scan history").child("qr scan history list").child(text).child(enter_time).child("exit time").setValue(exit_time);
 //        In globle
         dataref.child("globle").child("qr location").child(text).child("scan history").child(user_id).child(enter_time).child("exit time").setValue(exit_time);
