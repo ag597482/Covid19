@@ -4,11 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,7 +41,7 @@ public class Assest extends AppCompatActivity {
     FirebaseUser user;
 
     Map<String,String> startd,endd;
-    ArrayList<String> list;
+    ArrayList<String> list,s1,e1,s2,e2;
 
     private ValueEventListener eventListener,eventListener1;
 
@@ -58,6 +60,10 @@ public class Assest extends AppCompatActivity {
         endd = new HashMap<>();
 
         list = new ArrayList<>();
+        s1=new ArrayList<>();
+        e1= new ArrayList<>();
+        s2 = new ArrayList<>();
+        e2 = new ArrayList<>();
 
         firebaseDatabase=FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("tests");
@@ -68,7 +74,7 @@ public class Assest extends AppCompatActivity {
         user_mail=user.getEmail();
         user_id=user_mail.replace(".",",");
 
-        userref = firebaseDatabase.getReference().child("users").child(user_id).child("qr scan history list");
+        userref = firebaseDatabase.getReference().child("users").child(user_id).child("qr scan history").child("qr scan history list");
         shopref = firebaseDatabase.getReference().child("globe").child("qr location");
 
 
@@ -97,69 +103,150 @@ public class Assest extends AppCompatActivity {
                     databaseReference.child(user_id).setValue(report);
 
 
-                    eventListener = new ValueEventListener() {
 
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            eventListener = new ValueEventListener() {
 
-                            startd.clear();
-                            endd.clear();
-                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-                                String shopname = ds.getValue(String.class);
-
-
-
-                                for(DataSnapshot d : ds.getChildren())
-                                {
-
-                                    String entryt = d.child("entry time").getValue(String.class);
-                                    String exitt = d.child("exit time").getValue(String.class);
-
-                                    startd.put(shopname,entryt);
-                                    endd.put(shopname,exitt);
-
-
-
+                                    startd.clear();
+                                    endd.clear();
                                     list.clear();
-                                    eventListener1 = new ValueEventListener() {
-                                        @Override
-                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                                            String usersid = dataSnapshot.getValue(String.class);
+                                        String shopname = ds.getKey().toString();
 
-                                            list.add(usersid);
 
+
+
+                                        s1.clear();
+                                        e1.clear();
+                                        for(DataSnapshot d : ds.getChildren())
+                                        {
+
+                                            String entryt = d.child("entry time").getValue(String.class);
+                                            String exitt = d.child("exit time").getValue(String.class);
+
+
+                                            s1.add(entryt);
+                                            e1.add(exitt);
+                                            startd.put(shopname,entryt);
+                                            endd.put(shopname,exitt);
+
+
+                                            Log.e("TAG",s1.toString()+ "A" + e1.toString() );
+
+
+//                                            shopref.child(shopname).child("scan history").addListenerForSingleValueEvent(new ValueEventListener() {
+//                                                @Override
+//                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                                                    for (DataSnapshot dsa : dataSnapshot.getChildren()) {
+//
+//
+//
+//                                                        String usname1  = dsa.getKey().toString();
+//
+//                                                        s2.clear();
+//                                                        e2.clear();
+//
+//                                                        for(DataSnapshot d1 : dsa.getChildren()) {
+//
+//                                                            String entryt1 = d1.child("entry time").getValue(String.class);
+//                                                            String exitt1 = d1.child("exit time").getValue(String.class);
+//
+//                                                            s2.add(entryt1);
+//                                                            e2.add(exitt1);
+//
+//
+//                                                        }
+//                                                        Log.e("TAG",s2.toString()+ "Aa" + e2.toString() );
+//                                                            list.add(usname1);
+//
+//
+//
+//
+//                                                    }
+//
+//                                                }
+//
+//                                                @Override
+//                                                public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                                                }
+//                                            });
+//                                    eventListener1 = new ValueEventListener() {
+//                                        @Override
+//                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//
+//                                            for (DataSnapshot dsa : dataSnapshot.getChildren()) {
+//
+//
+//
+//                                                String usname1  = dsa.getKey().toString();
+//
+//                                                s2.clear();
+//                                                e2.clear();
+//
+//                                                for(DataSnapshot d1 : dsa.getChildren()) {
+//
+//                                                    String entryt1 = d1.child("entry time").getValue(String.class);
+//                                                    String exitt1 = d1.child("exit time").getValue(String.class);
+//
+//                                                    s2.add(entryt1);
+//                                                    e2.add(exitt1);
+//
+//
+//                                                }
+//                                                Log.e("TAG",s2.toString()+ "Aa" + e2.toString() );
+//                                                if(fun(s1,e1,s2,e2))
+//                                                {
+//                                                    list.add(usname1);
+//                                                }
+//
+//
+//
+//
+//
+//
+//                                                }
+//
+//
+//
+//                                        }
+//
+//                                        @Override
+//                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                                        }
+//                                    };
+//
+//                                    shopref.child(shopname).child("scan history").addValueEventListener(eventListener1);
 
 
                                         }
 
-                                        @Override
-                                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                        }
-                                    };
+                                    }
 
-                                    shopref.child(shopname).child("scan history").addValueEventListener(eventListener1);
+                                    fetch.setText("Fetching - > "+  list.toString()+ "@" + s1.toString() + e1.toString());
 
 
                                 }
 
 
-                            }
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                            fetch.setText("Fetching - > "+  startd.toString());
+                                }
+                            };
+                            userref.addValueEventListener(eventListener);
 
 
-                        }
 
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        }
-                    };
-                    userref.addValueEventListener(eventListener);
+
 
 
                     ////
@@ -171,6 +258,15 @@ public class Assest extends AppCompatActivity {
         });
 
 
+    }
+
+    private boolean fun(ArrayList<String> s1, ArrayList<String> e1, ArrayList<String> s2, ArrayList<String> e2) {
+
+
+        if(s2.size()>0)
+            return true;
+
+        return false;
     }
 
     @Override
