@@ -96,7 +96,6 @@ public class ScanAlert extends AppCompatActivity {
                         .child("in location").setValue("nothing");
                 set_scan_history_end_time(pre_qr_text,pre_entry_time,time);
                 check_person_entry_detail_and_action();
-
             }
         });
 
@@ -200,15 +199,14 @@ public class ScanAlert extends AppCompatActivity {
                     location_name=dataSnapshot.child("location_name").getValue(String.class);
                     total_covid_cases_in_last_7_days=dataSnapshot.child("total_covid_cases_in_last_7_days").getValue(long.class);
 
-                    present_scan_count=dataSnapshot.child("present_scan_count").getValue(long.class)+1;
-                    dataref.child("globle").child("qr location").child(qr_text).child("qr detail").child("present_scan_count").setValue(present_scan_count);
+                    present_scan_count=dataSnapshot.child("present_scan_count").getValue(long.class);
 
-                    total_scan_Count=dataSnapshot.child("total_scan_Count").getValue(long.class)+1;
-                    dataref.child("globle").child("qr location").child(qr_text).child("qr detail").child("total_scan_Count").setValue(total_scan_Count);
+
+                    total_scan_Count=dataSnapshot.child("total_scan_Count").getValue(long.class);
 
 
                     location_name_scan.setText(location_name);
-                    total_people_inside.setText(String.valueOf(present_scan_count));
+                    total_people_inside.setText(String.valueOf(present_scan_count+1));
                     covid_cases_in_last_7_days.setText(String.valueOf(total_covid_cases_in_last_7_days));
 
 
@@ -229,16 +227,43 @@ public class ScanAlert extends AppCompatActivity {
         });
     }
 
-    private void set_scan_history_end_time(String text, String enter_time,String exit_time) {
-//        Log.i("in history end time","-----------------------------------"+text+"          "+enter_time+"      "+exit_time);
+    private void set_scan_history_end_time(final String text, String enter_time, String exit_time) {
+        Log.i("in history end time","-----------------------------------"+text+"          "+enter_time+"      "+exit_time);
+
+        dataref.child("globle").child("qr location").child(text).child("qr detail").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                Long present_scan_count_end;
+                present_scan_count_end=dataSnapshot.child("present_scan_count").getValue(long.class);
+
+                dataref.child("globle").child("qr location").child(text).child("qr detail").child("present_scan_count").setValue(present_scan_count_end-1);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+        });
         dataref.child("users").child(user_id).child("qr scan history").child("qr scan history list").child(text).child(enter_time).child("exit time").setValue(exit_time);
 //        In globle
         dataref.child("globle").child("qr location").child(text).child("scan history").child(user_id).child(enter_time).child("exit time").setValue(exit_time);
 
     }
 
-    private void set_scan_history_start_time(String qr_text,String time) {
+    private void set_scan_history_start_time(final String qr_text, String time) {
 
+
+        dataref.child("globle").child("qr location").child(qr_text).child("qr detail").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                Long present_scan_count_end,total_scan_start;
+                present_scan_count_end=dataSnapshot.child("present_scan_count").getValue(long.class);
+                total_scan_start=dataSnapshot.child("total_scan_Count").getValue(long.class);
+                dataref.child("globle").child("qr location").child(qr_text).child("qr detail").child("present_scan_count").setValue(present_scan_count_end+1);
+                dataref.child("globle").child("qr location").child(qr_text).child("qr detail").child("total_scan_Count").setValue(total_scan_start+1);
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) { }
+            });
 //        In user history
         dataref.child("users").child(user_id).child("qr scan history").child("qr scan history list").child(qr_text).child(time).child("entry time").setValue(time);
 //        In globle
