@@ -41,7 +41,7 @@ public class Assest extends AppCompatActivity {
     FirebaseUser user;
 
     Map<String,String> startd,endd;
-    ArrayList<String> list,s1,e1,s2,e2;
+    ArrayList<String> list,s1,e1,s2,e2,noti;
 
     private ValueEventListener eventListener,eventListener1;
 
@@ -64,6 +64,7 @@ public class Assest extends AppCompatActivity {
         e1= new ArrayList<>();
         s2 = new ArrayList<>();
         e2 = new ArrayList<>();
+        noti = new ArrayList<>();
 
         firebaseDatabase=FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference().child("tests");
@@ -75,7 +76,7 @@ public class Assest extends AppCompatActivity {
         user_id=user_mail.replace(".",",");
 
         userref = firebaseDatabase.getReference().child("users").child(user_id).child("qr scan history").child("qr scan history list");
-        shopref = firebaseDatabase.getReference().child("globe").child("qr location");
+        shopref = firebaseDatabase.getReference().child("globle").child("qr location");
 
 
 
@@ -115,7 +116,7 @@ public class Assest extends AppCompatActivity {
                                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
                                         String shopname = ds.getKey().toString();
-
+                                       // list.add(shopname);
 
 
 
@@ -132,6 +133,7 @@ public class Assest extends AppCompatActivity {
                                             e1.add(exitt);
                                             startd.put(shopname,entryt);
                                             endd.put(shopname,exitt);
+
 
 
                                             Log.e("TAG",s1.toString()+ "A" + e1.toString() );
@@ -174,63 +176,106 @@ public class Assest extends AppCompatActivity {
 //
 //                                                }
 //                                            });
-//                                    eventListener1 = new ValueEventListener() {
-//                                        @Override
-//                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//
-//
-//                                            for (DataSnapshot dsa : dataSnapshot.getChildren()) {
-//
-//
-//
-//                                                String usname1  = dsa.getKey().toString();
-//
-//                                                s2.clear();
-//                                                e2.clear();
-//
-//                                                for(DataSnapshot d1 : dsa.getChildren()) {
-//
-//                                                    String entryt1 = d1.child("entry time").getValue(String.class);
-//                                                    String exitt1 = d1.child("exit time").getValue(String.class);
-//
-//                                                    s2.add(entryt1);
-//                                                    e2.add(exitt1);
-//
-//
-//                                                }
-//                                                Log.e("TAG",s2.toString()+ "Aa" + e2.toString() );
-//                                                if(fun(s1,e1,s2,e2))
-//                                                {
-//                                                    list.add(usname1);
-//                                                }
-//
-//
-//
-//
-//
-//
-//                                                }
-//
-//
-//
-//                                        }
-//
-//                                        @Override
-//                                        public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//                                        }
-//                                    };
-//
-//                                    shopref.child(shopname).child("scan history").addValueEventListener(eventListener1);
+                                    eventListener1 = new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+
+                                            for (DataSnapshot dsa : dataSnapshot.getChildren()) {
+
+
+
+                                                String usname1  = dsa.getKey().toString();
+
+                                                s2.clear();
+                                                e2.clear();
+
+                                                for(DataSnapshot d1 : dsa.getChildren()) {
+
+                                                    String entryt1 = d1.child("entry time").getValue(String.class);
+                                                    String exitt1 = d1.child("exit time").getValue(String.class);
+
+                                                    s2.add(entryt1);
+                                                    e2.add(exitt1);
+
+
+                                                }
+                                                Log.e("TAG",s2.toString()+ "Aa" + e2.toString());
+
+                                                if(fun(s1,e1,s2,e2))
+                                                {
+
+
+                                                    firebaseDatabase.getReference().child("users").child(usname1).child("profile").child("title_ofcall")
+                                                            .setValue("N");
+                                                    Log.e("TAG","#" + usname1);
+                                                    list.add(usname1);
+                                                }
+
+
+
+
+
+
+                                                }
+
+
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                        }
+                                    };
+
+                                    shopref.child(shopname).child("scan history").addValueEventListener(eventListener1);
 
 
                                         }
 
 
+
                                     }
 
-                                    fetch.setText("Fetching - > "+  list.toString()+ "@" + s1.toString() + e1.toString());
+//                                    for(int j = 0 ;j< list.size();j++) {
+//                                        eventListener1 = new ValueEventListener() {
+//                                            @Override
+//                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//
+//
+//                                                Log.e("TAG", "AaA@");
+//                                                for (DataSnapshot dsa : dataSnapshot.getChildren()) {
+//
+//
+//                                                    String usname1 = dsa.getKey().toString();
+//
+//                                                    noti.add(usname1);
+//
+//
+//                                                    Log.e("TAG", "AA@"+usname1);
+//
+//
+//
+//                                                }
+//
+//
+//                                            }
+//
+//                                            @Override
+//                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//                                            }
+//                                        };
+//
+//                                        shopref.child(list.get(j)).child("scan history").addListenerForSingleValueEvent(eventListener1);//ValueEventListener(eventListener1);
+//
+//                                    }
+//
+//                                    fetch.setText("Fetching - > "+  list.toString()+ "@" + s1.toString() +"@"+ noti.toString());
 
+
+                                    fetch.setText("Fetching - > "+  list.toString()+ "@" + s1.toString() +"@"+ noti.toString());
 
                                 }
 
@@ -239,6 +284,8 @@ public class Assest extends AppCompatActivity {
                                 public void onCancelled(@NonNull DatabaseError databaseError) {
 
                                 }
+
+
                             };
                             userref.addValueEventListener(eventListener);
 
